@@ -4,6 +4,7 @@ import './App.css';
 import useTestStore from './stores/test.store.ts';
 
 function App() {
+  // 테스트용 주석 추가
   const testStoreState = useTestStore((state) => state);
   return (
     <>
