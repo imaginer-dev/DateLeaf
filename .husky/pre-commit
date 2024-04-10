@@ -1,0 +1,3 @@
+pnpm lint
+
+pnpm dlx prettier --cache --write .
