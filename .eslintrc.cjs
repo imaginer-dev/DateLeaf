@@ -14,6 +14,6 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['react', 'react-refresh'],
   rules: {
-    "tailwindcss/no-custom-classname": "off"
-  }
+    'tailwindcss/no-custom-classname': 'off',
+  },
 };
