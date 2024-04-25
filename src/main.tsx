@@ -6,7 +6,6 @@ import App from './App.tsx';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-
 const router = createBrowserRouter([
   {
     path: '/',
@@ -18,9 +17,7 @@ const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-
       <RouterProvider router={router} />
-
     </QueryClientProvider>
   </React.StrictMode>,
 );
