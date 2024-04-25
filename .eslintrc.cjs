@@ -8,7 +8,6 @@ module.exports = {
     'plugin:@tanstack/eslint-plugin-query/recommended',
     'prettier',
     'plugin:storybook/recommended',
-    'plugin:tailwindcss/recommended',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.ts'],
   parser: '@typescript-eslint/parser',
