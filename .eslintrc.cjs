@@ -13,4 +13,7 @@ module.exports = {
   ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.ts'],
   parser: '@typescript-eslint/parser',
   plugins: ['react', 'react-refresh'],
+  rules: {
+    "tailwindcss/no-custom-classname": "off"
+  }
 };
