@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '../../assets/svgs/Logo.tsx';
+import Logo from '../assets/svgs/Logo.tsx';
 
 interface Props {
   display: 'spinner' | 'dots' | 'ring' | 'ball' | 'bars' | 'infinity';
