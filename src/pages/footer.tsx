@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="footer footer-center  rounded bg-base-200 p-10 text-base-content">
+    <footer className="footer footer-center rounded bg-base-200 p-10 text-base-content">
       <nav className="grid grid-flow-col gap-4">
         <a className="link-hover link">About us</a>
         <a className="link-hover link">Contact</a>
