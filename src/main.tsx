@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './styles/index.css';
 import App from './App.tsx';
 import TextInputForm from './pages/InputFormTest.tsx';
+import { NotFound } from './pages/notfound.tsx';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
@@ -11,10 +12,17 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <NotFound />,
   },
+
   {
-    path: '/test/inputForm',
-    element: <TextInputForm />,
+    path: '/test',
+    children: [
+      {
+        path: 'inputForm',
+        element: <TextInputForm />,
+      },
+    ],
   },
 ]);
 const queryClient = new QueryClient();
