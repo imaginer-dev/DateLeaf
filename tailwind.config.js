@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 import * as daisyUiPlugin from 'daisyui';
 
 export default {
@@ -6,6 +7,7 @@ export default {
   theme: {
     extend: {},
   },
+
   daisyui: {
     themes: ['lemonade'],
   },
