@@ -5,7 +5,13 @@ interface Props {
 }
 
 const LoginPageLayout: FC<Props> = ({ children }) => {
-  return <div>{children}</div>;
+  return (
+    <main className={'flex h-screen w-screen items-center justify-center'}>
+      <div className={'flex h-full w-full max-w-md flex-col items-center justify-around overflow-hidden px-8 py-8'}>
+        {children}
+      </div>
+    </main>
+  );
 };
 
 export default LoginPageLayout;
