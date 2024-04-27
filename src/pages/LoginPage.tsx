@@ -1,4 +1,4 @@
-import LoginPageLayout from '../layouts/LoginPageLayout.tsx';
+import LoginPageLayout from '../layouts/CenterPageLayout.tsx';
 import VerticalLogo from '../components/common/VerticalLogo.tsx';
 import LoginForm from '../components/login/LoginForm.tsx';
 import EmailInput from '../components/login/EmailInput.tsx';
