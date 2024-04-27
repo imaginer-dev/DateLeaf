@@ -6,6 +6,7 @@ import App from './App.tsx';
 import TextInputForm from './pages/InputFormTest.tsx';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import LoginPage from './pages/LoginPage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: '/test/inputForm',
     element: <TextInputForm />,
+  },
+  {
+    path: 'login',
+    element: <LoginPage />,
   },
 ]);
 const queryClient = new QueryClient();

@@ -9,11 +9,11 @@ interface Props extends HTMLProps<HTMLInputElement> {
 
 const InputForm: React.FC<Props> = ({ title, placeholder, hint, onChange, ...rest }) => {
   return (
-    <label className="form-control w-full max-w-xs">
+    <label className="form-control w-full">
       <div className="label">
         <span className="label-text">{title}</span>
       </div>
-      <input placeholder={placeholder} className="input input-bordered w-full max-w-xs" onChange={onChange} {...rest} />
+      <input placeholder={placeholder} className="input input-bordered w-full" onChange={onChange} {...rest} />
       <div className="label">
         <span className="label-text-alt">{hint}</span>
       </div>
