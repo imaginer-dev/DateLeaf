@@ -9,12 +9,10 @@ import PwCheckInput from '../components/Join/PwCheckInput.tsx';
 import TermsCheckInput from '../components/Join/TermsCheckInput.tsx';
 import JoinFormActions from '../components/Join/JoinFormActions.tsx';
 import JoinButton from '../components/Join/JoinButton.tsx';
-import HistoryBackButton from '../components/common/HistoryBackButton.tsx';
 
 const JoinPage = () => {
   return (
     <JoinPageLayout>
-    <HistoryBackButton/>
       <VerticalLogo />
       <JoinForm>
         <NameInput />
