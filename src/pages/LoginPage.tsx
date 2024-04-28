@@ -19,8 +19,8 @@ const LoginPage = () => {
       <LoginFormActions>
         <LoginButton />
         <LoginNavigation>
-          <LoginNavigationLink text={'비밀번호 찾기'} to={'/'} />
-          <LoginNavigationLink text={'회원가입'} to={'/'} />
+          <LoginNavigationLink text={'비밀번호 찾기'} to={'/editPw'} />
+          <LoginNavigationLink text={'회원가입'} to={'/join'} />
         </LoginNavigation>
       </LoginFormActions>
     </CenterPageLayout>
