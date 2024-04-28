@@ -9,11 +9,24 @@ import { NotFound } from './pages/Notfound.tsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import JoinPage from './pages/JoinPage.tsx';
 import LoginPage from './pages/LoginPage.tsx';
+import EditPwPage from './pages/EditPwPage.tsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+  },
+  {
+    path: '/login',
+    element: <LoginPage />,
+  },
+  {
+    path: '/join',
+    element: <JoinPage />,
+  },
+  {
+    path: '/editPw',
+    element: <EditPwPage />,
   },
   {
     path: '*',
@@ -27,14 +40,6 @@ const router = createBrowserRouter([
         element: <TextInputForm />,
       },
     ],
-  },
-  {
-    path: 'login',
-    element: <LoginPage />,
-  },
-  {
-    path: 'join',
-    element: <JoinPage />,
   },
 ]);
 const queryClient = new QueryClient();
