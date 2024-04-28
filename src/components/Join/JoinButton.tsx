@@ -1,4 +1,4 @@
-import { useJoinState } from "../../stores/joinStore"; 
+import { useJoinState } from '../../stores/joinStore';
 
 const JoinButton = () => {
   const { name, phone, email, password, pwCheck, useTermsCheck, privacyTermsCheck } = useJoinState();
