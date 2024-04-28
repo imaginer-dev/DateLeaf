@@ -14,7 +14,7 @@ import HistoryBackButton from '../components/common/HistoryBackButton.tsx';
 const JoinPage = () => {
   return (
     <JoinPageLayout>
-    <HistoryBackButton/>
+      <HistoryBackButton />
       <VerticalLogo />
       <JoinForm>
         <NameInput />
