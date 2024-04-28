@@ -5,7 +5,7 @@ interface Props {
 }
 
 const LoginForm: FC<Props> = ({ children }) => {
-  return <form className={'flex w-full flex-col gap-4'}>{children}</form>;
+  return <form className={'flex w-full flex-col'}>{children}</form>;
 };
 
 export default LoginForm;
