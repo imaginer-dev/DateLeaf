@@ -7,6 +7,7 @@ import TextInputForm from './pages/InputFormTest.tsx';
 import { NotFound } from './pages/Notfound.tsx';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import JoinPage from './pages/JoinPage.tsx';
 import LoginPage from './pages/LoginPage.tsx';
 
 const router = createBrowserRouter([
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
   {
     path: 'login',
     element: <LoginPage />,
+  },
+  {
+    path: 'join',
+    element: <JoinPage />,
   },
 ]);
 const queryClient = new QueryClient();
