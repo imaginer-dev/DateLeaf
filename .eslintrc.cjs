@@ -14,5 +14,7 @@ module.exports = {
   plugins: ['react', 'react-refresh'],
   rules: {
     'tailwindcss/no-custom-classname': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
   },
 };
