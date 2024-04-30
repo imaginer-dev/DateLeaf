@@ -8,14 +8,14 @@ const HistoryBackButton: React.FC = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="mr-auto w-3 md:w-4">
       <svg
         onClick={handleBack}
         className={'shrink-0'}
-        width="256"
-        height="512"
+        width="100%"
+        height="100%"
         viewBox="0 0 256 512"
-        fill="none"
+        fill="#429400"
         preserveAspectRatio="xMinYMin meet"
         xmlns="http://www.w3.org/2000/svg"
       >
