@@ -4,15 +4,25 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import './styles/index.css';
 import App from './App.tsx';
 import TextInputForm from './pages/InputFormTest.tsx';
-import { NotFound } from './pages/Notfound.tsx';
-
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import LoginPage from './pages/LoginPage.tsx';
+import { JoinPage, LoginPage, EditPwPage, NotFound } from './pages/index.ts';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+  },
+  {
+    path: '/login',
+    element: <LoginPage />,
+  },
+  {
+    path: '/join',
+    element: <JoinPage />,
+  },
+  {
+    path: '/editPw',
+    element: <EditPwPage />,
   },
   {
     path: '*',
@@ -26,10 +36,6 @@ const router = createBrowserRouter([
         element: <TextInputForm />,
       },
     ],
-  },
-  {
-    path: 'login',
-    element: <LoginPage />,
   },
 ]);
 const queryClient = new QueryClient();
