@@ -11,15 +11,15 @@ interface DialogElement {
 }
 
 const messages = {
-  ISVAILD_ERROR: "이메일 또는 비밀번호 형식이 잘못되었습니다.",
-  AUTH_ERROR: "인증 오류가 발생했습니다. 다시 시도해주세요."
-}
+  ISVAILD_ERROR: '이메일 또는 비밀번호 형식이 잘못되었습니다.',
+  AUTH_ERROR: '인증 오류가 발생했습니다. 다시 시도해주세요.',
+};
 
 const LoginButton = () => {
   const { email, password } = useLoginState();
   const { mutate } = useSignIn();
   const dialogRef = useRef<DialogElement | null>(null);
-  const [ dialogMessage, setDialogMessage ] = useState('');
+  const [dialogMessage, setDialogMessage] = useState('');
 
   const onClick = () => {
     if (!isValidEmail(email) || !isValidPassword(password)) {
@@ -48,7 +48,7 @@ const LoginButton = () => {
           console.log(data);
         },
         onSuccess: (data) => {
-          //로그인 성공시에는 팝업없이 캘린더 메인으로 
+          //로그인 성공시에는 팝업없이 캘린더 메인으로
           console.log(data);
         },
       },
