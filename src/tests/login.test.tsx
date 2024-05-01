@@ -27,6 +27,8 @@ describe('Login test', () => {
     render(<LoginPage />, {
       wrapper,
     });
+    window.HTMLDialogElement.prototype.showModal = vi.fn();
+    window.HTMLDialogElement.prototype.close = vi.fn();
   });
 
   afterEach(() => {
@@ -83,7 +85,7 @@ describe('Login test', () => {
       },
     });
     await waitFor(() => {});
-    const submitButton = screen.getByText('SIGN IN') as HTMLButtonElement;
+    const submitButton = screen.getByText('로그인') as HTMLButtonElement;
     fireEvent.click(submitButton);
     await waitFor(() => {});
     expect(supabase.auth.signInWithPassword).toBeCalledTimes(1);
@@ -102,7 +104,7 @@ describe('Login test', () => {
       },
     });
     await waitFor(() => {});
-    const submitButton = screen.getByText('SIGN IN') as HTMLButtonElement;
+    const submitButton = screen.getByText('로그인') as HTMLButtonElement;
     fireEvent.click(submitButton);
     await waitFor(() => {});
     expect(supabase.auth.signInWithPassword).toBeCalledTimes(0);
