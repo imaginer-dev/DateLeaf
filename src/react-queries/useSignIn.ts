@@ -3,7 +3,7 @@ import { signIn } from '../apis';
 
 const useSignIn = () =>
   useMutation({
-    mutationKey: [],
+    mutationKey: ['signIn'],
     mutationFn: signIn,
   });
 
