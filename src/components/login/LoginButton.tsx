@@ -1,8 +1,10 @@
+import { useLoginState } from '@/stores/loginStore.ts';
+import { isValidEmail, isValidPassword } from '@/utils/authUtils.ts';
 import { useRef, useState } from 'react';
-import { useLoginState } from '../../stores/loginStore.ts';
 import useSignIn from '../../react-queries/useSignIn.ts';
-import { isValidEmail, isValidPassword } from '../../utils/authUtils.ts';
 import { isAuthError } from '@supabase/supabase-js';
+import { useNavigate } from 'react-router-dom';
+import { Loading } from '@/pages';
 import Dialog from '../Dialog.tsx';
 
 interface DialogElement {
@@ -17,7 +19,8 @@ const messages = {
 
 const LoginButton = () => {
   const { email, password } = useLoginState();
-  const { mutate } = useSignIn();
+  const { mutate, isPending } = useSignIn();
+  const navigate = useNavigate();
   const dialogRef = useRef<DialogElement | null>(null);
   const [dialogMessage, setDialogMessage] = useState('');
 
@@ -36,20 +39,12 @@ const LoginButton = () => {
       {
         onError: (error) => {
           if (isAuthError(error)) {
-            // console.log(error.status);
-            // console.log(error.message);
-            // console.log(error);
-            //인증오류
             setDialogMessage(messages.AUTH_ERROR);
             dialogRef.current?.openModal();
           }
         },
-        onSettled: (data) => {
-          console.log(data);
-        },
-        onSuccess: (data) => {
-          //로그인 성공시에는 팝업없이 캘린더 메인으로
-          console.log(data);
+        onSuccess: () => {
+          navigate('/');
         },
       },
     );
@@ -61,6 +56,7 @@ const LoginButton = () => {
         로그인
       </button>
       <Dialog ref={dialogRef} desc={dialogMessage}></Dialog>
+      {isPending && <Loading size={'lg'} color={'primary'} display={'spinner'} />}
     </>
   );
 };

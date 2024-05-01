@@ -1,4 +1,4 @@
-import supabase from '../supabase';
+import supabase from '@/supabase';
 
 interface SignInParams {
   email: string;

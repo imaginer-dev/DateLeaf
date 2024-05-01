@@ -14,6 +14,8 @@ const PasswordInput = () => {
       onChange={(e) => passwordHandler(e.target.value)}
       name={'password'}
       type={'password'}
+      id={'password-input'}
+      aria-label={'login-password-input'}
       error={!isValidPassword(password)}
       errorText={'비밀번호는 6자리 이상이어야 합니다.'}
     />

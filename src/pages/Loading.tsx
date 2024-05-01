@@ -31,7 +31,9 @@ const styleMap = {
 const Loading: React.FC<Props> = ({ display, size, color }) => {
   return (
     <div
-      className={'fixed left-0 top-0 z-50 flex h-screen w-screen flex-col items-center justify-center overflow-hidden'}
+      className={
+        'fixed left-0 top-0 z-50 flex h-screen w-screen flex-col items-center justify-center overflow-hidden bg-base-100'
+      }
     >
       <Logo />
       <span className={`loading absolute bottom-20 ${styleMap[display]} ${styleMap[size]} ${styleMap[color]}`}></span>
