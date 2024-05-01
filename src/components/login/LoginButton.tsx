@@ -50,16 +50,13 @@ const LoginButton = () => {
     );
   };
 
-  if (isPending) {
-    return <Loading size={'lg'} color={'primary'} display={'spinner'} />;
-  }
-
   return (
     <>
       <button type={'button'} onClick={onClick} className="btn btn-outline btn-primary w-full">
         로그인
       </button>
       <Dialog ref={dialogRef} desc={dialogMessage}></Dialog>
+      {isPending && <Loading size={'lg'} color={'primary'} display={'spinner'} />}
     </>
   );
 };
