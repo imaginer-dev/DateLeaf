@@ -12,7 +12,7 @@ interface DialogElement {
 
 const messages = {
   ISVAILD_ERROR: '이메일 또는 비밀번호 형식이 잘못되었습니다.',
-  AUTH_ERROR: '인증 오류가 발생했습니다. 다시 시도해주세요.',
+  AUTH_ERROR: '이메일 또는 비밀번호가 정확하지 않습니다.',
 };
 
 const LoginButton = () => {
