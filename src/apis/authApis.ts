@@ -10,7 +10,7 @@ export const signIn = async ({ email, password }: SignInParams) => {
     password: password,
   });
   if (error) {
-    throw new Error(error.message);
+    throw error;
   }
 
   return data;

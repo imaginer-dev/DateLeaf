@@ -1,6 +1,7 @@
 import { useLoginState } from '../../stores/loginStore.ts';
 import useSignIn from '../../react-queries/useSignIn.ts';
 import { isValidEmail, isValidPassword } from '../../utils/authUtils.ts';
+import { isAuthError } from '@supabase/supabase-js';
 
 const LoginButton = () => {
   const { email, password } = useLoginState();
@@ -20,7 +21,11 @@ const LoginButton = () => {
       },
       {
         onError: (error) => {
-          console.error(error.message);
+          if (isAuthError(error)) {
+            console.log(error.status);
+            console.log(error.message);
+            console.log(error);
+          }
         },
         onSettled: (data) => {
           console.log(data);
