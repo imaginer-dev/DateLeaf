@@ -1,11 +1,14 @@
-import { useLoginState } from '../../stores/loginStore.ts';
-import useSignIn from '../../react-queries/useSignIn.ts';
-import { isValidEmail, isValidPassword } from '../../utils/authUtils.ts';
+import { useLoginState } from '@/stores/loginStore.ts';
+import useSignIn from '@/react-queries/useSignIn.ts';
+import { isValidEmail, isValidPassword } from '@/utils/authUtils.ts';
 import { isAuthError } from '@supabase/supabase-js';
+import { useNavigate } from 'react-router-dom';
+import { Loading } from '@/pages';
 
 const LoginButton = () => {
   const { email, password } = useLoginState();
-  const { mutate } = useSignIn();
+  const { mutate, isPending } = useSignIn();
+  const navigate = useNavigate();
 
   const onClick = () => {
     if (!isValidEmail(email) || !isValidPassword(password)) {
@@ -27,15 +30,16 @@ const LoginButton = () => {
             console.log(error);
           }
         },
-        onSettled: (data) => {
-          console.log(data);
-        },
-        onSuccess: (data) => {
-          console.log(data);
+        onSuccess: () => {
+          navigate('/');
         },
       },
     );
   };
+
+  if (isPending) {
+    return <Loading size={'lg'} color={'primary'} display={'spinner'} />;
+  }
 
   return (
     <button type={'button'} onClick={onClick} className="btn btn-outline btn-primary w-full">
