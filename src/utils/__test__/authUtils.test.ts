@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { LooseValidation, ValidateProcessor } from '@/utils/authUtils.ts';
 
-
 const validator = new ValidateProcessor(new LooseValidation());
 
 describe('이메일 검증 유틸리티 함수 테스트', () => {
