@@ -1,25 +1,42 @@
-export const isValidName = (name: string) => {
-  return name.length >= 2;
-};
-
-export const isValidPhone = (phone: string) => {
-  return phone.length == 11;
-};
-
-export function formatPhone(phone: string) {
-  const formatted = phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-  return formatted;
+export interface ValidationStrategy {
+  emailValidate(input: string): boolean;
+  passwordValidate(input: string): boolean;
 }
 
-export const isValidEmail = (email: string): boolean => {
-  const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-  return regex.test(email);
-};
+export class LooseValidation implements ValidationStrategy {
+  emailValidate(email: string): boolean {
+    return /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email);
+  }
+  passwordValidate(input: string): boolean {
+    return input.length >= 6;
+  }
+}
 
-export const isValidPassword = (password: string) => {
-  return password.length >= 6;
-};
+export class StrongValidation implements ValidationStrategy {
+  emailValidate(password: string): boolean {
+    return password.length >= 6;
+  }
+  passwordValidate(input: string): boolean {
+    const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+    return regex.test(input);
+  }
+}
 
-export const isValidPwCheck = (pwCheck: string, password: string) => {
-  return pwCheck == password;
-};
+export class ValidateProcessor {
+  #validator: ValidationStrategy;
+  constructor(validator: ValidationStrategy) {
+    this.#validator = validator;
+  }
+
+  setValidator(validator: ValidationStrategy) {
+    this.#validator = validator;
+  }
+
+  isValidEmail(email: string) {
+    return this.#validator.emailValidate(email);
+  }
+
+  isValidPassword(password: string) {
+    return this.#validator.passwordValidate(password);
+  }
+}

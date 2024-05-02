@@ -5,7 +5,7 @@ import './styles/index.css';
 import App from './App.tsx';
 import TextInputForm from './pages/InputFormTest.tsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { JoinPage, LoginPage, EditPwPage, NotFound } from './pages/index.ts';
+import { JoinPage, LoginPage, EditPwPage, NotFound, Policy } from './pages/index.ts';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +34,19 @@ const router = createBrowserRouter([
       {
         path: 'inputForm',
         element: <TextInputForm />,
+      },
+    ],
+  },
+  {
+    path: '/policy',
+    children: [
+      {
+        path: 'personalInfo',
+        element: <Policy.PersonalInfoPage />,
+      },
+      {
+        path: 'usecondition',
+        element: <Policy.UseConditionPage />,
       },
     ],
   },
