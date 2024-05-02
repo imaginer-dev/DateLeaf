@@ -1,9 +1,10 @@
 import { useJoinState } from '../../stores/joinStore';
 
 const JoinButton = () => {
-  const { name, phone, email, password, pwCheck, useTermsCheck, privacyTermsCheck } = useJoinState();
+  const { nickName, name, phone, email, password, pwCheck, useTermsCheck, privacyTermsCheck } = useJoinState();
 
   const onClick = () => {
+    console.log('nickName: ', nickName);
     console.log('name: ', name);
     console.log('phone: ', phone);
     console.log('email: ', email);
