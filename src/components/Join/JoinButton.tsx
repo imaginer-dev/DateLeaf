@@ -1,5 +1,6 @@
 import { useJoinState } from '../../stores/joinStore';
-import { isValidName, isValidFormatPhone, isValidEmail, isValidPassword, isValidPwCheck } from '@/utils/authUtils.ts';
+import { LooseValidation, ValidateProcessor } from '../../utils/authUtils.ts';
+import { FormatPhone } from './FormatPhone.tsx';
 import { useRef, useState } from 'react';
 import useSignUp from '@/react-queries/useSignUp';
 import { isAuthError } from '@supabase/supabase-js';
@@ -23,31 +24,32 @@ const messages = {
 
 const JoinButton = () => {
   const { nickName, name, phone, email, password, pwCheck, useTermsCheck, privacyTermsCheck } = useJoinState();
+  const validator = new ValidateProcessor(new LooseValidation());
   const { mutate, isPending } = useSignUp();
   const navigate = useNavigate();
   const dialogRef = useRef<DialogElement | null>(null);
   const [dialogMessage, setDialogMessage] = useState('');
 
   const onClick = () => {
-    if (!isValidEmail(email) || !isValidPassword(password)) {
+    if (!validator.isValidEmail(email) || !validator.isValidPassword(password)) {
       setDialogMessage(messages.EMAIL_PASSWORD_ISVAILD_ERROR);
       dialogRef.current?.openModal();
       return;
     }
 
-    if (!isValidName(name)) {
+    if (!validator.isValidName(name)) {
       setDialogMessage(messages.NAME_ISVAILD_ERROR);
       dialogRef.current?.openModal();
       return;
     }
 
-    if (!isValidFormatPhone(phone)) {
+    if (!FormatPhone(phone)) {
       setDialogMessage(messages.PHONE_ISVAILD_ERROR);
       dialogRef.current?.openModal();
       return;
     }
 
-    if (!isValidPwCheck(password, pwCheck)) {
+    if (!validator.isValidPwCheck(password, pwCheck)) {
       setDialogMessage(messages.PWCHECK_ISVAILD_ERROR);
       dialogRef.current?.openModal();
       return;
