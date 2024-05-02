@@ -1,9 +1,10 @@
 import InputForm from '../common/InputForm.tsx';
 import { useJoinState } from '../../stores/joinStore.ts';
-import { isValidName } from '../../utils/authUtils.ts';
+import { LooseValidation, ValidateProcessor } from '../../utils/authUtils.ts';
 
 const NameInput = () => {
   const { name, nameHandler } = useJoinState();
+  const validator = new ValidateProcessor(new LooseValidation());
 
   return (
     <InputForm
@@ -16,7 +17,7 @@ const NameInput = () => {
       name={'name'}
       id={'name-input'}
       aria-label={'join-name-input'}
-      error={!isValidName(name)}
+      error={!validator.isValidName(name)}
       errorText={'※ 이름을 입력해 주세요.'}
     />
   );

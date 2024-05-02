@@ -1,10 +1,12 @@
 import InputForm from '../common/InputForm.tsx';
 import { useJoinState } from '../../stores/joinStore.ts';
-import { isValidPhone, formatPhone } from '../../utils/authUtils.ts';
+import { FormatPhone } from './formatPhone.tsx';
+import { LooseValidation, ValidateProcessor } from '../../utils/authUtils.ts';
 
 const PhoneInput = () => {
   const { phone, phoneHandler } = useJoinState();
-  const formattedPhone = isValidPhone(phone) ? formatPhone(phone) : phone;
+  const validator = new ValidateProcessor(new LooseValidation());
+  const formattedPhone = validator.isValidPhone(phone) ? FormatPhone(phone) : phone;
 
   return (
     <InputForm
@@ -16,7 +18,7 @@ const PhoneInput = () => {
       name={'phone'}
       id={'phone-input'}
       aria-label={'join-phone-input'}
-      error={!isValidPhone(phone)}
+      error={!validator.isValidPhone(phone)}
       value={formattedPhone}
       errorText={"※ '-' 제외 11자리를 입력해 주세요"}
     />

@@ -1,9 +1,10 @@
 import InputForm from '../common/InputForm.tsx';
 import { useJoinState } from '../../stores/joinStore.ts';
-import { isValidPwCheck } from '../../utils/authUtils.ts';
+import { LooseValidation, ValidateProcessor } from '../../utils/authUtils.ts';
 
 const PwCheckInput = () => {
   const { pwCheck, password, pwCheckHandler } = useJoinState();
+  const validator = new ValidateProcessor(new LooseValidation());
 
   return (
     <InputForm
@@ -16,7 +17,7 @@ const PwCheckInput = () => {
       name={'pwCheck'}
       id={'pwCheck-input'}
       aria-label={'join-pwCheck-input'}
-      error={!isValidPwCheck(pwCheck, password)}
+      error={!validator.isValidPwCheck(pwCheck, password)}
       errorText={'※ 비밀번호가 일치하지 않습니다.'}
     />
   );

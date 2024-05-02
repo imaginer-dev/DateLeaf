@@ -1,9 +1,10 @@
 import InputForm from '../common/InputForm.tsx';
 import { useJoinState } from '../../stores/joinStore.ts';
-import { isValidPassword } from '../../utils/authUtils.ts';
+import { LooseValidation, ValidateProcessor } from '../../utils/authUtils.ts';
 
 const PasswordInput = () => {
   const { password, passwordHandler } = useJoinState();
+  const validator = new ValidateProcessor(new LooseValidation());
 
   return (
     <InputForm
@@ -16,7 +17,7 @@ const PasswordInput = () => {
       type={'password'}
       id={'password-input'}
       aria-label={'join-password-input'}
-      error={!isValidPassword(password)}
+      error={!validator.isValidPassword(password)}
       errorText={'※ 비밀번호는 6자리 이상이어야 합니다.'}
     />
   );
