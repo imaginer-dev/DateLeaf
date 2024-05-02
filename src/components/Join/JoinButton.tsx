@@ -23,6 +23,7 @@ const messages = {
 
 const JoinButton = () => {
   const { nickName, name, phone, email, password, pwCheck, useTermsCheck, privacyTermsCheck } = useJoinState();
+<<<<<<< HEAD
   const { mutate, isPending } = useSignUp();
   const navigate = useNavigate();
   const dialogRef = useRef<DialogElement | null>(null);
@@ -82,6 +83,18 @@ const JoinButton = () => {
         },
       },
     );
+=======
+
+  const onClick = () => {
+    console.log('nickName: ', nickName);
+    console.log('name: ', name);
+    console.log('phone: ', phone);
+    console.log('email: ', email);
+    console.log('password: ', password);
+    console.log('pwCheck: ', pwCheck);
+    console.log('useTermsCheck: ', useTermsCheck);
+    console.log('privacyTermsCheck: ', privacyTermsCheck);
+>>>>>>> 3abaa2c12e7547561dae2a83b24d0a6713afa301
   };
 
   return (

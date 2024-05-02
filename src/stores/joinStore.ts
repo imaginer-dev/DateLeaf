@@ -2,6 +2,7 @@ import { create } from 'zustand';
 
 interface JoinState {
   name: string;
+  nickName: string;
   phone: string;
   email: string;
   password: string;
@@ -10,6 +11,7 @@ interface JoinState {
   privacyTermsCheck: boolean;
 
   nameHandler: (name: string) => void;
+  nickNameHandler: (name: string) => void;
   phoneHandler: (phone: string) => void;
   emailHandler: (email: string) => void;
   passwordHandler: (password: string) => void;
@@ -20,6 +22,7 @@ interface JoinState {
 
 export const useJoinState = create<JoinState>()((set) => ({
   name: '',
+  nickName: '',
   phone: '',
   email: '',
   password: '',
@@ -28,6 +31,7 @@ export const useJoinState = create<JoinState>()((set) => ({
   privacyTermsCheck: false,
 
   nameHandler: (name: string) => set((state) => ({ ...state, name })),
+  nickNameHandler: (nickName: string) => set((state) => ({ ...state, nickName })),
   phoneHandler: (phone: string) => set((state) => ({ ...state, phone })),
   emailHandler: (email: string) => set((state) => ({ ...state, email })),
   passwordHandler: (password: string) => set((state) => ({ ...state, password })),

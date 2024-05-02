@@ -10,7 +10,13 @@ const TermsCheckInput = () => {
       </div>
       <div className="mt-2 flex items-center justify-between">
         <label htmlFor="termsOne">이용약관 동의 (필수)</label>
-        <input type="radio" className="radio-primary radio" checked={useTermsCheck} onClick={useTermsCheckHandler} />
+        <input
+          type="radio"
+          className="radio-primary radio"
+          checked={useTermsCheck}
+          onClick={useTermsCheckHandler}
+          readOnly
+        />
       </div>
       {!useTermsCheck ? <span className="text-red-500">이용약관에 동의해 주세요.</span> : <span className="h-6"></span>}
       <div className="mt-2 flex items-center justify-between">
@@ -20,6 +26,7 @@ const TermsCheckInput = () => {
           className="radio-primary radio"
           checked={privacyTermsCheck}
           onClick={privacyTermsCheckHandler}
+          readOnly
         />
       </div>
       {!privacyTermsCheck ? (

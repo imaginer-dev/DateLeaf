@@ -1,5 +1,5 @@
 import { useLoginState } from '@/stores/loginStore.ts';
-import { isValidEmail, isValidPassword } from '@/utils/authUtils.ts';
+import { LooseValidation, ValidateProcessor } from '@/utils/authUtils.ts';
 import { useRef, useState } from 'react';
 import useSignIn from '../../react-queries/useSignIn.ts';
 import { isAuthError } from '@supabase/supabase-js';
@@ -14,7 +14,7 @@ interface DialogElement {
 
 const messages = {
   ISVAILD_ERROR: '이메일 또는 비밀번호 형식이 잘못되었습니다.',
-  AUTH_ERROR: '이메일 또는 비밀번호가 정확하지 않습니다.',
+  AUTH_ERROR: '인증 오류가 발생했습니다. 다시 시도해주세요.',
 };
 
 const LoginButton = () => {
@@ -24,8 +24,10 @@ const LoginButton = () => {
   const dialogRef = useRef<DialogElement | null>(null);
   const [dialogMessage, setDialogMessage] = useState('');
 
+  const validator = new ValidateProcessor(new LooseValidation());
+
   const onClick = () => {
-    if (!isValidEmail(email) || !isValidPassword(password)) {
+    if (!validator.isValidEmail(email) || !validator.isValidPassword(password)) {
       setDialogMessage(messages.ISVAILD_ERROR);
       dialogRef.current?.openModal();
       return;
