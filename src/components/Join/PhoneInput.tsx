@@ -1,6 +1,6 @@
 import InputForm from '../common/InputForm.tsx';
 import { useJoinState } from '../../stores/joinStore.ts';
-import { FormatPhone } from './formatPhone.tsx';
+import { FormatPhone } from './FormatPhone.tsx';
 import { LooseValidation, ValidateProcessor } from '../../utils/authUtils.ts';
 
 const PhoneInput = () => {
