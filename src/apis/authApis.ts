@@ -43,6 +43,8 @@ export const signUp = async ({ name, nickName, phone, email, password }: SignUpP
   if (error) {
     throw error;
   }
+  return data;
+};
 
 export const recoveryPasswd = async (email: string) => {
   const { data, error } = await supabase.auth.resetPasswordForEmail(email);
