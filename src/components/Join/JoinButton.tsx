@@ -80,7 +80,7 @@ const JoinButton = () => {
           }
         },
         onSuccess: () => {
-          navigate('/*');
+          navigate('/login');
         },
       },
     );
