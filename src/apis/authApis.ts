@@ -15,3 +15,11 @@ export const signIn = async ({ email, password }: SignInParams) => {
 
   return data;
 };
+
+export const recoveryPasswd = async (email: string) => {
+  const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+  if (error) {
+    throw error;
+  }
+  return data;
+};

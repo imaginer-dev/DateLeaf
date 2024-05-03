@@ -1,11 +1,15 @@
 import { useEditPwState } from '../../stores/editPwStore.ts';
+import { recoveryPasswd } from '../../apis/authApis.ts';
 
 const EditPwButton = () => {
-  const { email, name } = useEditPwState();
+  const { email } = useEditPwState();
 
   const onClick = () => {
     console.log('email: ', email);
-    console.log('name: ', name);
+    const result = recoveryPasswd(email);
+    result.then((value) => {
+      console.log(value);
+    });
   };
 
   return (
