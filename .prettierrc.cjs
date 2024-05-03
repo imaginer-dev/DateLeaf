@@ -7,4 +7,5 @@ module.exports = {
   trailingComma: 'all', // 모든 요소에 쉼표(,)를 붙임
   printWidth: 120, // 한 줄에 120칸까지만 사용
   arrowParens: 'always', // 화살표 함수의 인자가 하나여도 괄호를 넣도록
+  plugins: ['prettier-plugin-tailwindcss'],
 };
