@@ -55,11 +55,10 @@ export const recoveryPasswd = async (email: string) => {
 };
 
 export const searchUser = async (nickname: string) => {
-  console.log(`search: ${nickname}`);
-  const { data: profiles, error } = await supabase.from('profiles').select('*').eq('user_nickname', { nickname });
-
+  const { data: profiles, error } = await supabase.from('profiles').select().eq('user_nickname', nickname);
   if (error) {
-    console.log(error);
+    throw error;
   }
-  console.log(profiles);
+
+  return profiles;
 };
