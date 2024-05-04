@@ -1,5 +1,6 @@
 export interface ValidationStrategy {
   nameValidate(input: string): boolean;
+  nickNameValidate(input: string): boolean;
   phoneValidate(input: string): boolean;
   emailValidate(input: string): boolean;
   passwordValidate(input: string): boolean;
@@ -9,6 +10,9 @@ export interface ValidationStrategy {
 export class LooseValidation implements ValidationStrategy {
   nameValidate(name: string): boolean {
     return name.length >= 2;
+  }
+  nickNameValidate(nickName: string): boolean {
+    return nickName.length >= 2 && nickName.length <= 12;
   }
   phoneValidate(phone: string): boolean {
     return phone.length == 11;
@@ -29,6 +33,9 @@ export class LooseValidation implements ValidationStrategy {
 export class StrongValidation implements ValidationStrategy {
   nameValidate(name: string): boolean {
     return name.length >= 2;
+  }
+  nickNameValidate(nickName: string): boolean {
+    return nickName.length >= 2 && nickName.length <= 12;
   }
   phoneValidate(phone: string): boolean {
     return phone.length == 11;
@@ -57,6 +64,10 @@ export class ValidateProcessor {
 
   isValidName(name: string) {
     return this.#validator.nameValidate(name);
+  }
+
+  isValidNickName(nickName: string) {
+    return this.#validator.nickNameValidate(nickName);
   }
 
   isValidPhone(phone: string) {
