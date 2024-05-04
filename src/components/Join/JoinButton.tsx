@@ -15,6 +15,7 @@ interface DialogElement {
 
 const messages = {
   NAME_ISVAILD_ERROR: '이름은 두글자 이상 입력 가능합니다.',
+  NICKNAME_ISVAILD_ERROR: '닉네임은 2 ~ 12자 이상 입력 가능합니다.',
   PHONE_ISVAILD_ERROR: '휴대폰 번호를 정확히 입력해주세요.',
   PWCHECK_ISVAILD_ERROR: '비밀번호 확인을 진행해주세요.',
   EMAIL_PASSWORD_ISVAILD_ERROR: '이메일 또는 비밀번호 형식이 잘못되었습니다.',
@@ -39,6 +40,12 @@ const JoinButton = () => {
 
     if (!validator.isValidName(name)) {
       setDialogMessage(messages.NAME_ISVAILD_ERROR);
+      dialogRef.current?.openModal();
+      return;
+    }
+
+    if (!validator.isValidNickName(nickName)) {
+      setDialogMessage(messages.NICKNAME_ISVAILD_ERROR);
       dialogRef.current?.openModal();
       return;
     }
