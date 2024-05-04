@@ -12,7 +12,8 @@ export class LooseValidation implements ValidationStrategy {
     return name.length >= 2;
   }
   nickNameValidate(nickName: string): boolean {
-    return nickName.length >= 2 && nickName.length <= 12;
+    const regex = /^[a-zA-Z0-9\u3131-\uD79D\uAC00-\uD7A3]+$/;
+    return regex.test(nickName) && nickName.length >= 2 && nickName.length <= 12;
   }
   phoneValidate(phone: string): boolean {
     return phone.length == 11;
