@@ -13,7 +13,6 @@ vi.mock('@/supabase');
 describe('ChangePassword', async () => {
   beforeEach(() => {
     render(<ChangePasswordForm />, { wrapper });
-    process.env.VITE_SUPABASE_KEY = 'useless_test_api_key';
   });
   afterEach(() => {
     vi.resetAllMocks();
