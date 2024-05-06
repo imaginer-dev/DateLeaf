@@ -6,11 +6,16 @@ import App from './App.tsx';
 import TextInputForm from './pages/InputFormTest.tsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { JoinPage, LoginPage, ResetPwPage, NotFound, Policy } from './pages/index.ts';
+import ProtectedRoute from './providers/ProtectedRoute.tsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: (
+      <ProtectedRoute>
+        <App />
+      </ProtectedRoute>
+    ),
   },
   {
     path: '/login',
