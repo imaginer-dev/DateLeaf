@@ -5,8 +5,8 @@ import './styles/index.css';
 import App from './App.tsx';
 import TextInputForm from './pages/InputFormTest.tsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { JoinPage, LoginPage, EditPwPage, NotFound, Policy } from './pages/index.ts';
 import ChangePasswordPage from './pages/ChangePasswordPage.tsx';
+import { JoinPage, LoginPage, ResetPwPage, NotFound, Policy } from './pages/index.ts';
 
 const router = createBrowserRouter([
   {
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/editPw',
-    element: <EditPwPage />,
+    element: <ResetPwPage />,
   },
   {
     path: '/change-password',
