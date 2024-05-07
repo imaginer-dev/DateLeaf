@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.userplus {
+  padding: 2rem 1.3rem;
+  border: 1px solid oklch(var(--b3));
+  border-radius: 0.5rem;
+  background-color: oklch(var(--b2));
+}
+.userplus:hover {
+  background-color: oklch(var(--b3));
+}

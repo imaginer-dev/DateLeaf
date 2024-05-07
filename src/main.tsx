@@ -7,6 +7,8 @@ import TextInputForm from './pages/InputFormTest.tsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { JoinPage, LoginPage, ResetPwPage, NotFound, Policy } from './pages/index.ts';
 
+import UserPlus from './components/common/UserPlus.tsx';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -34,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: 'inputForm',
         element: <TextInputForm />,
+      },
+      {
+        path: 'userPlus',
+        element: <UserPlus />,
       },
     ],
   },
