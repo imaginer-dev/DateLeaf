@@ -1,8 +1,8 @@
 import { Loading } from '@/pages';
 import Dialog from '../Dialog';
-import useUpdateUser from '@/react-queries/useUpdateUser';
+import useUpdateUserPassword from '@/react-queries/useUpdateUserPassword';
 const ChangePasswordButton = () => {
-  const { onClick, dialogRef, dialogMessage, isPending } = useUpdateUser();
+  const { onClick, dialogRef, dialogMessage, isPending } = useUpdateUserPassword();
 
   return (
     <>

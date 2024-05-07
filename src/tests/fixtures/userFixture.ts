@@ -1,6 +1,6 @@
 import { User } from '@supabase/supabase-js';
 
-export const updateUserResponseFixture: User = {
+export const updateUserPasswordResponseFixture: User = {
   id: '1d7a5662-922e-4167-932d-4dda46f67ef2',
   aud: 'authenticated',
   role: 'authenticated',

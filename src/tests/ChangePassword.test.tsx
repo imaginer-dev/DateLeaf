@@ -1,6 +1,6 @@
 import supabase from '@/supabase';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { updateUserResponseFixture } from './fixtures/userFixture';
+import { updateUserPasswordResponseFixture } from './fixtures/userFixture';
 import { AuthError } from '@supabase/supabase-js';
 import { act, render, screen, waitFor } from '@testing-library/react';
 import ChangePasswordForm from '@/components/ChangePassword/ChangePasswordForm';
@@ -22,7 +22,7 @@ describe('ChangePassword', async () => {
     const user = userEvent.setup();
     vi.mocked(supabase.auth.updateUser).mockResolvedValue({
       data: {
-        user: updateUserResponseFixture,
+        user: updateUserPasswordResponseFixture,
       },
       error: null,
     });
@@ -49,7 +49,7 @@ describe('ChangePassword', async () => {
 
     vi.mocked(supabase.auth.updateUser).mockResolvedValue({
       data: {
-        user: updateUserResponseFixture,
+        user: updateUserPasswordResponseFixture,
       },
       error: null,
     });

@@ -1,5 +1,5 @@
 import { isLogIn } from '@/apis/authApis';
-import updateUser from '@/apis/updateUserApi';
+import updateUserPassword from '@/apis/updateUserApi';
 import { useChangePasswordState } from '@/stores/changePasswordStore';
 import supabase from '@/supabase';
 import { LooseValidation, ValidateProcessor } from '@/utils/authUtils';
@@ -12,10 +12,10 @@ interface DialogElement {
   closeModal: () => void;
 }
 
-const useUpdateUser = () => {
+const useUpdateUserPassword = () => {
   const { mutate, isPending } = useMutation({
-    mutationKey: ['updateUser'],
-    mutationFn: updateUser,
+    mutationKey: ['updateUserPassword'],
+    mutationFn: updateUserPassword,
   });
   const [dialogMessage, setDialogMessage] = useState('');
   const { password } = useChangePasswordState();
@@ -52,4 +52,4 @@ const useUpdateUser = () => {
   };
 };
 
-export default useUpdateUser;
+export default useUpdateUserPassword;
