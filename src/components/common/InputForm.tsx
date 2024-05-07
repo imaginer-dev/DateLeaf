@@ -22,9 +22,13 @@ const InputForm: React.FC<Props> = ({ title, placeholder, hint, onChange, error 
         onChange={onChange}
         {...rest}
       />
-      <div className="label flex h-8 flex-row items-center">
-        <span className={`label-text-alt ${error ? 'text-error' : ''}`}>{error ? errorText : hint}</span>
-      </div>
+      {error || hint ? (
+        <div className="label flex h-8 flex-row items-center">
+          <span className={`label-text-alt ${error ? 'text-error' : ''}`}>{error ? errorText : hint}</span>
+        </div>
+      ) : (
+        ''
+      )}
     </label>
   );
 };

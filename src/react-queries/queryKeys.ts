@@ -4,4 +4,7 @@ export const queries = createQueryKeyStore({
   auth: {
     isLogin: null,
   },
+  session: {
+    getSession: null,
+  },
 });
