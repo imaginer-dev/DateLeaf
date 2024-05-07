@@ -5,12 +5,12 @@ import { useRef, useState, useEffect } from 'react';
 
 const events = [
   { title: 'Meeting', start: new Date() },
-  { title: 'Meeting', start: '2024-05-08' },
-  { title: 'Meeting', start: '2024-05-08' },
-  { title: 'Meeting', start: '2024-05-08' },
+  { title: 'Meeting2', start: '2024-05-08', end: '2024-05-12' },
+  { title: 'Meeting3', start: '2024-05-08', end: '2024-05-10' },
+  { title: 'Meeting4', start: '2024-05-08', end: '2024-05-11' },
 ];
 
-export function Calendar() {
+const Calendar: React.FC = () => {
   const [calendarHeight, setCalendarHeight] = useState<string | number>('auto');
   const calendarRef = useRef<FullCalendar | null>(null);
   const handlePrev = () => {
@@ -81,7 +81,7 @@ export function Calendar() {
       />
     </div>
   );
-}
+};
 
 interface EventInfo {
   timeText: string;
@@ -98,3 +98,5 @@ function renderEventContent(eventInfo: EventInfo) {
     </>
   );
 }
+
+export default Calendar;
