@@ -2,9 +2,9 @@ import InputForm from './InputForm.tsx';
 import { searchUser } from '../../apis/authApis.ts';
 import { FC, useState } from 'react';
 import IconSearch from '@/assets/icons/IconSearch.tsx';
-import UserPlusList from './UserPlusList.tsx';
+import UserInviteList from './UserInviteList.tsx';
 
-const UserPlus: FC = () => {
+const UserInvite: FC = () => {
   const [email, setEamil] = useState('');
   const [list, setList] = useState<any[]>([]);
 
@@ -14,7 +14,7 @@ const UserPlus: FC = () => {
 
   const onSearchClick = () => {
     searchUser(email).then((value) => {
-      setList(value.map(({ user_nickname, id }) => <UserPlusList user_nickname={user_nickname} id={id} />));
+      setList(value.map(({ user_nickname, id }) => <UserInviteList user_nickname={user_nickname} id={id} />));
       return list;
     });
   };
@@ -34,4 +34,4 @@ const UserPlus: FC = () => {
   );
 };
 
-export default UserPlus;
+export default UserInvite;
