@@ -1,4 +1,5 @@
 import Calendar from '../components/common/Calendar.tsx';
+import CreateEventButton from '@/components/MyCalendar/CreateEventButton.tsx';
 
 const MyCalendarPage: React.FC = () => {
   return (
@@ -52,6 +53,7 @@ const MyCalendarPage: React.FC = () => {
           </div>
         </div>
       </main>
+      <CreateEventButton />
     </div>
   );
 };

@@ -9,7 +9,15 @@ interface Props extends HTMLProps<HTMLInputElement> {
   errorText?: string;
 }
 
-const InputForm: React.FC<Props> = ({ title, placeholder, hint, onChange, error = false, errorText = '', ...rest }) => {
+const InputForm: React.FC<Props> = ({
+  title,
+  placeholder,
+  hint = '',
+  onChange,
+  error = false,
+  errorText = '',
+  ...rest
+}) => {
   return (
     <label htmlFor={rest.id} className="form-control w-full">
       <div className="label">
