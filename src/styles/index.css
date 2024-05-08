@@ -11,3 +11,24 @@
   border: 1px solid oklch(var(--b3));
   border-radius: 0.5rem;
 }
+
+@media (min-width: 1024px) {
+  .drawer-toggle {
+    display: none;
+  }
+  .drawer-content {
+    flex-direction: row;
+  }
+  .drawer-side {
+    width: 15%;
+    visibility: visible;
+    overflow-y: auto;
+  }
+  .drawer-side > *:not(.drawer-overlay) {
+    transform: translateX(0%);
+  }
+
+  .drawer-overlay {
+    visibility: visible;
+  }
+}

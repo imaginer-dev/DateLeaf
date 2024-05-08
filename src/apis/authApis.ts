@@ -28,6 +28,14 @@ export const signIn = async ({ email, password }: SignInParams) => {
   return data;
 };
 
+export const isLogIn = async () => {
+  const { data, error } = await supabase.auth.getSession();
+  if (error) {
+    throw error;
+  }
+  return data;
+};
+
 export const signUp = async ({ name, nickName, phone, email, password }: SignUpParams) => {
   const { data, error } = await supabase.auth.signUp({
     email: email,
