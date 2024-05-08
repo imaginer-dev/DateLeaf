@@ -27,7 +27,7 @@ function App() {
                 </label>
               </div>
               <div className="flex-1">
-                <h1 className="base-200 min-w-40 p-2 text-center">개인 일정 캘린더</h1>
+                <h1 className="text-sm min-w-40 p-2 text-center bg-base-200 rounded flex-end">개인 일정 캘린더</h1>
               </div>
             </div>
           </div>

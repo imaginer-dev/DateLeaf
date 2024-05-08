@@ -1,3 +1,39 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+  }
+}
+
+/* 캘린더 - 화살표 아이콘 */
+.fc .fc-button-primary:hover {
+  background-color: var(--fc-event-text-color);
+}
+.fc .fc-prevButton-button {
+  background-color: transparent;
+  border: 0;
+  background-image: url('../img/icon_arrow_left.png');
+  width: 20px;
+  height: 20px;
+  display: block;
+  background-size: contain;
+}
+.fc .fc-nextButton-button {
+  background-color: transparent;
+  border: 0;
+  background-image: url('../img/icon_arrow_right.png');
+  width: 20px;
+  height: 20px;
+  display: block;
+  background-size: contain;
+}
+/* 캘린더 - 일정컬러 */
+.fc .fc-h-event {
+  border: var(--fc-event-text-color);
+}
