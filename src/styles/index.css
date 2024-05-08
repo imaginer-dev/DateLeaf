@@ -68,3 +68,4 @@
 /* 캘린더 - 일정컬러 */
 .fc .fc-h-event {
   border: var(--fc-event-text-color);
+}
