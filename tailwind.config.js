@@ -7,10 +7,10 @@ export default {
   theme: {
     extend: {},
     fontFamily: {
-      'sans': ['Pretendard-Regular', 'sans-serif'],
-      'serif': ['Pretendard-Regular', 'sans-serif'],
-      'mono': ['Pretendard-Regular', 'sans-serif']
-    }
+      sans: ['Pretendard-Regular', 'sans-serif'],
+      serif: ['Pretendard-Regular', 'sans-serif'],
+      mono: ['Pretendard-Regular', 'sans-serif'],
+    },
   },
 
   daisyui: {
