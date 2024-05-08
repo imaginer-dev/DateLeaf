@@ -8,7 +8,7 @@ interface DialogElement {
 
 interface Props {
   classname?: string;
-  name: string;
+  name: any;
   title?: string;
   desc: string;
   children?: ReactNode;

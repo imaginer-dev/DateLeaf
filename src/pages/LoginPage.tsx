@@ -1,5 +1,5 @@
 import CenterPageLayout from '../layouts/CenterPageLayout.tsx';
-import VerticalLogo from '../components/common/VerticalLogo.tsx';
+import VerticalLogo from '../assets/svgs/VerticalLogo.tsx';
 import {
   EmailInput,
   LoginButton,

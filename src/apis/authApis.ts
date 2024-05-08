@@ -28,6 +28,14 @@ export const signIn = async ({ email, password }: SignInParams) => {
   return data;
 };
 
+export const isLogIn = async () => {
+  const { data, error } = await supabase.auth.getSession();
+  if (error) {
+    throw error;
+  }
+  return data;
+};
+
 export const signUp = async ({ name, nickName, phone, email, password }: SignUpParams) => {
   const { data, error } = await supabase.auth.signUp({
     email: email,
@@ -52,4 +60,13 @@ export const recoveryPasswd = async (email: string) => {
     throw error;
   }
   return data;
+};
+
+export const searchUser = async (nickname: string) => {
+  const { data: profiles, error } = await supabase.from('profiles').select().eq('user_nickname', nickname);
+  if (error) {
+    throw error;
+  }
+
+  return profiles;
 };

@@ -2,6 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+
+.userInvite {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 4.2rem;
+  height: 5.7rem;
+  border: 1px solid oklch(var(--b3));
+  border-radius: 0.5rem;
+}
+
+@media (min-width: 1024px) {
+  .drawer-toggle {
+    display: none;
+  }
+  .drawer-content {
+    flex-direction: row;
+  }
+  .drawer-side {
+    width: 15%;
+    visibility: visible;
+    overflow-y: auto;
+  }
+  .drawer-side > *:not(.drawer-overlay) {
+    transform: translateX(0%);
+  }
+
+  .drawer-overlay {
+    visibility: visible;
+  }
+}
+
 @layer base {
   @font-face {
     font-family: 'Pretendard-Regular';
@@ -36,4 +68,3 @@
 /* 캘린더 - 일정컬러 */
 .fc .fc-h-event {
   border: var(--fc-event-text-color);
-}

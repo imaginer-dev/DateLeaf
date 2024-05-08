@@ -1,5 +1,5 @@
 import JoinPageLayout from '../layouts/JoinPageLayout.tsx';
-import VerticalLogo from '../components/common/VerticalLogo.tsx';
+import VerticalLogo from '../assets/svgs/VerticalLogo.tsx';
 import {
   JoinForm,
   NameInput,

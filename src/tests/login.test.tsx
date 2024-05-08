@@ -1,11 +1,9 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { LoginPage } from '../pages';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactNode } from 'react';
-import { BrowserRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
 import supabase from '@/supabase';
+import wrapper from './helpers/wrapper';
 
 vi.mock('@/supabase', () => ({
   default: {
@@ -14,13 +12,6 @@ vi.mock('@/supabase', () => ({
     },
   },
 }));
-
-const queryClient = new QueryClient();
-const wrapper = ({ children }: { children: ReactNode }) => (
-  <BrowserRouter>
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-  </BrowserRouter>
-);
 
 describe('Login test', () => {
   beforeEach(() => {
