@@ -5,8 +5,8 @@ import { useRef, useState, useEffect } from 'react';
 
 const events = [
   { title: 'Meeting', start: new Date() },
-  { title: 'Meeting2', start: '2024-05-08', end: '2024-05-12' },
-  { title: 'Meeting3', start: '2024-05-08', end: '2024-05-10' },
+  { title: 'Meeting2', start: '2024-05-08', end: '2024-05-12', backgroundColor: 'red', borderColor: 'red' },
+  { title: 'Meeting3', start: '2024-05-08', end: '2024-05-10', backgroundColor: 'green', borderColor: 'green' },
   { title: 'Meeting4', start: '2024-05-08', end: '2024-05-11' },
 ];
 
