@@ -2,13 +2,7 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { useRef, useState, useEffect } from 'react';
-
-const events = [
-  { title: 'Meeting', start: new Date() },
-  { title: 'Meeting2', start: '2024-05-08', end: '2024-05-12', backgroundColor: 'red', borderColor: 'red' },
-  { title: 'Meeting3', start: '2024-05-08', end: '2024-05-10', backgroundColor: 'green', borderColor: 'green' },
-  { title: 'Meeting4', start: '2024-05-08', end: '2024-05-11' },
-];
+import { useEventState } from '@/stores/myEventsStore';
 
 const Calendar: React.FC = () => {
   const [calendarHeight, setCalendarHeight] = useState<string | number>('auto');
@@ -43,6 +37,7 @@ const Calendar: React.FC = () => {
     return () => window.removeEventListener('resize', updateSize);
   }, []);
 
+  const events = useEventState();
   return (
     <div>
       <FullCalendar
