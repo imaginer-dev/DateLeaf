@@ -3,6 +3,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { useRef, useState, useEffect } from 'react';
 import { useEventState } from '@/stores/myEventsStore';
+import { getPersonalSchedule } from '@/apis/personalScheduleApi';
 
 const Calendar: React.FC = () => {
   const [calendarHeight, setCalendarHeight] = useState<string | number>('auto');
@@ -49,6 +50,8 @@ const Calendar: React.FC = () => {
     }
   };
 
+  const { events, addEvents } = useEventState();
+
   useEffect(() => {
     const calendarApi = calendarRef?.current?.getApi();
 
@@ -62,15 +65,19 @@ const Calendar: React.FC = () => {
     window.addEventListener('resize', updateSize);
     updateSize(); // 컴포넌트 마운트 시 화면 크기에 따른 업데이트
 
+    const data = getPersonalSchedule();
+    data.then((schedule) => {
+      schedule.map((x) => addEvents({ ...x, start: x.start_date, end: x.end_date }));
+    });
+
     return () => {
       window.removeEventListener('resize', updateSize);
       if (calendarApi) {
         calendarApi.off('datesSet', updateTitle);
       }
     };
-  }, [updateSize]);
+  }, [updateSize, addEvents]);
 
-  const events = useEventState();
   return (
     <div>
       <FullCalendar

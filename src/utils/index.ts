@@ -1,8 +1,7 @@
 export interface Events {
-  id?: string;
   title: string;
-  start: Date | string;
-  end: Date | string;
+  start: string;
+  end: string;
   backgroundColor?: string;
   borderColor?: string;
   textColor?: string;
