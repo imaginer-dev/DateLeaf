@@ -34,13 +34,13 @@ const Dialog = forwardRef<DialogElement, Props>((props, ref) => {
     <dialog ref={dialogRef} className="modal modal-middle" onClick={handleClose}>
       <div className="modal-box" onClick={(e) => e.stopPropagation()}>
         {title && <h3 className="text-lg font-bold">{title}</h3>}
-        <p className={descClassName}>{desc}</p>
+        {desc && <p className={descClassName}>{desc}</p>}
         {children && <div>{children}</div>}
-        <form method="dialog" className="modal-action flex justify-center">
+        <div className="modal-action flex justify-center">
           <button type="button" className="btn bg-primary text-base-100" onClick={() => dialogRef.current?.close()}>
             닫기
           </button>
-        </form>
+        </div>
       </div>
     </dialog>
   );

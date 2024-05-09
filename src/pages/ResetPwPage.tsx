@@ -4,7 +4,7 @@ import EditPwButton from '../components/EditPw/EditPwButton.tsx';
 import InputForm from '../components/common/InputForm.tsx';
 import { useEditPwState } from '../stores/editPwStore.ts';
 
-const EditPwPage = () => {
+const ResetPwPage = () => {
   const { email, emailHandler } = useEditPwState();
 
   return (
@@ -37,4 +37,4 @@ const EditPwPage = () => {
   );
 };
 
-export default EditPwPage;
+export default ResetPwPage;

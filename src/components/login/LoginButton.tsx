@@ -5,7 +5,7 @@ import useSignIn from '../../react-queries/useSignIn.ts';
 import { isAuthError } from '@supabase/supabase-js';
 import { useNavigate } from 'react-router-dom';
 import { Loading } from '@/pages';
-import Dialog from '../Dialog.tsx';
+import Dialog from '../common/Dialog.tsx';
 
 interface DialogElement {
   openModal: () => void;
