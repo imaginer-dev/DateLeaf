@@ -2,15 +2,9 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { useRef, useState, useEffect } from 'react';
+import { useEventState } from '@/stores/myEventsStore';
 
-const events = [
-  { title: 'Meeting', start: new Date() },
-  { title: 'Meeting', start: '2024-05-08' },
-  { title: 'Meeting', start: '2024-05-08' },
-  { title: 'Meeting', start: '2024-05-08' },
-];
-
-export function Calendar() {
+const Calendar: React.FC = () => {
   const [calendarHeight, setCalendarHeight] = useState<string | number>('auto');
   const calendarRef = useRef<FullCalendar | null>(null);
   const handlePrev = () => {
@@ -76,6 +70,7 @@ export function Calendar() {
     };
   }, [updateSize]);
 
+  const events = useEventState();
   return (
     <div>
       <FullCalendar
@@ -116,7 +111,7 @@ export function Calendar() {
       />
     </div>
   );
-}
+};
 
 interface EventInfo {
   timeText: string;
@@ -135,3 +130,5 @@ function renderEventContent(eventInfo: EventInfo) {
     </>
   );
 }
+
+export default Calendar;
