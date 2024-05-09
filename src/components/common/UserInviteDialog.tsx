@@ -1,7 +1,7 @@
 import InputForm from './InputForm.tsx';
 import { searchUser } from '../../apis/authApis.ts';
 import { FC, useState } from 'react';
-import IconSearch from '@/assets/icons/IconSearch.tsx';
+import { IconSearch } from '@/assets/icons';
 import UserInviteList from './UserInviteList.tsx';
 
 const UserInvite: FC = () => {
@@ -13,8 +13,16 @@ const UserInvite: FC = () => {
   };
 
   const onSearchClick = () => {
-    searchUser(email).then((value) => {
-      setList(value.map(({ user_nickname, id }) => <UserInviteList user_nickname={user_nickname} id={id} />));
+    searchUser(email).then((nickNames) => {
+      if (!nickNames.length) {
+        alert('해당 닉네임을 찾을 수 없습니다.');
+        return;
+      }
+      setList(
+        nickNames.map(({ user_nickname, id }) => {
+          return <UserInviteList user_nickname={user_nickname} id={id} />;
+        }),
+      );
       return list;
     });
   };

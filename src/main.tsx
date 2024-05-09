@@ -23,7 +23,10 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-
+      {
+        path: 'userInvite',
+        element: <UserInvite />,
+      },
       {
         path: '/login',
         element: <LoginPage />,
