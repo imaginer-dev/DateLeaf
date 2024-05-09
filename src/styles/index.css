@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .userInvite {
   display: flex;
   justify-content: center;
