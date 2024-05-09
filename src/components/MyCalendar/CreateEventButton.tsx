@@ -8,9 +8,9 @@ const CreateEventButton = () => {
   const [eventTitle, setTitle] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const titleRef = useRef(null);
-  const startRef = useRef(null);
-  const endRef = useRef(null);
+  const titleRef = useRef<HTMLInputElement>(null);
+  const startRef = useRef<HTMLInputElement>(null);
+  const endRef = useRef<HTMLInputElement>(null);
 
   const onTitleChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -31,9 +31,15 @@ const CreateEventButton = () => {
     setTitle('');
     setStartDate('');
     setEndDate('');
-    titleRef.current.value = null;
-    startRef.current.value = null;
-    endRef.current.value = null;
+    if (titleRef.current) {
+      titleRef.current.value = '';
+    }
+    if (startRef.current) {
+      startRef.current.value = '';
+    }
+    if (endRef.current) {
+      endRef.current.value = '';
+    }
   };
 
   const eventForm = (
