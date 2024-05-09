@@ -48,7 +48,7 @@ const router = createBrowserRouter([
         element: <TextInputForm />,
       },
       {
-        path: 'UserInvite',
+        path: 'userInvite',
         element: <UserInvite />,
       },
     ],
