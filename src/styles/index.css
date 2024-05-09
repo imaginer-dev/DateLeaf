@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .userInvite {
   display: flex;
   justify-content: center;
@@ -68,3 +67,4 @@
 /* 캘린더 - 일정컬러 */
 .fc .fc-h-event {
   border: var(--fc-event-text-color);
+}
