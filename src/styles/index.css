@@ -11,3 +11,6 @@
   border: 1px solid oklch(var(--b3));
   border-radius: 0.5rem;
 }
+.userInvite svg {
+  margin: auto;
+}
