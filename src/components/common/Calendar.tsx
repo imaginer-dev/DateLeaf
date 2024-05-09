@@ -5,12 +5,12 @@ import interactionPlugin from '@fullcalendar/interaction';
 import { useRef, useState, useEffect } from 'react';
 
 type Event = {
-    title: string;
-    start: Date | string; 
-}
+  title: string;
+  start: Date | string;
+};
 interface EventCardsProps {
-    events: Event[];
-    date: Date | string | null;
+  events: Event[];
+  date: Date | string | null;
 }
 
 const events = [
@@ -27,18 +27,16 @@ export function Calendar() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const handleDateClick = (clickInfo: EventClickArg) => {
-    if(clickInfo.event.start) {
-        const clickStartDate = new Date(clickInfo.event.start);
-        setSelectedDate(clickStartDate);
+    if (clickInfo.event.start) {
+      const clickStartDate = new Date(clickInfo.event.start);
+      setSelectedDate(clickStartDate);
 
-        const clickedStartDate = new Date(clickInfo.event.start).toDateString();
-        setSelectedEvents(events.filter(event => 
-            new Date(event.start).toDateString() === clickedStartDate
-          ));
+      const clickedStartDate = new Date(clickInfo.event.start).toDateString();
+      setSelectedEvents(events.filter((event) => new Date(event.start).toDateString() === clickedStartDate));
     } else {
-        console.log("not available");
+      console.log('not available');
     }
-  }
+  };
 
   const handlePrev = () => {
     const calendarApi = calendarRef?.current?.getApi();
@@ -136,11 +134,11 @@ export function Calendar() {
           right: 'nextButton',
         }}
         customButtons={{
-            prevButton: { click: handlePrev },
-            nextButton: { click: handleNext },
+          prevButton: { click: handlePrev },
+          nextButton: { click: handleNext },
         }}
       />
-       {selectedDate && <EventCards events={selectedEvents} date={selectedDate} />}
+      {selectedDate && <EventCards events={selectedEvents} date={selectedDate} />}
     </div>
   );
 }
@@ -163,32 +161,32 @@ function renderEventContent(eventInfo: EventInfo) {
   );
 }
 
-
 function EventCards({ events, date }: EventCardsProps) {
-    if (!date) {
-        return <div>No date provided</div>;  // date가 null인 경우 처리
-    }
-    
-    const formattedDate = new Date(date).toLocaleDateString('ko-KR', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit'
-    }).replace(/\. /g,".").slice(0, -1);
-    console.log(formattedDate)
+  if (!date) {
+    return <div>No date provided</div>; // date가 null인 경우 처리
+  }
 
-    return (
-        <div>
-            <h2>{formattedDate}</h2>
-            <div className="flex overflow-x-auto">
-            {events.map((event, index) => (
-                <div key={index} className="min-w-[200px] m-2 p-2 bg-blue-200 text-white">
-                <h3>{event.title}</h3>
-                <p>{new Date(event.start).toLocaleTimeString()}</p>
-                </div>
-            ))}
-            </div>
+  const formattedDate = new Date(date)
+    .toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    })
+    .replace(/\. /g, '.')
+    .slice(0, -1);
+  console.log(formattedDate);
 
-        </div>
-        
-    );
+  return (
+    <div>
+      <h2>{formattedDate}</h2>
+      <div className="flex overflow-x-auto">
+        {events.map((event, index) => (
+          <div key={index} className="m-2 min-w-[200px] bg-blue-200 p-2 text-white">
+            <h3>{event.title}</h3>
+            <p>{new Date(event.start).toLocaleTimeString()}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
