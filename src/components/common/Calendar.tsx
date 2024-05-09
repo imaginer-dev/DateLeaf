@@ -25,17 +25,50 @@ const Calendar: React.FC = () => {
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const updateSize = () => {
+    const isMobile = window.innerWidth < 768;
+    setCalendarHeight(isMobile ? 500 : 'auto');
+    updateTitle();
+  };
+
+  const updateTitle = () => {
+    const calendarApi = calendarRef?.current?.getApi();
+    if (calendarApi) {
+      const calendarView = calendarApi.view;
+
+      const date = new Date(calendarView.currentStart);
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const newTitle = `${year}.${month}`;
+
+      const titleElement = document.querySelector('.fc-toolbar-title');
+      if (titleElement) {
+        titleElement.textContent = newTitle;
+      }
+    }
+  };
+
   useEffect(() => {
-    const updateSize = () => {
-      const isMobile = window.innerWidth < 768;
-      setCalendarHeight(isMobile ? 500 : 'auto');
-    };
+    const calendarApi = calendarRef?.current?.getApi();
 
+    if (calendarApi) {
+      calendarApi.on('datesSet', updateTitle);
+    }
+
+    updateTitle(); // 컴포넌트 마운트 시 제목 업데이트
+
+    /* 캘린더 - 반응형 사이즈 */
     window.addEventListener('resize', updateSize);
-    updateSize();
+    updateSize(); // 컴포넌트 마운트 시 화면 크기에 따른 업데이트
 
-    return () => window.removeEventListener('resize', updateSize);
-  }, []);
+    return () => {
+      window.removeEventListener('resize', updateSize);
+      if (calendarApi) {
+        calendarApi.off('datesSet', updateTitle);
+      }
+    };
+  }, [updateSize]);
 
   const events = useEventState();
   return (
@@ -53,6 +86,10 @@ const Calendar: React.FC = () => {
         titleFormat={{
           year: 'numeric',
           month: '2-digit',
+        }}
+        eventTimeFormat={{
+          hour: '2-digit',
+          minute: '2-digit',
           meridiem: false,
         }}
         dayHeaderFormat={{
@@ -65,11 +102,9 @@ const Calendar: React.FC = () => {
         }}
         customButtons={{
           prevButton: {
-            icon: 'chevron-left',
             click: handlePrev,
           },
           nextButton: {
-            icon: 'chevron-right',
             click: handleNext,
           },
         }}
@@ -88,8 +123,10 @@ interface EventInfo {
 function renderEventContent(eventInfo: EventInfo) {
   return (
     <>
-      <b>{eventInfo.timeText}</b>
-      <i>{eventInfo.event.title}</i>
+      <div className="w-full border-0 bg-secondary p-0.5 text-white">
+        <b className="border-0">{eventInfo.timeText}</b>
+        <i> {eventInfo.event.title}</i>
+      </div>
     </>
   );
 }
