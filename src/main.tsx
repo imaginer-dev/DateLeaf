@@ -14,55 +14,64 @@ import UserInvite from './components/common/UserInvite.tsx';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <ProtectedRoute>
-        <App />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: '/login',
-    element: <LoginPage />,
-  },
-  {
-    path: '/join',
-    element: <JoinPage />,
-  },
-  {
-    path: '/editPw',
-    element: <ResetPwPage />,
-  },
-  {
-    path: '/change-password',
-    element: <ChangePasswordPage />,
-  },
-  {
-    path: '*',
-    element: <NotFound />,
-  },
-  {
-    path: '/test',
     children: [
       {
-        path: 'inputForm',
-        element: <TextInputForm />,
+        index: true,
+        element: (
+          <ProtectedRoute>
+            <App />
+          </ProtectedRoute>
+        ),
       },
       {
         path: 'userInvite',
         element: <UserInvite />,
       },
-    ],
-  },
-  {
-    path: '/policy',
-    children: [
       {
-        path: 'personalInfo',
-        element: <Policy.PersonalInfoPage />,
+        path: '/login',
+        element: <LoginPage />,
       },
       {
-        path: 'usecondition',
-        element: <Policy.UseConditionPage />,
+        path: '/join',
+        element: <JoinPage />,
+      },
+      {
+        path: '/editPw',
+        element: <ResetPwPage />,
+      },
+      {
+        path: '/change-password',
+        element: <ChangePasswordPage />,
+      },
+      {
+        path: '*',
+        element: <NotFound />,
+      },
+      {
+        path: '/test',
+        children: [
+          {
+            path: 'inputForm',
+            element: <TextInputForm />,
+          },
+          {
+            path: 'UserInvite',
+            element: <UserInvite />,
+          },
+        ],
+      },
+      {
+        path: '/policy',
+        children: [
+          {
+            path: 'personalInfo',
+            element: <Policy.PersonalInfoPage />,
+          },
+          {
+            path: 'usecondition',
+            element: <Policy.UseConditionPage />,
+          },
+        ],
       },
     ],
   },
