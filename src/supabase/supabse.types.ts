@@ -10,6 +10,7 @@ export type Database = {
           end_date: string;
           group_id: string;
           id: number;
+          memo: string | null;
           owner_id: string;
           start_date: string;
           title: string;
@@ -20,6 +21,7 @@ export type Database = {
           end_date: string;
           group_id?: string;
           id?: number;
+          memo?: string | null;
           owner_id?: string;
           start_date: string;
           title: string;
@@ -30,6 +32,7 @@ export type Database = {
           end_date?: string;
           group_id?: string;
           id?: number;
+          memo?: string | null;
           owner_id?: string;
           start_date?: string;
           title?: string;
@@ -92,8 +95,8 @@ export type Database = {
           color: string | null;
           created_at: string;
           end_date: string;
-          exclude_time_end: string;
-          exclude_time_start: string;
+          exclude_time_end: string | null;
+          exclude_time_start: string | null;
           id: number;
           name: string;
           open: boolean;
@@ -104,8 +107,8 @@ export type Database = {
           color?: string | null;
           created_at?: string;
           end_date: string;
-          exclude_time_end: string;
-          exclude_time_start: string;
+          exclude_time_end?: string | null;
+          exclude_time_start?: string | null;
           id?: number;
           name: string;
           open: boolean;
@@ -116,8 +119,8 @@ export type Database = {
           color?: string | null;
           created_at?: string;
           end_date?: string;
-          exclude_time_end?: string;
-          exclude_time_start?: string;
+          exclude_time_end?: string | null;
+          exclude_time_start?: string | null;
           id?: number;
           name?: string;
           open?: boolean;
