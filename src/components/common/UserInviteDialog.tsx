@@ -20,7 +20,7 @@ const UserInvite: FC = () => {
       }
       setList(
         nickNames.map(({ user_nickname, id }) => {
-          return <UserInviteList user_nickname={user_nickname} id={id} />;
+          return <UserInviteList user_nickname={user_nickname} id={id} key={id + '-UserInviteList'} />;
         }),
       );
       return list;
@@ -31,7 +31,7 @@ const UserInvite: FC = () => {
     <div>
       <div className="flex items-end">
         <InputForm title={'닉네임으로 검색하기'} placeholder={'닉네임을 입력하세요'} hint={''} onChange={onChange} />
-        <button className="btn btn-outline btn-primary" onClick={onSearchClick}>
+        <button type="button" className="btn btn-outline btn-primary" onClick={onSearchClick}>
           <IconSearch />
         </button>
       </div>
