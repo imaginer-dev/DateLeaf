@@ -1,10 +1,10 @@
-import { useEventState } from '@/stores/myEventsStore.ts';
 import DialogButton from '@/components/common/DialogButton';
 import { InputRef } from '../common/InputForm.tsx';
 import { useState, useRef } from 'react';
+import { Events } from '@/utils/index.ts';
+import { addPersonalSchedule } from '@/apis/personalScheduleApi.ts';
 
 const CreateEventButton = () => {
-  const { addEvents } = useEventState();
   const [eventTitle, setTitle] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -26,8 +26,14 @@ const CreateEventButton = () => {
 
   const onCreateClicked = () => {
     if (eventTitle !== '' && startDate !== '') {
-      addEvents({ title: eventTitle, start: startDate, end: endDate === '' ? startDate : endDate });
+      const newEvent: Events = {
+        title: eventTitle,
+        start: startDate,
+        end: endDate === '' ? startDate : endDate,
+      };
+      addPersonalSchedule(newEvent);
     }
+
     setTitle('');
     setStartDate('');
     setEndDate('');
