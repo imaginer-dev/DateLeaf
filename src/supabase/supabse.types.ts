@@ -181,7 +181,7 @@ export type Database = {
           id: string;
           phone: string;
           user_name: string;
-          user_nickname: string | null;
+          user_nickname: string;
         };
         Insert: {
           created_at?: string;

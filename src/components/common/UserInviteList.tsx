@@ -9,7 +9,7 @@ interface Props {
 const UserInviteList: FC<Props> = ({ user_nickname, id }) => {
   return (
     <li key={id} className="border-b">
-      <button className="ju btn block flex w-full justify-between border-none bg-transparent" onClick={onClick}>
+      <button type="button" className="ju btn flex w-full justify-between border-none bg-transparent" onClick={onClick}>
         {user_nickname}
         <IconPlus />
       </button>
