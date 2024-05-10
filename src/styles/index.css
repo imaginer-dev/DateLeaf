@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .userInvite {
   display: flex;
   justify-content: center;
@@ -14,6 +13,7 @@
 }
 .userInvite svg {
   margin: auto;
+}
 
 @media (min-width: 1024px) {
   .drawer-toggle {
