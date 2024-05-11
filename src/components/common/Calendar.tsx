@@ -6,7 +6,6 @@ import { useRef, useState, useEffect } from 'react';
 import { useEventState } from '@/stores/myEventsStore';
 import { getPersonalSchedule } from '@/apis/personalScheduleApi';
 
-
 type Event = {
   title: string;
   start: Date | string;
@@ -16,15 +15,7 @@ interface EventCardsProps {
   date: Date | string | null;
 }
 
-const events = [
-  { title: 'Meeting', start: new Date() },
-  { title: 'Meeting', start: '2024-05-08' },
-  { title: 'Meeting', start: '2024-05-08' },
-  { title: 'Meeting', start: '2024-05-08' },
-];
-
 export function Calendar() {
-
   const [calendarHeight, setCalendarHeight] = useState<string | number>('auto');
   const calendarRef = useRef<FullCalendar | null>(null);
   const [selectedEvents, setSelectedEvents] = useState<Event[]>([]);
@@ -154,7 +145,7 @@ export function Calendar() {
       <div className="mt-10">{selectedDate && <EventCards events={selectedEvents} date={selectedDate} />}</div>
     </div>
   );
-};
+}
 
 interface EventInfo {
   timeText: string;
@@ -173,7 +164,6 @@ function renderEventContent(eventInfo: EventInfo) {
     </>
   );
 }
-
 
 function EventCards({ events, date }: EventCardsProps) {
   const [menuOpen, setMenuOpen] = useState(-1);
@@ -222,4 +212,3 @@ function EventCards({ events, date }: EventCardsProps) {
     </div>
   );
 }
-

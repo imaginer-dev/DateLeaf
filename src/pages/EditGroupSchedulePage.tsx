@@ -3,6 +3,7 @@ import AppBar from '@/components/common/AppBar';
 import { useGetOneGroupSchedule } from '@/react-queries/useGetOneGroupSchedule';
 import { useParams } from 'react-router-dom';
 import { Loading } from '.';
+import { Member } from '@/types/Member';
 
 const EditGroupSchedulePage = () => {
   const params = useParams<{ groupId: string; scheduleId: string }>();
@@ -19,10 +20,15 @@ const EditGroupSchedulePage = () => {
     return <div>데이터를 찾을 수 없습니다.</div>;
   }
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>, userList: Member[]) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    console.log(formData);
+    console.log(formData.get('name'));
+    console.log(formData.get('description'));
+    console.log(formData.get('startDate'));
+    console.log(formData.get('endDate'));
+    console.log(formData.get('memo'));
+    console.log('userList', userList);
   };
 
   return (

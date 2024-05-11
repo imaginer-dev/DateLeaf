@@ -1,13 +1,16 @@
 import InputForm from './InputForm.tsx';
 import { FC } from 'react';
 import { IconSearch } from '@/assets/icons';
+import { Member } from '@/types/Member.ts';
+import UserInviteList from './UserInviteList.tsx';
 interface Props {
-  list: any[];
+  list: Member[];
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onSearchClick: () => void;
+  onUserItemClick: (clickedUser: Member) => void;
 }
 
-const UserInvite: FC<Props> = ({ list, onChange, onSearchClick }) => {
+const UserInvite: FC<Props> = ({ list, onChange, onSearchClick, onUserItemClick }) => {
   return (
     <div>
       <div className="flex items-end">
@@ -17,7 +20,14 @@ const UserInvite: FC<Props> = ({ list, onChange, onSearchClick }) => {
         </button>
       </div>
       <ul id="searchList" role="list" className="divide-y divide-gray-100">
-        {list}
+        {list.map((user) => (
+          <UserInviteList
+            id={user.id}
+            onClick={() => onUserItemClick(user)}
+            user_nickname={user.user_nickname}
+            key={user.id + '-UserInviteList'}
+          />
+        ))}
       </ul>
     </div>
   );
