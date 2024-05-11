@@ -20,7 +20,7 @@ const events = [
   { title: 'Meeting', start: '2024-05-08' },
 ];
 
-export function Calendar() { 
+export function Calendar() {
   const [calendarHeight, setCalendarHeight] = useState<string | number>('auto');
   const calendarRef = useRef<FullCalendar | null>(null);
   const [selectedEvents, setSelectedEvents] = useState<Event[]>([]);
