@@ -6,7 +6,6 @@ import { useRef, useState, useEffect } from 'react';
 import { useEventState } from '@/stores/myEventsStore';
 import { getPersonalSchedule } from '@/apis/personalScheduleApi';
 
-
 type Event = {
   title: string;
   start: Date | string;
@@ -16,6 +15,7 @@ interface EventCardsProps {
   date: Date | string | null;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const events = [
   { title: 'Meeting', start: new Date() },
   { title: 'Meeting', start: '2024-05-08' },

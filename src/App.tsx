@@ -1,4 +1,4 @@
-import MyCalendarPage from './pages/MyCalendarPage';
+import { Calendar } from './components/common/Calendar.tsx';
 
 function App() {
 
