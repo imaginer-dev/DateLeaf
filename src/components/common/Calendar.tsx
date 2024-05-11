@@ -15,7 +15,7 @@ interface EventCardsProps {
   date: Date | string | null;
 }
 
-export function Calendar() {
+export default function Calendar() {
   const [calendarHeight, setCalendarHeight] = useState<string | number>('auto');
   const calendarRef = useRef<FullCalendar | null>(null);
   const [selectedEvents, setSelectedEvents] = useState<Event[]>([]);
