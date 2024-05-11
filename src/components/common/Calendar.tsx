@@ -104,45 +104,43 @@ export function Calendar() {
   }, [updateSize]);
 
   return (
-    <div >
+    <div>
       <div className="rounded bg-white p-6 px-4 sm:px-0">
-      <FullCalendar
-        ref={calendarRef}
-        plugins={[dayGridPlugin, interactionPlugin]}
-        initialView="dayGridMonth"
-        events={events}
-        eventClick={handleDateClick}
-        dayMaxEvents={2} //Max개수까지보이고 나머지는 more
-        //navLinks={true} // 날짜/주 이름을 클릭하여 뷰를 변경할 수 있습니다.
-        editable={true} // 이벤트를 수정할 수 있습니다.
-        eventContent={renderEventContent}
-        contentHeight={calendarHeight}
-        titleFormat={{
-          year: 'numeric',
-          month: '2-digit',
-        }}
-        eventTimeFormat={{
-          hour: '2-digit',
-          minute: '2-digit',
-          meridiem: false,
-        }}
-        dayHeaderFormat={{
-          weekday: 'short',
-        }}
-        headerToolbar={{
-          left: 'prevButton',
-          center: 'title',
-          right: 'nextButton',
-        }}
-        customButtons={{
-          prevButton: { click: handlePrev },
-          nextButton: { click: handleNext },
-        }}
-      />
+        <FullCalendar
+          ref={calendarRef}
+          plugins={[dayGridPlugin, interactionPlugin]}
+          initialView="dayGridMonth"
+          events={events}
+          eventClick={handleDateClick}
+          dayMaxEvents={2} //Max개수까지보이고 나머지는 more
+          //navLinks={true} // 날짜/주 이름을 클릭하여 뷰를 변경할 수 있습니다.
+          editable={true} // 이벤트를 수정할 수 있습니다.
+          eventContent={renderEventContent}
+          contentHeight={calendarHeight}
+          titleFormat={{
+            year: 'numeric',
+            month: '2-digit',
+          }}
+          eventTimeFormat={{
+            hour: '2-digit',
+            minute: '2-digit',
+            meridiem: false,
+          }}
+          dayHeaderFormat={{
+            weekday: 'short',
+          }}
+          headerToolbar={{
+            left: 'prevButton',
+            center: 'title',
+            right: 'nextButton',
+          }}
+          customButtons={{
+            prevButton: { click: handlePrev },
+            nextButton: { click: handleNext },
+          }}
+        />
       </div>
-      <div className='mt-10'>
-      {selectedDate && <EventCards events={selectedEvents} date={selectedDate} />}
-      </div>
+      <div className="mt-10">{selectedDate && <EventCards events={selectedEvents} date={selectedDate} />}</div>
     </div>
   );
 }
@@ -171,7 +169,7 @@ function EventCards({ events, date }: EventCardsProps) {
   if (!date) {
     return <div>No date provided</div>; // date가 null인 경우 처리
   }
-  
+
   const formattedDate = new Date(date)
     .toLocaleDateString('ko-KR', {
       year: 'numeric',
@@ -184,22 +182,25 @@ function EventCards({ events, date }: EventCardsProps) {
   return (
     <div>
       <h2 className="ml-2">{formattedDate}</h2>
-      <div className="flex overflow-x-auto gap-5">
+      <div className="flex gap-5 overflow-x-auto">
         {events.map((event, index) => (
-          <div key={index} className="min-w-[240px] min-h-[150px] bg-white p-4 text-black relative">
+          <div key={index} className="relative min-h-[150px] min-w-[240px] bg-white p-4 text-black">
             <h3>{event.title}</h3>
-            <p className="text-xs mt-1">{new Date(event.start).toLocaleTimeString()}</p>
+            <p className="mt-1 text-xs">{new Date(event.start).toLocaleTimeString()}</p>
             {/* 메뉴 버튼 */}
-            <div className="flex flex-col items-center justify-center cursor-pointer absolute top-2 right-2" onClick={() => setMenuOpen(menuOpen === index ? -1 : index)}>
-              <div className="w-1 h-1 bg-[#429400] rounded-full mb-1"></div>
-              <div className="w-1 h-1 bg-[#429400] rounded-full mb-1"></div>
-              <div className="w-1 h-1 bg-[#429400] rounded-full"></div>
+            <div
+              className="absolute right-2 top-2 flex cursor-pointer flex-col items-center justify-center"
+              onClick={() => setMenuOpen(menuOpen === index ? -1 : index)}
+            >
+              <div className="mb-1 h-1 w-1 rounded-full bg-[#429400]"></div>
+              <div className="mb-1 h-1 w-1 rounded-full bg-[#429400]"></div>
+              <div className="h-1 w-1 rounded-full bg-[#429400]"></div>
             </div>
             {menuOpen === index && (
-              <div className="absolute right-0 top-10 bg-white shadow-md rounded-lg z-10">
+              <div className="absolute right-0 top-10 z-10 rounded-lg bg-white shadow-md">
                 <ul>
-                  <li className="p-2 hover:bg-gray-100 cursor-pointer">편집</li>
-                  <li className="p-2 hover:bg-gray-100 cursor-pointer">삭제</li>
+                  <li className="cursor-pointer p-2 hover:bg-gray-100">편집</li>
+                  <li className="cursor-pointer p-2 hover:bg-gray-100">삭제</li>
                 </ul>
               </div>
             )}
