@@ -11,7 +11,7 @@ import ProtectedRoute from './providers/ProtectedRoute.tsx';
 
 import UserInvite from './components/common/UserInvite.tsx';
 import EditGroupPage from './pages/EditGroupPage.tsx';
-import AddGroupPage from './pages/AddGroupPage.tsx';
+import AddGroupSchedulePage from './pages/AddGroupSchedulePage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/add-group',
-        element: <AddGroupPage />,
+        element: <AddGroupSchedulePage />,
       },
       {
         path: '/login',
