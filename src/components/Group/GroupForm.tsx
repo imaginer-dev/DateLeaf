@@ -7,10 +7,10 @@ import GroupFormMemoInput from './GroupFormMemoInput';
 
 interface Props {
   name?: string;
-  description?: string;
+  description?: string | null;
   startDate?: string;
   endDate?: string;
-  memo?: string;
+  memo?: string | null;
   onSubmit: React.FormEventHandler<HTMLFormElement>;
 }
 
@@ -26,10 +26,10 @@ const GroupForm: FC<Props> = ({
     <form onSubmit={onSubmit} className="container mx-auto flex max-w-sm flex-1 flex-col gap-4 pb-[50px] pt-4">
       <div className="flex h-full w-full flex-1 flex-col gap-4">
         <GroupFormNameInput name={name} />
-        <GroupFormDescriptionInput description={description} />
+        <GroupFormDescriptionInput description={description ?? ''} />
         <GroupFormDateInput startDate={startDate} endDate={endDate} />
         <UserInvite />
-        <GroupFormMemoInput memo={memo} />
+        <GroupFormMemoInput memo={memo ?? ''} />
       </div>
       <button type="submit" className="btn btn-outline btn-primary w-full">
         저장

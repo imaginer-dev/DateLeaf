@@ -10,7 +10,7 @@ import { JoinPage, LoginPage, ResetPwPage, NotFound, Policy } from './pages/inde
 import ProtectedRoute from './providers/ProtectedRoute.tsx';
 
 import UserInvite from './components/common/UserInvite.tsx';
-import EditGroupPage from './pages/EditGroupPage.tsx';
+import EditGroupSchedule from './pages/EditGroupSchedulePage.tsx';
 import AddGroupPage from './pages/AddGroupPage.tsx';
 
 const router = createBrowserRouter([
@@ -30,8 +30,8 @@ const router = createBrowserRouter([
         element: <UserInvite />,
       },
       {
-        path: '/edit-group/:id',
-        element: <EditGroupPage />,
+        path: '/group/:groupId/edit/:scheduleId',
+        element: <EditGroupSchedule />,
       },
       {
         path: '/add-group',

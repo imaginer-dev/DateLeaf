@@ -7,4 +7,8 @@ export const queries = createQueryKeyStore({
   session: {
     getSession: null,
   },
+  groupSchedule: {
+    getOne: (scheduleId: string) => [scheduleId],
+    getAll: null,
+  },
 });
