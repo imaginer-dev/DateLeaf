@@ -3,8 +3,9 @@ import { groupScheduleFixture } from './fixtures/groupScheduleFixture';
 import { render, screen, waitFor } from '@testing-library/react';
 import EditGroupPage from '@/pages/EditGroupSchedulePage';
 import wrapper from './helpers/wrapper';
-import { getOneGroupSchedule } from '@/apis/groupScheduleApis';
+import { getAllGroupMembers, getOneGroupSchedule } from '@/apis/groupScheduleApis';
 import { dateToYYMMDD } from '@/utils/dateUtils';
+import { memberListFixture } from './fixtures/memberFixture';
 
 vi.mock('react-router-dom', () => ({
   useNavigate: () => vi.fn(),
@@ -16,11 +17,13 @@ vi.mock('@/apis/groupScheduleApis');
 describe('EditGroupPage', () => {
   it('페이지 파라미터를 통해 그룹의 기본값을 받아올 수 있어야 한다.', async () => {
     vi.mocked(getOneGroupSchedule).mockResolvedValueOnce(groupScheduleFixture[0]);
+    vi.mocked(getAllGroupMembers).mockResolvedValueOnce(memberListFixture);
     render(<EditGroupPage />, {
       wrapper: wrapper,
     });
 
     await waitFor(() => expect(screen.getByPlaceholderText(/모임명/)).toHaveValue(groupScheduleFixture[0].title));
+    await waitFor(() => expect(screen.getByText(/gihwan/gi)).toBeInTheDocument());
 
     const groupNameInput = screen.getByPlaceholderText(/모임명/) as HTMLInputElement;
     const groupDescriptionInput = screen.getByPlaceholderText(/모임 설명/) as HTMLInputElement;
@@ -34,6 +37,4 @@ describe('EditGroupPage', () => {
     expect(groupDateEndInput.value).toBe(dateToYYMMDD(new Date(groupScheduleFixture[0].end_date)));
     expect(groupMemoInput.value).toBe(groupScheduleFixture[0].memo);
   });
-
-  it('저장 버튼을 누르면 그룹 수정 요청을 보낼 수 있어야 한다.', () => {});
 });

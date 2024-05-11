@@ -12,6 +12,7 @@ interface Props {
   startDate?: string;
   endDate?: string;
   memo?: string | null;
+  memberList?: Member[];
   onSubmit: (e: React.FormEvent<HTMLFormElement>, userList: Member[]) => void;
 }
 
@@ -21,9 +22,10 @@ const GroupForm: FC<Props> = ({
   startDate = new Date().toString(),
   endDate = new Date().toString(),
   memo = '',
+  memberList = [],
   onSubmit,
 }) => {
-  const [member, setMember] = useState<Member[]>([]);
+  const [member, setMember] = useState<Member[]>(memberList);
 
   const onClick = (newMember: Member) => {
     setMember((prev) => [...prev, newMember]);
