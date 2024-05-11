@@ -1,7 +1,7 @@
-import MyCalendarPage from './pages/MyCalendarPage';
+import Calendar from '../components/common/Calendar.tsx';
+import CreateEventButton from '@/components/MyCalendar/CreateEventButton.tsx';
 
-function App() {
-
+const MyCalendarPage: React.FC = () => {
   return (
     <div>
       <header className="relative z-10">
@@ -27,8 +27,8 @@ function App() {
                   </svg>
                 </label>
               </div>
-              <div className="flex-1 justify-end">
-                <h1 className="min-w-40 rounded bg-base-200 p-2 text-center text-sm">개인 일정 캘린더</h1>
+              <div className="flex-1">
+                <h1 className="base-200 min-w-40 p-2 text-center">개인 일정 캘린더</h1>
               </div>
             </div>
           </div>
@@ -47,13 +47,15 @@ function App() {
         </div>
       </header>
       <main className="z-1 relative flex-grow">
-        <div className="ml-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <Calendar />
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="rounded bg-white p-6 px-4 sm:px-0">
+            <Calendar />
+          </div>
         </div>
       </main>
+      <CreateEventButton />
     </div>
   );
+};
 
-}
-
-export default App;
+export default MyCalendarPage;

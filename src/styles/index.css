@@ -11,6 +11,9 @@
   border: 1px solid oklch(var(--b3));
   border-radius: 0.5rem;
 }
+.userInvite svg {
+  margin: auto;
+}
 
 @media (min-width: 1024px) {
   .drawer-toggle {

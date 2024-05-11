@@ -10,59 +10,78 @@ import { JoinPage, LoginPage, ResetPwPage, NotFound, Policy } from './pages/inde
 import ProtectedRoute from './providers/ProtectedRoute.tsx';
 
 import UserInvite from './components/common/UserInvite.tsx';
+import EditGroupPage from './pages/EditGroupPage.tsx';
+import AddGroupPage from './pages/AddGroupPage.tsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <ProtectedRoute>
-        <App />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: '/login',
-    element: <LoginPage />,
-  },
-  {
-    path: '/join',
-    element: <JoinPage />,
-  },
-  {
-    path: '/editPw',
-    element: <ResetPwPage />,
-  },
-  {
-    path: '/change-password',
-    element: <ChangePasswordPage />,
-  },
-  {
-    path: '*',
-    element: <NotFound />,
-  },
-  {
-    path: '/test',
     children: [
       {
-        path: 'inputForm',
-        element: <TextInputForm />,
+        index: true,
+        element: (
+          <ProtectedRoute>
+            <App />
+          </ProtectedRoute>
+        ),
       },
       {
-        path: 'UserInvite',
+        path: '/userInvite',
         element: <UserInvite />,
       },
-    ],
-  },
-  {
-    path: '/policy',
-    children: [
       {
-        path: 'personalInfo',
-        element: <Policy.PersonalInfoPage />,
+        path: '/edit-group/:id',
+        element: <EditGroupPage />,
       },
       {
-        path: 'usecondition',
-        element: <Policy.UseConditionPage />,
+        path: '/add-group',
+        element: <AddGroupPage />,
+      },
+      {
+        path: '/login',
+        element: <LoginPage />,
+      },
+      {
+        path: '/join',
+        element: <JoinPage />,
+      },
+      {
+        path: '/editPw',
+        element: <ResetPwPage />,
+      },
+      {
+        path: '/change-password',
+        element: <ChangePasswordPage />,
+      },
+      {
+        path: '*',
+        element: <NotFound />,
+      },
+      {
+        path: '/test',
+        children: [
+          {
+            path: 'inputForm',
+            element: <TextInputForm />,
+          },
+          {
+            path: 'UserInvite',
+            element: <UserInvite />,
+          },
+        ],
+      },
+      {
+        path: '/policy',
+        children: [
+          {
+            path: 'personalInfo',
+            element: <Policy.PersonalInfoPage />,
+          },
+          {
+            path: 'usecondition',
+            element: <Policy.UseConditionPage />,
+          },
+        ],
       },
     ],
   },
