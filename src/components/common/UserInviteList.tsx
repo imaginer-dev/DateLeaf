@@ -4,9 +4,10 @@ import { IconPlus } from '@/assets/icons';
 interface Props {
   user_nickname: any;
   id: string;
+  onClick: () => void;
 }
 
-const UserInviteList: FC<Props> = ({ user_nickname, id }) => {
+const UserInviteList: FC<Props> = ({ user_nickname, id, onClick }) => {
   return (
     <li key={id} className="border-b">
       <button type="button" className="ju btn flex w-full justify-between border-none bg-transparent" onClick={onClick}>
@@ -16,7 +17,5 @@ const UserInviteList: FC<Props> = ({ user_nickname, id }) => {
     </li>
   );
 };
-
-const onClick = () => {};
 
 export default UserInviteList;
