@@ -5,7 +5,7 @@ const AddGroupPage = () => {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    console.log(formData);
+    console.log(formData.get('name'));
   };
 
   return (

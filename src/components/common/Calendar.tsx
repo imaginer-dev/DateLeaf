@@ -1,17 +1,52 @@
 import FullCalendar from '@fullcalendar/react';
+import { EventClickArg } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { useRef, useState, useEffect } from 'react';
 import { useEventState } from '@/stores/myEventsStore';
 import { getPersonalSchedule } from '@/apis/personalScheduleApi';
 
-const Calendar: React.FC = () => {
+
+type Event = {
+  title: string;
+  start: Date | string;
+};
+interface EventCardsProps {
+  events: Event[];
+  date: Date | string | null;
+}
+
+const events = [
+  { title: 'Meeting', start: new Date() },
+  { title: 'Meeting', start: '2024-05-08' },
+  { title: 'Meeting', start: '2024-05-08' },
+  { title: 'Meeting', start: '2024-05-08' },
+];
+
+export function Calendar() {
+
   const [calendarHeight, setCalendarHeight] = useState<string | number>('auto');
   const calendarRef = useRef<FullCalendar | null>(null);
+  const [selectedEvents, setSelectedEvents] = useState<Event[]>([]);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+
+  const handleDateClick = (clickInfo: EventClickArg) => {
+    if (clickInfo.event.start) {
+      const clickStartDate = new Date(clickInfo.event.start);
+      setSelectedDate(clickStartDate);
+
+      const clickedStartDate = new Date(clickInfo.event.start).toDateString();
+      setSelectedEvents(events.filter((event) => new Date(event.start).toDateString() === clickedStartDate));
+    } else {
+      console.log('not available');
+    }
+  };
+
   const handlePrev = () => {
     const calendarApi = calendarRef?.current?.getApi();
     if (calendarApi) {
       calendarApi.prev();
+      setSelectedDate(null);
     } else {
       console.error('Calendar API is not available.');
     }
@@ -21,6 +56,7 @@ const Calendar: React.FC = () => {
     const calendarApi = calendarRef?.current?.getApi();
     if (calendarApi) {
       calendarApi.next();
+      setSelectedDate(null);
     } else {
       console.error('Calendar API is not available.');
     }
@@ -80,42 +116,42 @@ const Calendar: React.FC = () => {
 
   return (
     <div>
-      <FullCalendar
-        ref={calendarRef}
-        plugins={[dayGridPlugin, interactionPlugin]}
-        initialView="dayGridMonth"
-        events={events}
-        dayMaxEvents={2} //Max개수까지보이고 나머지는 more
-        navLinks={true} // 날짜/주 이름을 클릭하여 뷰를 변경할 수 있습니다.
-        editable={true} // 이벤트를 수정할 수 있습니다.
-        eventContent={renderEventContent}
-        contentHeight={calendarHeight}
-        titleFormat={{
-          year: 'numeric',
-          month: '2-digit',
-        }}
-        eventTimeFormat={{
-          hour: '2-digit',
-          minute: '2-digit',
-          meridiem: false,
-        }}
-        dayHeaderFormat={{
-          weekday: 'short',
-        }}
-        headerToolbar={{
-          left: 'prevButton',
-          center: 'title',
-          right: 'nextButton',
-        }}
-        customButtons={{
-          prevButton: {
-            click: handlePrev,
-          },
-          nextButton: {
-            click: handleNext,
-          },
-        }}
-      />
+      <div className="rounded bg-white p-6 px-4 sm:px-0">
+        <FullCalendar
+          ref={calendarRef}
+          plugins={[dayGridPlugin, interactionPlugin]}
+          initialView="dayGridMonth"
+          events={events}
+          eventClick={handleDateClick}
+          dayMaxEvents={2} //Max개수까지보이고 나머지는 more
+          //navLinks={true} // 날짜/주 이름을 클릭하여 뷰를 변경할 수 있습니다.
+          editable={true} // 이벤트를 수정할 수 있습니다.
+          eventContent={renderEventContent}
+          contentHeight={calendarHeight}
+          titleFormat={{
+            year: 'numeric',
+            month: '2-digit',
+          }}
+          eventTimeFormat={{
+            hour: '2-digit',
+            minute: '2-digit',
+            meridiem: false,
+          }}
+          dayHeaderFormat={{
+            weekday: 'short',
+          }}
+          headerToolbar={{
+            left: 'prevButton',
+            center: 'title',
+            right: 'nextButton',
+          }}
+          customButtons={{
+            prevButton: { click: handlePrev },
+            nextButton: { click: handleNext },
+          }}
+        />
+      </div>
+      <div className="mt-10">{selectedDate && <EventCards events={selectedEvents} date={selectedDate} />}</div>
     </div>
   );
 };
@@ -138,4 +174,52 @@ function renderEventContent(eventInfo: EventInfo) {
   );
 }
 
-export default Calendar;
+
+function EventCards({ events, date }: EventCardsProps) {
+  const [menuOpen, setMenuOpen] = useState(-1);
+
+  if (!date) {
+    return <div>No date provided</div>; // date가 null인 경우 처리
+  }
+
+  const formattedDate = new Date(date)
+    .toLocaleDateString('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    })
+    .replace(/\. /g, '.')
+    .slice(0, -1);
+
+  return (
+    <div>
+      <h2 className="ml-2">{formattedDate}</h2>
+      <div className="flex gap-5 overflow-x-auto">
+        {events.map((event, index) => (
+          <div key={index} className="relative min-h-[150px] min-w-[240px] bg-white p-4 text-black">
+            <h3>{event.title}</h3>
+            <p className="mt-1 text-xs">{new Date(event.start).toLocaleTimeString()}</p>
+            {/* 메뉴 버튼 */}
+            <div
+              className="absolute right-2 top-2 flex cursor-pointer flex-col items-center justify-center"
+              onClick={() => setMenuOpen(menuOpen === index ? -1 : index)}
+            >
+              <div className="mb-1 h-1 w-1 rounded-full bg-[#429400]"></div>
+              <div className="mb-1 h-1 w-1 rounded-full bg-[#429400]"></div>
+              <div className="h-1 w-1 rounded-full bg-[#429400]"></div>
+            </div>
+            {menuOpen === index && (
+              <div className="absolute right-0 top-10 z-10 rounded-lg bg-white shadow-md">
+                <ul>
+                  <li className="cursor-pointer p-2 hover:bg-gray-100">편집</li>
+                  <li className="cursor-pointer p-2 hover:bg-gray-100">삭제</li>
+                </ul>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+

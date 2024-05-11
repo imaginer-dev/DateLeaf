@@ -8,10 +8,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ChangePasswordPage from './pages/ChangePasswordPage.tsx';
 import { JoinPage, LoginPage, ResetPwPage, NotFound, Policy } from './pages/index.ts';
 import ProtectedRoute from './providers/ProtectedRoute.tsx';
-
-import UserInvite from './components/common/UserInvite.tsx';
 import EditGroupSchedule from './pages/EditGroupSchedulePage.tsx';
-import AddGroupPage from './pages/AddGroupPage.tsx';
+import AddGroupSchedulePage from './pages/AddGroupSchedulePage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -26,16 +24,12 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/userInvite',
-        element: <UserInvite />,
-      },
-      {
         path: '/group/:groupId/edit/:scheduleId',
         element: <EditGroupSchedule />,
       },
       {
         path: '/add-group',
-        element: <AddGroupPage />,
+        element: <AddGroupSchedulePage />,
       },
       {
         path: '/login',
@@ -63,10 +57,6 @@ const router = createBrowserRouter([
           {
             path: 'inputForm',
             element: <TextInputForm />,
-          },
-          {
-            path: 'UserInvite',
-            element: <UserInvite />,
           },
         ],
       },
