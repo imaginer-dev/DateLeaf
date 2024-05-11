@@ -1,7 +1,6 @@
-import { Calendar } from './components/common/Calendar.tsx';
+import Calendar from './components/common/Calendar.tsx';
 
 function App() {
-
   return (
     <div>
       <header className="relative z-10">
@@ -53,7 +52,6 @@ function App() {
       </main>
     </div>
   );
-
 }
 
 export default App;

@@ -23,8 +23,7 @@ const events = [
   { title: 'Meeting', start: '2024-05-08' },
 ];
 
-export function Calendar() {
-
+export default function Calendar() {
   const [calendarHeight, setCalendarHeight] = useState<string | number>('auto');
   const calendarRef = useRef<FullCalendar | null>(null);
   const [selectedEvents, setSelectedEvents] = useState<Event[]>([]);
@@ -154,7 +153,7 @@ export function Calendar() {
       <div className="mt-10">{selectedDate && <EventCards events={selectedEvents} date={selectedDate} />}</div>
     </div>
   );
-};
+}
 
 interface EventInfo {
   timeText: string;
@@ -173,7 +172,6 @@ function renderEventContent(eventInfo: EventInfo) {
     </>
   );
 }
-
 
 function EventCards({ events, date }: EventCardsProps) {
   const [menuOpen, setMenuOpen] = useState(-1);
@@ -208,6 +206,7 @@ function EventCards({ events, date }: EventCardsProps) {
               <div className="mb-1 h-1 w-1 rounded-full bg-[#429400]"></div>
               <div className="h-1 w-1 rounded-full bg-[#429400]"></div>
             </div>
+             {/* 메뉴 */}
             {menuOpen === index && (
               <div className="absolute right-0 top-10 z-10 rounded-lg bg-white shadow-md">
                 <ul>
@@ -222,4 +221,3 @@ function EventCards({ events, date }: EventCardsProps) {
     </div>
   );
 }
-
