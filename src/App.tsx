@@ -47,9 +47,7 @@ function App() {
       </header>
       <main className="z-1 relative flex-grow">
         <div className="ml-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded bg-white p-6 px-4 sm:px-0">
-            <Calendar />
-          </div>
+          <Calendar />
         </div>
       </main>
     </div>

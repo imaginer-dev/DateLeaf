@@ -104,7 +104,8 @@ export function Calendar() {
   }, [updateSize]);
 
   return (
-    <div>
+    <div >
+      <div className="rounded bg-white p-6 px-4 sm:px-0">
       <FullCalendar
         ref={calendarRef}
         plugins={[dayGridPlugin, interactionPlugin]}
@@ -138,7 +139,10 @@ export function Calendar() {
           nextButton: { click: handleNext },
         }}
       />
+      </div>
+      <div className='mt-10'>
       {selectedDate && <EventCards events={selectedEvents} date={selectedDate} />}
+      </div>
     </div>
   );
 }
@@ -162,10 +166,12 @@ function renderEventContent(eventInfo: EventInfo) {
 }
 
 function EventCards({ events, date }: EventCardsProps) {
+  const [menuOpen, setMenuOpen] = useState(-1);
+
   if (!date) {
     return <div>No date provided</div>; // date가 null인 경우 처리
   }
-
+  
   const formattedDate = new Date(date)
     .toLocaleDateString('ko-KR', {
       year: 'numeric',
@@ -174,16 +180,29 @@ function EventCards({ events, date }: EventCardsProps) {
     })
     .replace(/\. /g, '.')
     .slice(0, -1);
-  console.log(formattedDate);
 
   return (
     <div>
-      <h2>{formattedDate}</h2>
-      <div className="flex overflow-x-auto">
+      <h2 className="ml-2">{formattedDate}</h2>
+      <div className="flex overflow-x-auto gap-5">
         {events.map((event, index) => (
-          <div key={index} className="m-2 min-w-[200px] bg-blue-200 p-2 text-white">
+          <div key={index} className="min-w-[240px] min-h-[150px] bg-white p-4 text-black relative">
             <h3>{event.title}</h3>
-            <p>{new Date(event.start).toLocaleTimeString()}</p>
+            <p className="text-xs mt-1">{new Date(event.start).toLocaleTimeString()}</p>
+            {/* 메뉴 버튼 */}
+            <div className="flex flex-col items-center justify-center cursor-pointer absolute top-2 right-2" onClick={() => setMenuOpen(menuOpen === index ? -1 : index)}>
+              <div className="w-1 h-1 bg-[#429400] rounded-full mb-1"></div>
+              <div className="w-1 h-1 bg-[#429400] rounded-full mb-1"></div>
+              <div className="w-1 h-1 bg-[#429400] rounded-full"></div>
+            </div>
+            {menuOpen === index && (
+              <div className="absolute right-0 top-10 bg-white shadow-md rounded-lg z-10">
+                <ul>
+                  <li className="p-2 hover:bg-gray-100 cursor-pointer">편집</li>
+                  <li className="p-2 hover:bg-gray-100 cursor-pointer">삭제</li>
+                </ul>
+              </div>
+            )}
           </div>
         ))}
       </div>
