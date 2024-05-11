@@ -6,10 +6,14 @@ import UserInviteDialog from '@/components/common/UserInviteDialog';
 import UserInvited from './UserInvited';
 import UserInviteList from './UserInviteList.tsx';
 
-const UserInvite: FC = () => {
+interface Props {
+  member: any;
+  setMember: any;
+}
+
+const UserInvite: FC<Props> = ({ member, setMember }) => {
   const [email, setEamil] = useState('');
   const [list, setList] = useState<any[]>([]);
-  const [member, setMember] = useState<any[]>([]);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEamil(event.target.value);
@@ -34,8 +38,6 @@ const UserInvite: FC = () => {
           />,
         ]);
       });
-
-      console.log(member);
     });
   };
 
