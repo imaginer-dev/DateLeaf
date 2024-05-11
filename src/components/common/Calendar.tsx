@@ -3,6 +3,9 @@ import { EventClickArg } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { useRef, useState, useEffect } from 'react';
+import { useEventState } from '@/stores/myEventsStore';
+import { getPersonalSchedule } from '@/apis/personalScheduleApi';
+
 
 type Event = {
   title: string;
@@ -21,6 +24,7 @@ const events = [
 ];
 
 export function Calendar() {
+
   const [calendarHeight, setCalendarHeight] = useState<string | number>('auto');
   const calendarRef = useRef<FullCalendar | null>(null);
   const [selectedEvents, setSelectedEvents] = useState<Event[]>([]);
@@ -82,6 +86,8 @@ export function Calendar() {
     }
   };
 
+  const { events, addEvents } = useEventState();
+
   useEffect(() => {
     const calendarApi = calendarRef?.current?.getApi();
 
@@ -95,13 +101,18 @@ export function Calendar() {
     window.addEventListener('resize', updateSize);
     updateSize(); // 컴포넌트 마운트 시 화면 크기에 따른 업데이트
 
+    const data = getPersonalSchedule();
+    data.then((schedule) => {
+      schedule.map((x) => addEvents({ ...x, start: x.start_date, end: x.end_date }));
+    });
+
     return () => {
       window.removeEventListener('resize', updateSize);
       if (calendarApi) {
         calendarApi.off('datesSet', updateTitle);
       }
     };
-  }, [updateSize]);
+  }, [updateSize, addEvents]);
 
   return (
     <div>
@@ -143,7 +154,7 @@ export function Calendar() {
       <div className="mt-10">{selectedDate && <EventCards events={selectedEvents} date={selectedDate} />}</div>
     </div>
   );
-}
+};
 
 interface EventInfo {
   timeText: string;
@@ -162,6 +173,7 @@ function renderEventContent(eventInfo: EventInfo) {
     </>
   );
 }
+
 
 function EventCards({ events, date }: EventCardsProps) {
   const [menuOpen, setMenuOpen] = useState(-1);
@@ -210,3 +222,4 @@ function EventCards({ events, date }: EventCardsProps) {
     </div>
   );
 }
+
