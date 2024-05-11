@@ -206,7 +206,7 @@ function EventCards({ events, date }: EventCardsProps) {
               <div className="mb-1 h-1 w-1 rounded-full bg-[#429400]"></div>
               <div className="h-1 w-1 rounded-full bg-[#429400]"></div>
             </div>
-             {/* 메뉴 */}
+            {/* 메뉴 */}
             {menuOpen === index && (
               <div className="absolute right-0 top-10 z-10 rounded-lg bg-white shadow-md">
                 <ul>
