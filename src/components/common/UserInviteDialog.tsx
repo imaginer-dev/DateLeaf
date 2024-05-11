@@ -20,7 +20,7 @@ const UserInvite: FC = () => {
       }
       setList(
         nickNames.map(({ user_nickname, id }) => {
-          return <UserInviteList user_nickname={user_nickname} id={id} key={id + '-UserInviteList'} />;
+          return <UserInviteList user_nickname={user_nickname} key={id + '-UserInviteList'} />;
         }),
       );
       return list;

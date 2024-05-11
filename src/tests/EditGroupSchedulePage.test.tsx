@@ -35,7 +35,5 @@ describe('EditGroupPage', () => {
     expect(groupMemoInput.value).toBe(groupScheduleFixture[0].memo);
   });
 
-  it('저장 버튼을 누르면 그룹 수정 요청을 보낼 수 있어야 한다.', () => {
-    
-  });
+  it('저장 버튼을 누르면 그룹 수정 요청을 보낼 수 있어야 한다.', () => {});
 });
