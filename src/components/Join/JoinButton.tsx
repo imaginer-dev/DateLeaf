@@ -75,9 +75,9 @@ const JoinButton = () => {
         phone,
         email,
         password,
-        pwCheck: '',
-        useTermsCheck: false,
-        privacyTermsCheck: false,
+        pwCheck: pwCheck,
+        useTermsCheck: true,
+        privacyTermsCheck: true,
       },
       {
         onError: (error) => {
@@ -95,7 +95,7 @@ const JoinButton = () => {
 
   return (
     <>
-      <button type={'submit'} onClick={onClick} className="btn btn-outline btn-primary w-full">
+      <button type={'button'} onClick={onClick} className="btn btn-outline btn-primary w-full">
         회원가입 하기
       </button>
       <Dialog ref={dialogRef} desc={dialogMessage}></Dialog>

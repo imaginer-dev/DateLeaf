@@ -1,5 +1,5 @@
 import { FC, ReactNode } from 'react';
-import PolicyButton from '../components/Policy/PolicyButton';
+import PolicyPersonalButton from '../components/Policy/PolicyPersonalButton';
 import HistoryBackButton from '../components/common/HistoryBackButton';
 
 interface Props {
@@ -14,7 +14,7 @@ const PolicyPageLayout: FC<Props> = ({ children, title }) => {
       <h2 className="my-5 text-xl font-semibold">{title}</h2>
       {/* <div className="card h-5/6 max-w-5xl bg-white">{children}</div> */}
       <div className="card h-3/4 max-w-5xl bg-white">{children}</div>
-      <PolicyButton />
+      <PolicyPersonalButton />
     </main>
   );
 };

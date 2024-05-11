@@ -1,10 +1,10 @@
-import { usePolicyState } from '../../stores/policyStore';
+import { useNavigate } from 'react-router-dom';
 
-const PolicyButton = () => {
-  const { check } = usePolicyState();
+const PolicyUseConditionButton = () => {
+  const navigate = useNavigate();
 
   const onClick = () => {
-    console.log(check);
+    navigate('/join', { replace: true, state: { useTerms: true } });
   };
 
   return (
@@ -16,4 +16,4 @@ const PolicyButton = () => {
   );
 };
 
-export default PolicyButton;
+export default PolicyUseConditionButton;
