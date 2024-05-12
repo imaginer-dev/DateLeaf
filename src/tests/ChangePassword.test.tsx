@@ -9,6 +9,9 @@ import { sessionFixture } from './fixtures/sessionFixture';
 import wrapper from './helpers/wrapper';
 
 vi.mock('@/supabase');
+vi.mock('react-router-dom', () => ({
+  useNavigate: () => vi.fn(),
+}));
 
 describe('ChangePassword', async () => {
   beforeEach(() => {

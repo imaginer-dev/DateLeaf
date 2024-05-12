@@ -1,11 +1,11 @@
-import GroupForm from '@/components/GroupForm/GroupForm';
+import GroupForm from '@/components/Group/GroupForm';
 import AppBar from '@/components/common/AppBar';
 
 const AddGroupPage = () => {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    console.log(formData);
+    console.log(formData.get('name'));
   };
 
   return (

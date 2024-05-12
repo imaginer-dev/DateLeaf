@@ -1,32 +1,16 @@
 import InputForm from './InputForm.tsx';
-import { searchUser } from '../../apis/authApis.ts';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { IconSearch } from '@/assets/icons';
+import { Member } from '@/types/Member.ts';
 import UserInviteList from './UserInviteList.tsx';
+interface Props {
+  list: Member[];
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onSearchClick: () => void;
+  onUserItemClick: (clickedUser: Member) => void;
+}
 
-const UserInvite: FC = () => {
-  const [email, setEamil] = useState('');
-  const [list, setList] = useState<any[]>([]);
-
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEamil(event.target.value);
-  };
-
-  const onSearchClick = () => {
-    searchUser(email).then((nickNames) => {
-      if (!nickNames.length) {
-        alert('해당 닉네임을 찾을 수 없습니다.');
-        return;
-      }
-      setList(
-        nickNames.map(({ user_nickname, id }) => {
-          return <UserInviteList user_nickname={user_nickname} id={id} key={id + '-UserInviteList'} />;
-        }),
-      );
-      return list;
-    });
-  };
-
+const UserInvite: FC<Props> = ({ list, onChange, onSearchClick, onUserItemClick }) => {
   return (
     <div>
       <div className="flex items-end">
@@ -36,7 +20,14 @@ const UserInvite: FC = () => {
         </button>
       </div>
       <ul id="searchList" role="list" className="divide-y divide-gray-100">
-        {list}
+        {list.map((user) => (
+          <UserInviteList
+            id={user.id}
+            onClick={() => onUserItemClick(user)}
+            user_nickname={user.user_nickname}
+            key={user.id + '-UserInviteList'}
+          />
+        ))}
       </ul>
     </div>
   );

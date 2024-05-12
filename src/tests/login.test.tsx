@@ -13,6 +13,8 @@ vi.mock('@/supabase', () => ({
   },
 }));
 
+vi.mock('react-router-dom');
+
 describe('Login test', () => {
   beforeEach(() => {
     render(<LoginPage />, {
