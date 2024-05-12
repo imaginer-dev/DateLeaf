@@ -3,56 +3,57 @@ import { searchUser } from '../../apis/authApis.ts';
 import DialogButton from '@/components/common/DialogButton';
 import { IconUserPlus } from '@/assets/icons';
 import UserInviteDialog from '@/components/common/UserInviteDialog';
-import UserInvited from './UserInvited';
-import UserInviteList from './UserInviteList.tsx';
+import { Member } from '@/types/Member.ts';
+import UserInvited from './UserInvited.tsx';
 
 interface Props {
-  member: any;
+  member: Member[];
   setMember: any;
 }
 
 const UserInvite: FC<Props> = ({ member, setMember }) => {
   const [email, setEamil] = useState('');
-  const [list, setList] = useState<any[]>([]);
+  const [list, setList] = useState<Member[]>([]);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEamil(event.target.value);
   };
 
   const onSearchClick = () => {
-    searchUser(email).then((nickNames) => {
-      if (!nickNames.length) {
+    searchUser(email).then((searchedUserList) => {
+      if (!searchedUserList.length) {
         alert('해당 닉네임을 찾을 수 없습니다.');
         return;
       }
-      nickNames.map(({ user_nickname, id }) => {
-        setList([
-          <UserInviteList
-            user_nickname={user_nickname}
-            id={id}
-            key={id + '-UserInviteList'}
-            onClick={() => {
-              if (!user_nickname.length) return;
-              setMember([...member, <UserInvited user_nickname={user_nickname} id={id} key={id + '-Member'} />]);
-            }}
-          />,
-        ]);
-      });
+      setList(searchedUserList);
     });
+  };
+
+  const onUserItemClick = (clickedUser: Member) => {
+    setMember(clickedUser);
   };
 
   return (
     <div>
       멤버 초대하기 *
       <ul className="flex gap-2">
-        {member}
+        {member.map((user) => (
+          <UserInvited id={user.id} user_nickname={user.user_nickname} key={user.id + '-UserInvited'} />
+        ))}
         <li>
           <DialogButton
             classname={'userInvite bg-base-200 hover:bg-base-300'}
             name={<IconUserPlus />}
             title={'멤버 찾기'}
             desc={''}
-            children={<UserInviteDialog list={list} onChange={onChange} onSearchClick={onSearchClick} />}
+            children={
+              <UserInviteDialog
+                onUserItemClick={onUserItemClick}
+                list={list}
+                onChange={onChange}
+                onSearchClick={onSearchClick}
+              />
+            }
           />
         </li>
       </ul>

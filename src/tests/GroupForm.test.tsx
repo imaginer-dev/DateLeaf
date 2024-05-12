@@ -1,4 +1,4 @@
-import EditGroupForm from '@/components/GroupForm/GroupForm';
+import EditGroupForm from '@/components/Group/GroupForm';
 import { dateToYYMMDD } from '@/utils/dateUtils';
 import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';

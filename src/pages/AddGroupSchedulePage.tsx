@@ -1,4 +1,4 @@
-import GroupForm from '@/components/GroupForm/GroupForm';
+import GroupForm from '@/components/Group/GroupForm';
 import AppBar from '@/components/common/AppBar';
 
 const AddGroupPage = () => {
