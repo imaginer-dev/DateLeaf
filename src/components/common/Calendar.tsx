@@ -37,7 +37,6 @@ export default function Calendar() {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const { events, addEvents } = useEventState();
 
-
   /*
   const handleDateClick = (clickInfo: EventClickArg) => {
     if (clickInfo.event.start) {
@@ -53,13 +52,16 @@ export default function Calendar() {
   */
 
   const handleDateSelection = (dateClickInfo: { dateStr: string }) => {
-    console.log(dateClickInfo)
+    console.log(dateClickInfo);
     const clickedDateStr = dateClickInfo.dateStr;
     setSelectedDate(clickedDateStr);
-    setSelectedEvents(events.filter(event =>
-      clickedDateStr >= event.start.split('T')[0] &&
-      clickedDateStr <= (event.end ? event.end.split('T')[0] : event.start.split('T')[0])
-    ));
+    setSelectedEvents(
+      events.filter(
+        (event) =>
+          clickedDateStr >= event.start.split('T')[0] &&
+          clickedDateStr <= (event.end ? event.end.split('T')[0] : event.start.split('T')[0]),
+      ),
+    );
   };
 
   const handlePrev = () => {
@@ -86,14 +88,23 @@ export default function Calendar() {
     setCalendarHeight(window.innerWidth < 768 ? 500 : 'auto');
   }, []);
 
-  function convertEvents(events: {title: string, start_date: string, end_date: string, backgroundColor?: string, borderColor?: string, textColor?: string}[]): Events[] {
-    return events.map(event => ({
+  function convertEvents(
+    events: {
+      title: string;
+      start_date: string;
+      end_date: string;
+      backgroundColor?: string;
+      borderColor?: string;
+      textColor?: string;
+    }[],
+  ): Events[] {
+    return events.map((event) => ({
       title: event.title,
-      start: event.start_date, 
-      end: event.end_date,   
+      start: event.start_date,
+      end: event.end_date,
       backgroundColor: event.backgroundColor || '#3788d8',
       borderColor: event.borderColor || '#296c98',
-      textColor: event.textColor || '#ffffff'
+      textColor: event.textColor || '#ffffff',
     }));
   }
 
@@ -117,9 +128,8 @@ export default function Calendar() {
   };
   */
 
-
   useEffect(() => {
-     /*
+    /*
     const calendarApi = calendarRef?.current?.getApi();
     if (calendarApi) {
       calendarApi.on('datesSet', updateTitle);
@@ -146,20 +156,21 @@ export default function Calendar() {
 
   useEffect(() => {
     if (!isLoaded) {
-      getPersonalSchedule().then(schedule => {
-        const uniqueEvents = schedule.filter(newEvent =>
-          !events.some(existingEvent =>
-            existingEvent.start === newEvent.start_date && existingEvent.title === newEvent.title
-          )
+      getPersonalSchedule().then((schedule) => {
+        const uniqueEvents = schedule.filter(
+          (newEvent) =>
+            !events.some(
+              (existingEvent) => existingEvent.start === newEvent.start_date && existingEvent.title === newEvent.title,
+            ),
         );
-        if (uniqueEvents.length > 0) { 
+        if (uniqueEvents.length > 0) {
           const eventsToAdd = convertEvents(uniqueEvents);
-          eventsToAdd.forEach(eventToAdd => addEvents(eventToAdd));
-          setIsLoaded(true); 
+          eventsToAdd.forEach((eventToAdd) => addEvents(eventToAdd));
+          setIsLoaded(true);
         }
       });
     }
-  }, [events, addEvents]); 
+  }, [events, addEvents]);
 
   return (
     <div>
@@ -199,11 +210,10 @@ export default function Calendar() {
           }}
         />
       </div>
-      <div className="mt-10">{selectedDate && <EventCards events={selectedEvents} date={selectedDate}  /> }</div>
+      <div className="mt-10">{selectedDate && <EventCards events={selectedEvents} date={selectedDate} />}</div>
     </div>
   );
 }
-
 
 function renderEventContent(eventInfo: EventInfo) {
   return (
@@ -221,9 +231,12 @@ function EventCards({ events, date }: EventCardsProps) {
   const [menuOpen, setMenuOpen] = useState(-1);
 
   if (!events.length) {
-    return <div className='min-h-[150px] min-w-[240px] bg-white p-4 text-black'>
-      일정이 없습니다. <br />일정을 등록해주세요!
-    </div>; 
+    return (
+      <div className="min-h-[150px] min-w-[240px] bg-white p-4 text-black">
+        일정이 없습니다. <br />
+        일정을 등록해주세요!
+      </div>
+    );
   }
 
   return (
@@ -260,4 +273,3 @@ function EventCards({ events, date }: EventCardsProps) {
     </div>
   );
 }
-
