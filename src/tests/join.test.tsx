@@ -4,6 +4,7 @@ import { JoinPage } from '../pages';
 import wrapper from './helpers/wrapper';
 import supabase from '@/supabase';
 import '@testing-library/jest-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 vi.mock('@/supabase', () => ({
   default: {
@@ -15,11 +16,17 @@ vi.mock('@/supabase', () => ({
 
 describe('Join test', () => {
   beforeEach(() => {
-    render(<JoinPage />, {
-      wrapper,
-    });
     window.HTMLDialogElement.prototype.showModal = vi.fn();
     window.HTMLDialogElement.prototype.close = vi.fn();
+
+    render(
+      <Router>
+        <JoinPage />
+      </Router>,
+      {
+        wrapper,
+      },
+    );
   });
 
   afterEach(() => {
@@ -107,17 +114,8 @@ describe('Join test', () => {
   it('이용약관 및 개인정보 관련 체크를 하지 않으면 에러 텍스트를 보여줄 수 있어야 한다.', async () => {
     const useTermsCheckInput = screen.getByLabelText(/useTermsCheck/i) as HTMLInputElement;
     const privacyTermsCheckInput = screen.getByLabelText(/privacyTermsCheck/i) as HTMLInputElement;
-
-    fireEvent.change(useTermsCheckInput, {
-      target: {
-        checked: false,
-      },
-    });
-    fireEvent.change(privacyTermsCheckInput, {
-      target: {
-        checked: false,
-      },
-    });
+    fireEvent.click(useTermsCheckInput);
+    fireEvent.click(privacyTermsCheckInput);
     await waitFor(() => {});
     expect(screen.getByText(/이용약관에 동의해/)).toBeInTheDocument();
     expect(screen.getByText(/개인정보 수집, 이용에 동의해/)).toBeInTheDocument();
@@ -163,16 +161,15 @@ describe('Join test', () => {
         value: '111111',
       },
     });
-    fireEvent.click(useTermsCheckInput, {
-      target: {
-        checked: true,
-      },
-    });
-    fireEvent.click(privacyTermsCheckInput, {
-      target: {
-        checked: true,
-      },
-    });
+
+    fireEvent.click(useTermsCheckInput);
+    const useTermsCheck = screen.getByText('동의하기') as HTMLButtonElement;
+    fireEvent.click(useTermsCheck);
+
+    fireEvent.click(privacyTermsCheckInput);
+    const privacyTermsCheck = screen.getByText('동의하기') as HTMLButtonElement;
+    fireEvent.click(privacyTermsCheck);
+
     await waitFor(() => {});
     const submitButton = screen.getByText('회원가입 하기') as HTMLButtonElement;
     fireEvent.click(submitButton);
@@ -220,16 +217,8 @@ describe('Join test', () => {
         value: '123456',
       },
     });
-    fireEvent.click(useTermsCheckInput, {
-      target: {
-        checked: false,
-      },
-    });
-    fireEvent.click(privacyTermsCheckInput, {
-      target: {
-        checked: false,
-      },
-    });
+    fireEvent.click(useTermsCheckInput);
+    fireEvent.click(privacyTermsCheckInput);
     await waitFor(() => {});
     const submitButton = screen.getByText('회원가입 하기') as HTMLButtonElement;
     fireEvent.click(submitButton);
