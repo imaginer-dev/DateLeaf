@@ -145,20 +145,20 @@ export default function Calendar() {
   useEffect(() => {
     if (!isLoaded) {
       getPersonalSchedule().then((schedule) => {
-        const uniqueEvents = schedule.filter(newEvent =>  
-          !events.some(existingEvent => 
-            existingEvent.start === newEvent.start_date && existingEvent.title === newEvent.title
-          )
+        const uniqueEvents = schedule.filter(
+          (newEvent) =>
+            !events.some(
+              (existingEvent) => existingEvent.start === newEvent.start_date && existingEvent.title === newEvent.title,
+            ),
         );
         if (uniqueEvents.length > 0) {
           const eventsToAdd = convertEvents(uniqueEvents);
-          eventsToAdd.forEach(eventToAdd => addEvents(eventToAdd));
+          eventsToAdd.forEach((eventToAdd) => addEvents(eventToAdd));
           setIsLoaded(true);
         }
       });
     }
   }, [events, addEvents, isLoaded]);
-  
 
   return (
     <div>
@@ -201,7 +201,6 @@ export default function Calendar() {
       <div className="mt-10">{selectedDate && <EventCards events={selectedEvents} date={selectedDate} />}</div>
     </div>
   );
-
 }
 
 function renderEventContent(eventInfo: EventInfo) {
