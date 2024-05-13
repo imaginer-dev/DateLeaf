@@ -52,8 +52,8 @@ const CreateEventButton = () => {
     <div>
       <hr className="mt-1" />
       <InputRef title="일정 제목" placeholder="새 일정 제목" onChange={onTitleChanged} ref={titleRef} />
-      <InputRef title="시작 날짜" placeholder="YYYY-MM-DD" onChange={onStartDateChanged} ref={startRef} />
-      <InputRef title="끝 날짜" placeholder="YYYY-MM-DD" onChange={onEndDateChanged} ref={endRef} />
+      <InputRef type="date" title="시작 날짜" placeholder="YYYY-MM-DD" onChange={onStartDateChanged} ref={startRef} />
+      <InputRef type="date" title="끝 날짜" placeholder="YYYY-MM-DD" onChange={onEndDateChanged} ref={endRef} />
       <hr className="mb-2 mt-2" />
       <button className="btn w-full bg-primary text-base-100" onClick={onCreateClicked}>
         추가하기
