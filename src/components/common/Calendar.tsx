@@ -19,7 +19,6 @@ type Event = {
 };
 */
 
-
 interface EventInfo {
   timeText: string;
   event: {
@@ -215,7 +214,6 @@ export default function Calendar() {
       <div className="mt-10">{selectedDate && <EventCards events={selectedEvents} date={selectedDate} />}</div>
     </div>
   );
-
 }
 
 function renderEventContent(eventInfo: EventInfo) {
