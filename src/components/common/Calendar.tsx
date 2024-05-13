@@ -8,6 +8,7 @@ import { useEventState } from '@/stores/myEventsStore';
 import { getPersonalSchedule, deletePersonalSchedule } from '@/apis/personalScheduleApi';
 import { DB_Events } from '../../utils/index.ts';
 import { formatDateRange, formatTime } from '../../utils/dateUtils';
+import CreateEventButton from '@/components/MyCalendar/CreateEventButton.tsx';
 
 interface EventInfo {
   timeText: string;
@@ -235,7 +236,14 @@ function EventCards({ events, date }: EventCardsProps) {
               {menuOpen === index && (
                 <div className="absolute right-0 top-10 z-10 rounded-lg bg-white shadow-md">
                   <ul>
-                    <li className="cursor-pointer p-2 hover:bg-gray-100">편집</li>
+                    <li className="cursor-pointer p-2 hover:bg-gray-100">
+                      <CreateEventButton
+                        id={event.id}
+                        title={event.title}
+                        start_date={event.start_date}
+                        end_date={event.end_date}
+                      />
+                    </li>
                     <li className="cursor-pointer p-2 hover:bg-gray-100" onClick={() => onDeleteClicked(event.id)}>
                       삭제
                     </li>
