@@ -1,5 +1,6 @@
 import Calendar from './components/common/Calendar';
 
+
 function App() {
   return (
     <div>
@@ -46,7 +47,7 @@ function App() {
         </div>
       </header>
       <main className="z-1 relative flex-grow">
-        <div className="ml-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="ml-auto max-w-7xl p-4 pb-10 sm:px-6 lg:px-8">
           <Calendar />
         </div>
       </main>

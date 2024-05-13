@@ -71,3 +71,22 @@
 .fc .fc-h-event {
   border: var(--fc-event-text-color);
 }
+.fc-daygrid-day {
+  cursor: pointer;
+}
+
+.fc-daygrid-day-frame {
+  height: 100%;
+  z-index: 10;
+  &:hover {
+    &::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: #bec00038;
+      top: 0;
+      left: 0;
+    }
+  }
+}

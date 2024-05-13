@@ -1,26 +1,44 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import FullCalendar from '@fullcalendar/react';
-import { EventClickArg } from '@fullcalendar/core';
+// import { EventClickArg } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { useEventState } from '@/stores/myEventsStore';
 import { getPersonalSchedule } from '@/apis/personalScheduleApi';
-
+import { Events } from '../../utils/index.ts';
+/*
 type Event = {
   title: string;
-  start: Date | string;
+  start: string;
+  end: string;
+  backgroundColor?: string;
+  borderColor?: string;
+  textColor?: string;
 };
+*/
+
+
+interface EventInfo {
+  timeText: string;
+  event: {
+    title: string;
+  };
+}
+
 interface EventCardsProps {
-  events: Event[];
-  date: Date | string | null;
+  events: Events[];
+  date: string | null;
 }
 
 export default function Calendar() {
   const [calendarHeight, setCalendarHeight] = useState<string | number>('auto');
   const calendarRef = useRef<FullCalendar | null>(null);
-  const [selectedEvents, setSelectedEvents] = useState<Event[]>([]);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedEvents, setSelectedEvents] = useState<Events[]>([]);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const { events, addEvents } = useEventState();
 
+  /*
   const handleDateClick = (clickInfo: EventClickArg) => {
     if (clickInfo.event.start) {
       const clickStartDate = new Date(clickInfo.event.start);
@@ -31,6 +49,20 @@ export default function Calendar() {
     } else {
       console.log('not available');
     }
+  };
+  */
+
+  const handleDateSelection = (dateClickInfo: { dateStr: string }) => {
+    console.log(dateClickInfo);
+    const clickedDateStr = dateClickInfo.dateStr;
+    setSelectedDate(clickedDateStr);
+    setSelectedEvents(
+      events.filter(
+        (event) =>
+          clickedDateStr >= event.start.split('T')[0] &&
+          clickedDateStr <= (event.end ? event.end.split('T')[0] : event.start.split('T')[0]),
+      ),
+    );
   };
 
   const handlePrev = () => {
@@ -53,17 +85,36 @@ export default function Calendar() {
     }
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const updateSize = () => {
-    const isMobile = window.innerWidth < 768;
-    setCalendarHeight(isMobile ? 500 : 'auto');
-    updateTitle();
-  };
+  const updateSize = useCallback(() => {
+    setCalendarHeight(window.innerWidth < 768 ? 500 : 'auto');
+  }, []);
 
+  function convertEvents(
+    events: {
+      title: string;
+      start_date: string;
+      end_date: string;
+      backgroundColor?: string;
+      borderColor?: string;
+      textColor?: string;
+    }[],
+  ): Events[] {
+    return events.map((event) => ({
+      title: event.title,
+      start: event.start_date,
+      end: event.end_date,
+      backgroundColor: event.backgroundColor || '#3788d8',
+      borderColor: event.borderColor || '#296c98',
+      textColor: event.textColor || '#ffffff',
+    }));
+  }
+
+  /*
   const updateTitle = () => {
     const calendarApi = calendarRef?.current?.getApi();
     if (calendarApi) {
       const calendarView = calendarApi.view;
+      console.log('View start date:', calendarView.currentStart);
 
       const date = new Date(calendarView.currentStart);
       const year = date.getFullYear();
@@ -76,34 +127,51 @@ export default function Calendar() {
       }
     }
   };
-
-  const { events, addEvents } = useEventState();
+  */
 
   useEffect(() => {
+    /*
     const calendarApi = calendarRef?.current?.getApi();
-
     if (calendarApi) {
       calendarApi.on('datesSet', updateTitle);
     }
 
     updateTitle(); // 컴포넌트 마운트 시 제목 업데이트
+    */
 
     /* 캘린더 - 반응형 사이즈 */
     window.addEventListener('resize', updateSize);
     updateSize(); // 컴포넌트 마운트 시 화면 크기에 따른 업데이트
 
-    const data = getPersonalSchedule();
-    data.then((schedule) => {
-      schedule.map((x) => addEvents({ ...x, start: x.start_date, end: x.end_date }));
-    });
-
     return () => {
       window.removeEventListener('resize', updateSize);
+      /*
       if (calendarApi) {
         calendarApi.off('datesSet', updateTitle);
       }
+      */
     };
-  }, [updateSize, addEvents]);
+  }, [updateSize]);
+
+  const [isLoaded, setIsLoaded] = useState(false); // 데이터 로딩 상태
+
+  useEffect(() => {
+    if (!isLoaded) {
+      getPersonalSchedule().then((schedule) => {
+        const uniqueEvents = schedule.filter(
+          (newEvent) =>
+            !events.some(
+              (existingEvent) => existingEvent.start === newEvent.start_date && existingEvent.title === newEvent.title,
+            ),
+        );
+        if (uniqueEvents.length > 0) {
+          const eventsToAdd = convertEvents(uniqueEvents);
+          eventsToAdd.forEach((eventToAdd) => addEvents(eventToAdd));
+          setIsLoaded(true);
+        }
+      });
+    }
+  }, [events, addEvents]);
 
   return (
     <div>
@@ -113,7 +181,8 @@ export default function Calendar() {
           plugins={[dayGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
           events={events}
-          eventClick={handleDateClick}
+          // eventClick={handleDateClick}
+          dateClick={handleDateSelection}
           dayMaxEvents={2} //Max개수까지보이고 나머지는 more
           //navLinks={true} // 날짜/주 이름을 클릭하여 뷰를 변경할 수 있습니다.
           editable={true} // 이벤트를 수정할 수 있습니다.
@@ -145,13 +214,7 @@ export default function Calendar() {
       <div className="mt-10">{selectedDate && <EventCards events={selectedEvents} date={selectedDate} />}</div>
     </div>
   );
-}
 
-interface EventInfo {
-  timeText: string;
-  event: {
-    title: string;
-  };
 }
 
 function renderEventContent(eventInfo: EventInfo) {
@@ -166,48 +229,48 @@ function renderEventContent(eventInfo: EventInfo) {
 }
 
 function EventCards({ events, date }: EventCardsProps) {
+  console.log(events, date);
   const [menuOpen, setMenuOpen] = useState(-1);
 
-  if (!date) {
-    return <div>No date provided</div>; // date가 null인 경우 처리
+  if (!events.length) {
+    return (
+      <div className="min-h-[150px] min-w-[240px] bg-white p-4 text-black">
+        일정이 없습니다. <br />
+        일정을 등록해주세요!
+      </div>
+    );
   }
-
-  const formattedDate = new Date(date)
-    .toLocaleDateString('ko-KR', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    })
-    .replace(/\. /g, '.')
-    .slice(0, -1);
 
   return (
     <div>
-      <h2 className="ml-2">{formattedDate}</h2>
+      <h2 className="ml-2">{date}</h2>
       <div className="flex gap-5 overflow-x-auto">
-        {events.map((event, index) => (
-          <div key={index} className="relative min-h-[150px] min-w-[240px] bg-white p-4 text-black">
-            <h3>{event.title}</h3>
-            <p className="mt-1 text-xs">{new Date(event.start).toLocaleTimeString()}</p>
-            {/* 메뉴 버튼 */}
-            <div
-              className="absolute right-2 top-2 flex cursor-pointer flex-col items-center justify-center"
-              onClick={() => setMenuOpen(menuOpen === index ? -1 : index)}
-            >
-              <div className="mb-1 h-1 w-1 rounded-full bg-[#429400]"></div>
-              <div className="mb-1 h-1 w-1 rounded-full bg-[#429400]"></div>
-              <div className="h-1 w-1 rounded-full bg-[#429400]"></div>
-            </div>
-            {menuOpen === index && (
-              <div className="absolute right-0 top-10 z-10 rounded-lg bg-white shadow-md">
-                <ul>
-                  <li className="cursor-pointer p-2 hover:bg-gray-100">편집</li>
-                  <li className="cursor-pointer p-2 hover:bg-gray-100">삭제</li>
-                </ul>
+        {events.map((event, index) => {
+          return (
+            <div key={index} className="relative min-h-[150px] min-w-[240px] bg-white p-4 text-black">
+              <h3>{event.title}</h3>
+              <p className="mt-1 text-xs">{event.start === event.end ? event.start : `${event.start}~${event.end}`}</p>
+              {/* 메뉴 버튼 */}
+              <div
+                className="absolute right-2 top-2 flex cursor-pointer flex-col items-center justify-center"
+                onClick={() => setMenuOpen(menuOpen === index ? -1 : index)}
+              >
+                <div className="mb-1 h-1 w-1 rounded-full bg-[#429400]"></div>
+                <div className="mb-1 h-1 w-1 rounded-full bg-[#429400]"></div>
+                <div className="h-1 w-1 rounded-full bg-[#429400]"></div>
               </div>
-            )}
-          </div>
-        ))}
+              {/* 메뉴 */}
+              {menuOpen === index && (
+                <div className="absolute right-0 top-10 z-10 rounded-lg bg-white shadow-md">
+                  <ul>
+                    <li className="cursor-pointer p-2 hover:bg-gray-100">편집</li>
+                    <li className="cursor-pointer p-2 hover:bg-gray-100">삭제</li>
+                  </ul>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
