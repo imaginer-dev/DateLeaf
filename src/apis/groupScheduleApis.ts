@@ -19,6 +19,20 @@ export const addGroupSchedule = async ({ startDate, endDate, ...props }: addGrou
   }
 };
 
+interface UpdateGroupSchedule {
+  name: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  memo: string;
+  scheduleId: string;
+}
+
+interface UpdateGroupScheduleMember {
+  updatedMemberList: Member[];
+  groupId: string;
+}
+
 export const getOneGroupSchedule = async (scheduleId: string) => {
   const { data, error } = await supabase.from('group_schedules').select('*').eq('id', +scheduleId);
 
@@ -32,15 +46,6 @@ export const getOneGroupSchedule = async (scheduleId: string) => {
 
   return data[0];
 };
-
-interface UpdateGroupSchedule {
-  name: string;
-  description: string;
-  startDate: string;
-  endDate: string;
-  memo: string;
-  scheduleId: string;
-}
 
 export const updateGroupSchedule = async ({
   name,
@@ -67,11 +72,6 @@ export const updateGroupSchedule = async ({
 
   return data;
 };
-
-interface UpdateGroupScheduleMember {
-  updatedMemberList: Member[];
-  groupId: string;
-}
 
 export const updateGroupScheduleMember = async ({ updatedMemberList, groupId }: UpdateGroupScheduleMember) => {
   const { error: deleteError } = await supabase.from('group_user_ralations').delete().eq('group_id', groupId);

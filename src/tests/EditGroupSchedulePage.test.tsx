@@ -33,8 +33,8 @@ describe('EditGroupPage', () => {
 
     expect(groupNameInput.value).toBe(groupScheduleFixture[0].title);
     expect(groupDescriptionInput.value).toBe(groupScheduleFixture[0].description);
-    expect(groupDateStartInput.value).toBe(dateToYYMMDD(new Date(groupScheduleFixture[0].start_date)));
-    expect(groupDateEndInput.value).toBe(dateToYYMMDD(new Date(groupScheduleFixture[0].end_date)));
+    expect(groupDateStartInput.value).toBe(dateToYYMMDD(groupScheduleFixture[0].start_date));
+    expect(groupDateEndInput.value).toBe(dateToYYMMDD(groupScheduleFixture[0].end_date));
     expect(groupMemoInput.value).toBe(groupScheduleFixture[0].memo);
   });
 });
