@@ -10,7 +10,7 @@ interface Props {
   onUserItemClick: (clickedUser: Member) => void;
 }
 
-const UserInvite: FC<Props> = ({ list, onChange, onSearchClick, onUserItemClick }) => {
+const UserInviteDialog: FC<Props> = ({ list, onChange, onSearchClick, onUserItemClick }) => {
   return (
     <div>
       <div className="flex items-end">
@@ -33,4 +33,4 @@ const UserInvite: FC<Props> = ({ list, onChange, onSearchClick, onUserItemClick 
   );
 };
 
-export default UserInvite;
+export default UserInviteDialog;

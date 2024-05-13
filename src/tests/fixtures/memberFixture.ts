@@ -7,6 +7,7 @@ export const memberListFixture: Member[] = [
     created_at: '2021-10-10',
     phone: '010-1234-5678',
     user_nickname: 'gihwan-dev',
+    image_url: '',
   },
   {
     id: '2',
@@ -14,5 +15,6 @@ export const memberListFixture: Member[] = [
     created_at: '2021-10-10',
     phone: '010-1234-5678',
     user_nickname: 'hong',
+    image_url: '',
   },
 ];

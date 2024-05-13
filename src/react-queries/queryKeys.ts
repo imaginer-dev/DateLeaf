@@ -18,5 +18,6 @@ export const queries = createQueryKeyStore({
     update: null,
     updateMember: null,
     getAllMember: (groupId: string) => [groupId],
+    add: null,
   },
 });
