@@ -61,7 +61,7 @@ const CreateEventButton = () => {
     </div>
   );
   return (
-    <div className="p-8">
+    <div className="p-8 pl-0 pr-0">
       <DialogButton
         classname="btn bg-primary text-base-100 w-full"
         name={'새 일정 추가하기'}
