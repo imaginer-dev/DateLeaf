@@ -1,6 +1,5 @@
 import Calendar from './components/common/Calendar';
 
-
 function App() {
   return (
     <div>
