@@ -25,7 +25,7 @@ function DialogButton({ classname, name, title, desc, children }: Props) {
 
   return (
     <div>
-      <button className={classname} onClick={() => openModal(dialogRef)}>
+      <button type="button" className={classname} onClick={() => openModal(dialogRef)}>
         {name}
       </button>
       <Dialog ref={dialogRef} title={title} desc={desc}>

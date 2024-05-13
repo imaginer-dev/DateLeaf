@@ -1,15 +1,16 @@
 import { FC } from 'react';
-import IconPlus from '@/assets/icons/IconPlus.tsx';
+import { IconPlus } from '@/assets/icons';
 
 interface Props {
   user_nickname: any;
   id: string;
+  onClick: () => void;
 }
 
-const UserPlusList: FC<Props> = ({ user_nickname, id }) => {
+const UserInviteList: FC<Props> = ({ user_nickname, onClick }) => {
   return (
-    <li key={id} className="border-b">
-      <button className="ju btn block flex w-full justify-between border-none bg-transparent" onClick={onPlusClick}>
+    <li className="border-b">
+      <button type="button" className="ju btn flex w-full justify-between border-none bg-transparent" onClick={onClick}>
         {user_nickname}
         <IconPlus />
       </button>
@@ -17,8 +18,4 @@ const UserPlusList: FC<Props> = ({ user_nickname, id }) => {
   );
 };
 
-const onPlusClick = () => {
-  console.log('aa');
-};
-
-export default UserPlusList;
+export default UserInviteList;

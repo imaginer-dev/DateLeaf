@@ -1,6 +1,6 @@
 import ResetPwPage from './ResetPwPage';
 import JoinPage from './JoinPage';
-import Loading from './Loading';
+import Loading from '../components/common/Loading/Loading';
 import LoginPage from './LoginPage';
 import { NotFound } from './Notfound';
 
