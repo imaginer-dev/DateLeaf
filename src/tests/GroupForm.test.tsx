@@ -27,8 +27,8 @@ describe('EditGroupForm', () => {
 
     expect(groupNameInput.value).toBe('name');
     expect(groupDescriptionInput.value).toBe('description');
-    expect(groupDateStartInput.value).toBe(dateToYYMMDD(new Date(startDate)));
-    expect(groupDateEndInput.value).toBe(dateToYYMMDD(new Date(endDate)));
+    expect(groupDateStartInput.value).toBe(dateToYYMMDD(startDate));
+    expect(groupDateEndInput.value).toBe(dateToYYMMDD(endDate));
     expect(groupMemoInput.value).toBe('memo');
   });
   it('모임명, 설명, 메모를 수정할 수 있어야 한다.', async () => {
