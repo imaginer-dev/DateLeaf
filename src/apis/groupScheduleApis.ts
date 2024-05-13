@@ -1,5 +1,23 @@
 import supabase from '@/supabase';
 import { Member } from '@/types/Member';
+interface addGroupShedule {
+  title: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  memo: string;
+  newMemberList: any[];
+}
+
+export const addGroupSchedule = async ({ startDate, endDate, ...props }: addGroupShedule) => {
+  const { error } = await supabase
+    .from('group_schedules')
+    .insert({ ...props, start_date: startDate, end_date: endDate });
+
+  if (error) {
+    throw error;
+  }
+};
 
 export const getOneGroupSchedule = async (scheduleId: string) => {
   const { data, error } = await supabase.from('group_schedules').select('*').eq('id', +scheduleId);

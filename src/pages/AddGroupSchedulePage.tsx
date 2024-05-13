@@ -1,11 +1,21 @@
+import { addGroupSchedule } from '@/apis/groupScheduleApis';
 import GroupForm from '@/components/Group/GroupForm';
 import AppBar from '@/components/common/AppBar';
+import { Member } from '@/types/Member';
 
 const AddGroupPage = () => {
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>, userList: Member[]) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    console.log(formData.get('name'));
+    const addSchedule = {
+      title: formData.get('name') as string,
+      description: formData.get('description') as string,
+      startDate: formData.get('startDate') as string,
+      endDate: formData.get('endDate') as string,
+      memo: formData.get('memo') as string,
+      newMemberList: userList,
+    };
+    addGroupSchedule(addSchedule);
   };
 
   return (
