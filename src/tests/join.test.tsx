@@ -107,6 +107,7 @@ describe('Join test', () => {
   it('이용약관 및 개인정보 관련 체크를 하지 않으면 에러 텍스트를 보여줄 수 있어야 한다.', async () => {
     const useTermsCheckInput = screen.getByLabelText(/useTermsCheck/i) as HTMLInputElement;
     const privacyTermsCheckInput = screen.getByLabelText(/privacyTermsCheck/i) as HTMLInputElement;
+
     fireEvent.change(useTermsCheckInput, {
       target: {
         checked: false,
@@ -219,14 +220,14 @@ describe('Join test', () => {
         value: '123456',
       },
     });
-    fireEvent.change(useTermsCheckInput, {
+    fireEvent.click(useTermsCheckInput, {
       target: {
-        checked: true,
+        checked: false,
       },
     });
-    fireEvent.change(privacyTermsCheckInput, {
+    fireEvent.click(privacyTermsCheckInput, {
       target: {
-        checked: true,
+        checked: false,
       },
     });
     await waitFor(() => {});

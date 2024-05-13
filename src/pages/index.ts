@@ -4,6 +4,6 @@ import Loading from './Loading';
 import LoginPage from './LoginPage';
 import { NotFound } from './Notfound';
 
-import * as Policy from './Policy/index';
+import * as Policy from './Policy';
 
 export { ResetPwPage as ResetPwPage, JoinPage, Loading, LoginPage, NotFound, Policy };
