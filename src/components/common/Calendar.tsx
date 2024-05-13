@@ -1,6 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import FullCalendar from '@fullcalendar/react';
-// import { EventClickArg } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { useRef, useState, useEffect, useCallback } from 'react';
@@ -8,16 +6,6 @@ import { useEventState } from '@/stores/myEventsStore';
 import { getPersonalSchedule } from '@/apis/personalScheduleApi';
 import { Events } from '../../utils/index.ts';
 import { formatDateRange, formatTime } from '../../utils/dateUtils';
-/*
-type Event = {
-  title: string;
-  start: string;
-  end: string;
-  backgroundColor?: string;
-  borderColor?: string;
-  textColor?: string;
-};
-*/
 
 interface EventInfo {
   timeText: string;
@@ -154,24 +142,23 @@ export default function Calendar() {
   }, [updateSize]);
 
   const [isLoaded, setIsLoaded] = useState(false); // 데이터 로딩 상태
-
   useEffect(() => {
     if (!isLoaded) {
       getPersonalSchedule().then((schedule) => {
-        const uniqueEvents = schedule.filter(
-          (newEvent) =>
-            !events.some(
-              (existingEvent) => existingEvent.start === newEvent.start_date && existingEvent.title === newEvent.title,
-            ),
+        const uniqueEvents = schedule.filter(newEvent =>  
+          !events.some(existingEvent => 
+            existingEvent.start === newEvent.start_date && existingEvent.title === newEvent.title
+          )
         );
         if (uniqueEvents.length > 0) {
           const eventsToAdd = convertEvents(uniqueEvents);
-          eventsToAdd.forEach((eventToAdd) => addEvents(eventToAdd));
+          eventsToAdd.forEach(eventToAdd => addEvents(eventToAdd));
           setIsLoaded(true);
         }
       });
     }
-  }, [events, addEvents]);
+  }, [events, addEvents, isLoaded]);
+  
 
   return (
     <div>
@@ -214,6 +201,7 @@ export default function Calendar() {
       <div className="mt-10">{selectedDate && <EventCards events={selectedEvents} date={selectedDate} />}</div>
     </div>
   );
+
 }
 
 function renderEventContent(eventInfo: EventInfo) {
