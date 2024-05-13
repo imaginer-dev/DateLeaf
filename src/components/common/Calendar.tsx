@@ -7,6 +7,7 @@ import { useRef, useState, useEffect, useCallback } from 'react';
 import { useEventState } from '@/stores/myEventsStore';
 import { getPersonalSchedule } from '@/apis/personalScheduleApi';
 import { Events } from '../../utils/index.ts';
+import { formatDateRange, formatTime } from '../../utils/dateUtils';
 /*
 type Event = {
   title: string;
@@ -246,10 +247,13 @@ function EventCards({ events, date }: EventCardsProps) {
       <h2 className="ml-2">{date}</h2>
       <div className="flex gap-5 overflow-x-auto">
         {events.map((event, index) => {
+          const eventDateRange = formatDateRange(event.start, event.end);
+          const eventTime = formatTime(event.start);
           return (
             <div key={index} className="relative min-h-[150px] min-w-[240px] bg-white p-4 text-black">
               <h3>{event.title}</h3>
-              <p className="mt-1 text-xs">{event.start === event.end ? event.start : `${event.start}~${event.end}`}</p>
+              <p className="mt-1 text-xs">{eventDateRange}</p>
+              <p className="mt-1 text-xs">{eventTime}</p>
               {/* 메뉴 버튼 */}
               <div
                 className="absolute right-2 top-2 flex cursor-pointer flex-col items-center justify-center"
