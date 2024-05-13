@@ -6,17 +6,47 @@ interface addGroupShedule {
   startDate: string;
   endDate: string;
   memo: string;
-  newMemberList: any[];
+  newMemberList: Member[];
 }
 
-export const addGroupSchedule = async ({ startDate, endDate, ...props }: addGroupShedule) => {
-  const { error } = await supabase
-    .from('group_schedules')
-    .insert({ ...props, start_date: startDate, end_date: endDate });
+export const addGroupScheduleFetch = async ({ startDate, endDate, newMemberList, ...props }: addGroupShedule) => {
+  // 그룹을 생성한다.
+  const { data: groupInfo, error: groupInfoError } = await supabase
+    .from('groups')
+    .insert({
+      name: props.title,
+      open: true,
+      start_date: startDate,
+      end_date: endDate,
+    })
+    .select()
+    .single();
 
-  if (error) {
-    throw error;
+  if (!groupInfo || groupInfoError) {
+    throw groupInfoError;
   }
+
+  // 그룹에 멤버를 추가한다.
+  const { error: groupMemberError } = await supabase.from('group_user_ralations').insert(
+    newMemberList.map((member) => ({
+      group_id: groupInfo.id,
+      user_id: member.id,
+    })),
+  );
+  if (groupMemberError) {
+    throw groupMemberError;
+  }
+  // 그룹 일정을 생성한다.
+  const { data: groupScheduleData, error: groupScheduleError } = await supabase
+    .from('group_schedules')
+    .insert({ ...props, start_date: startDate, end_date: endDate, group_id: groupInfo.id })
+    .select()
+    .single();
+
+  if (groupScheduleError) {
+    throw groupScheduleError;
+  }
+  return groupScheduleData;
 };
 
 interface UpdateGroupSchedule {
