@@ -13,6 +13,7 @@ interface Props {
   endDate?: string;
   memo?: string | null;
   memberList?: Member[];
+  isLoading?: boolean;
   onSubmit: (e: React.FormEvent<HTMLFormElement>, userList: Member[]) => void;
 }
 
@@ -24,6 +25,7 @@ const GroupForm: FC<Props> = ({
   memo = '',
   memberList = [],
   onSubmit,
+  isLoading = false,
 }) => {
   const [member, setMember] = useState<Member[]>(memberList);
 
@@ -43,8 +45,12 @@ const GroupForm: FC<Props> = ({
         <UserInvite member={member} setMember={onClick} />
         <GroupFormMemoInput memo={memo ?? ''} />
       </div>
-      <button type="submit" className="btn btn-outline btn-primary w-full">
-        저장
+      <button
+        disabled={isLoading}
+        type="submit"
+        className={`btn btn-outline btn-primary w-full ${isLoading ? 'disabled' : ''}`}
+      >
+        {isLoading ? <span className="loading" /> : '저장'}
       </button>
     </form>
   );

@@ -37,8 +37,8 @@ const UserInvite: FC<Props> = ({ member, setMember }) => {
     <div>
       멤버 초대하기 *
       <ul className="flex gap-2">
-        {member.map((user) => (
-          <UserInvited id={user.id} user_nickname={user.user_nickname} key={user.id + '-UserInvited'} />
+        {member.map(({ user_nickname, id }) => (
+          <UserInvited id={id} user_nickname={user_nickname} key={id + '-UserInvited'} />
         ))}
         <li>
           <DialogButton

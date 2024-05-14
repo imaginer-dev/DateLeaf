@@ -5,6 +5,7 @@ import { Loading } from '.';
 import { Member } from '@/types/Member';
 import { useUpdateGroupSchedule } from '@/react-queries/useUpdateGroupSchedule';
 import { useGetGroupScheduleDefaultData } from '@/hooks/useGetGroupScheduleDefaultData';
+import Dialog from '@/components/common/Dialog';
 
 const EditGroupSchedulePage = () => {
   const params = useParams<{ groupId: string; scheduleId: string }>();
@@ -15,7 +16,7 @@ const EditGroupSchedulePage = () => {
     scheduleId,
     groupId,
   );
-  const { mutate, isError: updateHasError, isPending: updateIsPending } = useUpdateGroupSchedule();
+  const { mutate, successDialog, errorDialogRef, isPending: updateIsPending } = useUpdateGroupSchedule();
 
   if (isError) {
     return <div>{error!.message}</div>;
@@ -40,14 +41,6 @@ const EditGroupSchedulePage = () => {
     mutate(updatePayload);
   };
 
-  if (updateHasError) {
-    // TODO: 에러 다이얼로그 표시
-  }
-
-  if (updateIsPending) {
-    // TODO: 로딩 스피너 표시
-  }
-
   return (
     <>
       {isLoading ? (
@@ -63,7 +56,10 @@ const EditGroupSchedulePage = () => {
             endDate={groupScheduleData!.end_date}
             memo={groupScheduleData!.memo}
             memberList={groupMemberData}
+            isLoading={updateIsPending}
           />
+          <Dialog ref={errorDialogRef} desc="오류가 발생했습니다. 다시시도해 주세요." />
+          <Dialog ref={successDialog} desc="성공적으로 수정했습니다." />
         </div>
       )}
     </>

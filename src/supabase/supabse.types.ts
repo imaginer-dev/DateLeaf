@@ -8,7 +8,7 @@ export type Database = {
           created_at: string;
           description: string | null;
           end_date: string;
-          group_id: string;
+          group_id: number;
           id: number;
           memo: string | null;
           owner_id: string;
@@ -19,7 +19,7 @@ export type Database = {
           created_at?: string;
           description?: string | null;
           end_date: string;
-          group_id?: string;
+          group_id: number;
           id?: number;
           memo?: string | null;
           owner_id?: string;
@@ -30,7 +30,7 @@ export type Database = {
           created_at?: string;
           description?: string | null;
           end_date?: string;
-          group_id?: string;
+          group_id?: number;
           id?: number;
           memo?: string | null;
           owner_id?: string;
@@ -42,14 +42,7 @@ export type Database = {
             foreignKeyName: 'group_schedules_group_id_fkey';
             columns: ['group_id'];
             isOneToOne: false;
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'group_schedules_owner_id_fkey';
-            columns: ['owner_id'];
-            isOneToOne: false;
-            referencedRelation: 'users';
+            referencedRelation: 'groups';
             referencedColumns: ['id'];
           },
         ];
@@ -131,7 +124,7 @@ export type Database = {
           {
             foreignKeyName: 'groups_owner_id_fkey';
             columns: ['owner_id'];
-            isOneToOne: true;
+            isOneToOne: false;
             referencedRelation: 'users';
             referencedColumns: ['id'];
           },
@@ -179,13 +172,15 @@ export type Database = {
         Row: {
           created_at: string;
           id: string;
+          image_url: string | null;
           phone: string;
           user_name: string;
-          user_nickname: string;
+          user_nickname: string | null;
         };
         Insert: {
           created_at?: string;
           id?: string;
+          image_url?: string | null;
           phone: string;
           user_name: string;
           user_nickname?: string | null;
@@ -193,6 +188,7 @@ export type Database = {
         Update: {
           created_at?: string;
           id?: string;
+          image_url?: string | null;
           phone?: string;
           user_name?: string;
           user_nickname?: string | null;

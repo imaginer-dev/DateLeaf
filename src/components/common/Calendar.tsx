@@ -28,6 +28,8 @@ export default function Calendar() {
   const [selectedEvents, setSelectedEvents] = useState<DB_Events[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const { events, addEvents, db_events, addDBEvents } = useEventState();
+  // ! : 외부에서 이벤트 리스트를 받아오게 된다면 zustand 스토어도 필요 없을거 같습니다!
+  const { events, addEvents } = useEventState();
 
   /*
   const handleDateClick = (clickInfo: EventClickArg) => {
@@ -124,6 +126,9 @@ export default function Calendar() {
     };
   }, [updateSize]);
 
+  const [isLoaded, setIsLoaded] = useState(false); // 데이터 로딩 상태
+
+  // !: 이베트를 받아온다면 필요없는 코드가 될 수 있을거 같아요.
   useEffect(() => {
     getPersonalSchedule().then((schedule) => {
       schedule.map((x) => {
