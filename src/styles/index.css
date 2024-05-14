@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  @font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+  }
+}
+
 .userInvite {
   display: flex;
   justify-content: center;
@@ -13,36 +22,6 @@
 }
 .userInvite svg {
   margin: auto;
-}
-
-@media (min-width: 1024px) {
-  .drawer-toggle {
-    display: none;
-  }
-  .drawer-content {
-    flex-direction: row;
-  }
-  .drawer-side {
-    width: 15%;
-    visibility: visible;
-    overflow-y: auto;
-  }
-  .drawer-side > *:not(.drawer-overlay) {
-    transform: translateX(0%);
-  }
-
-  .drawer-overlay {
-    visibility: visible;
-  }
-}
-
-@layer base {
-  @font-face {
-    font-family: 'Pretendard-Regular';
-    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-  }
 }
 
 /* 캘린더 - 화살표 아이콘 */
@@ -88,5 +67,45 @@
       top: 0;
       left: 0;
     }
+  }
+}
+
+@media (min-width: 1024px) {
+  main {
+    padding-left: 15%;
+    padding-right: 25%;
+  }
+  .eventCardList {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 25%;
+    height: 100%;
+    padding: 0 1rem;
+    padding-left: 0;
+    margin-top: 4rem;
+  }
+  .eventCardList .flex {
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-flow: column;
+  }
+  .drawer-toggle {
+    display: none;
+  }
+  .drawer-content {
+    flex-direction: row;
+  }
+  .drawer-side {
+    width: 15%;
+    visibility: visible;
+    overflow-y: auto;
+  }
+  .drawer-side > *:not(.drawer-overlay) {
+    transform: translateX(0%);
+  }
+
+  .drawer-overlay {
+    visibility: visible;
   }
 }
