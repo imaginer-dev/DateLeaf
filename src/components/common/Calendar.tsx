@@ -31,6 +31,9 @@ export default function Calendar({ db_events, onDeleteClicked }: CalendarProps) 
   const [selectedEvents, setSelectedEvents] = useState<DB_Events[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
+  useEffect(() => {
+    console.log('mounted!');
+  }, []);
   /*
   const handleDateClick = (clickInfo: EventClickArg) => {
     if (clickInfo.event.start) {

@@ -7,7 +7,7 @@ import { useEventState } from '@/stores/myEventsStore';
 import { useEffect } from 'react';
 
 const MyCalendarPage: React.FC = () => {
-  const { events, addEvents, db_events, addDBEvents } = useEventState();
+  const { addEvents, db_events, addDBEvents } = useEventState();
 
   useEffect(() => {
     getPersonalSchedule().then((schedule) => {
@@ -16,7 +16,7 @@ const MyCalendarPage: React.FC = () => {
         addEvents({ ...x, start: x.start_date, end: x.end_date });
       });
     });
-  }, [events, addEvents, addDBEvents]);
+  }, [addDBEvents, addEvents]);
 
   const onDeleteClicked = (id: number) => {
     console.log('delete : ', id);
