@@ -3,13 +3,10 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { useEventState } from '@/stores/myEventsStore';
-import { getPersonalSchedule } from '@/apis/personalScheduleApi';
-import { Events } from '../../utils/index.ts';
-import { formatDateRange } from '../../utils/dateUtils';
 // import { formatDateRange, formatTime } from '../../utils/dateUtils';
 import { getPersonalSchedule, deletePersonalSchedule } from '@/apis/personalScheduleApi';
 import { DB_Events } from '../../utils/index.ts';
-import { formatDateRange, formatTime } from '../../utils/dateUtils';
+import { formatDateRange } from '../../utils/dateUtils';
 import CreateEventButton from '@/components/MyCalendar/CreateEventButton.tsx';
 
 interface EventInfo {
@@ -29,9 +26,8 @@ export default function Calendar() {
   const calendarRef = useRef<FullCalendar | null>(null);
   const [selectedEvents, setSelectedEvents] = useState<DB_Events[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const { events, addEvents, db_events, addDBEvents } = useEventState();
   // ! : 외부에서 이벤트 리스트를 받아오게 된다면 zustand 스토어도 필요 없을거 같습니다!
-  const { events, addEvents } = useEventState();
+  const { events, addEvents, db_events, addDBEvents } = useEventState();
 
   /*
   const handleDateClick = (clickInfo: EventClickArg) => {
@@ -128,7 +124,7 @@ export default function Calendar() {
     };
   }, [updateSize]);
 
-  const [isLoaded, setIsLoaded] = useState(false); // 데이터 로딩 상태
+  // const [isLoaded, setIsLoaded] = useState(false); // 데이터 로딩 상태
 
   // !: 이베트를 받아온다면 필요없는 코드가 될 수 있을거 같아요.
   useEffect(() => {
@@ -137,8 +133,8 @@ export default function Calendar() {
         addDBEvents({ ...x });
         addEvents({ ...x, start: x.start_date, end: x.end_date });
       });
-    }
-  }, [events, addEvents, isLoaded]);
+    });
+  }, [events, addEvents, addDBEvents]);
 
   return (
     <div>
@@ -225,10 +221,8 @@ function EventCards({ events, date }: EventCardsProps) {
       <h2 className="ml-2">{date}</h2>
       <div className="flex gap-5 overflow-x-auto">
         {events.map((event, index) => {
-          const eventDateRange = formatDateRange(event.start, event.end);
-          // const eventTime = formatTime(event.start);
           const eventDateRange = formatDateRange(event.start_date, event.end_date);
-          const eventTime = formatTime(event.start_date);
+          // const eventTime = formatTime(event.start_date);
           return (
             <div key={index} className="relative min-h-[150px] min-w-[240px] bg-white p-4 text-black">
               <h3>{event.title}</h3>

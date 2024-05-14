@@ -18,10 +18,12 @@ const SideBarGroupList: FC<Props> = ({ userId }) => {
     <ul>
       {isLoading && <span className="loading" />}
       <div className="flex flex-row items-center justify-between border-b border-white py-3">
-        <h2>모임 리스트</h2>
-        <Link to="/add-group" className="text-2xl">
-          +
-        </Link>
+        <h2 className="font-bold">모임 리스트</h2>
+        <li>
+          <Link to="/add-group" className="text-2xl">
+            +
+          </Link>
+        </li>
       </div>
       {data?.map((group) => (
         <li

@@ -100,6 +100,7 @@
     width: 15%;
     visibility: visible;
     overflow-y: auto;
+    pointer-events: auto;
   }
   .drawer-side > *:not(.drawer-overlay) {
     transform: translateX(0%);
