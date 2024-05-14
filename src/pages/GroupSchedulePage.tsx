@@ -8,6 +8,7 @@ import { Loading } from '.';
 
 const GroupSchedulePage = () => {
   // TODO: 캘린더 수정해서 이벤트 리스트를 외부에서 받을 수 있도록 해야함.
+  // TODO: 그룹 스케줄을 받아오는게 아닌 그룹 정보를 받아와 이름을 표현해줘야 한다.
   const params = useParams<{ groupId: string }>();
   const groupId = params.groupId!;
 
