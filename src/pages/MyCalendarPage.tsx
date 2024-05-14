@@ -9,7 +9,7 @@ const MyCalendarPage: React.FC = () => {
       <AppBar backButton={false} IconButton={<HamburgerButton />} calendarName="내 캘린더" />
       <main className="z-1 relative flex-grow">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="rounded p-6 px-4 sm:px-0">
+          <div>
             <Calendar />
             <CreateEventButton />
           </div>
