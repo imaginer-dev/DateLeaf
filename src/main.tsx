@@ -10,6 +10,7 @@ import ProtectedRoute from './providers/ProtectedRoute.tsx';
 import EditGroupSchedule from './pages/EditGroupSchedulePage.tsx';
 import AddGroupSchedulePage from './pages/AddGroupSchedulePage.tsx';
 import GroupSchedulePage from './pages/GroupSchedulePage.tsx';
+import ProfilePage from './pages/ProfilePage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
             element: <Policy.UseConditionPage />,
           },
         ],
+      },
+      {
+        path: '/profile',
+        element: <ProfilePage />,
       },
     ],
   },

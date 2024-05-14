@@ -15,10 +15,10 @@ const SideBarProfile: FC<Props> = ({ userName, imageUrl }) => {
 
   return (
     <div className="flex w-full flex-row justify-between border-b-2 border-white pb-4">
-      <div className="flex flex-row items-center gap-1 text-lg">
+      <Link to={`/profile`} className="flex flex-row items-center gap-1 text-lg">
         <ProfileIcon imageUrl={imageUrl} />
         <span className="ml-2">{userName}</span>
-      </div>
+      </Link>
       <div className="flex flex-row items-center gap-2">
         <Link to="/" className="cursor-pointer rounded-lg bg-base-100 px-3 py-1 font-black hover:opacity-50">
           내 캘린더 보기

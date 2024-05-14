@@ -138,7 +138,7 @@ export default function Calendar() {
 
   return (
     <div>
-      <div className="rounded bg-white p-6 px-4">
+      <div className="rounded bg-white p-7 px-4">
         <FullCalendar
           ref={calendarRef}
           plugins={[dayGridPlugin, interactionPlugin]}
@@ -218,7 +218,7 @@ function EventCards({ events, date }: EventCardsProps) {
 
   return (
     <div>
-      <h2 className="ml-2">{date}</h2>
+      <h2 className="mb-2 ml-2">{date}</h2>
       <div className="flex gap-5 overflow-x-auto">
         {events.map((event, index) => {
           const eventDateRange = formatDateRange(event.start_date, event.end_date);
