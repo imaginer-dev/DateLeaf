@@ -2,10 +2,8 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { useRef, useState, useEffect, useCallback } from 'react';
-import { useEventState } from '@/stores/myEventsStore';
 // import { formatDateRange, formatTime } from '../../utils/dateUtils';
-import { getPersonalSchedule, deletePersonalSchedule } from '@/apis/personalScheduleApi';
-import { DB_Events } from '../../utils/index.ts';
+import { Events, DB_Events } from '../../utils/index.ts';
 import { formatDateRange } from '../../utils/dateUtils';
 import CreateEventButton from '@/components/MyCalendar/CreateEventButton.tsx';
 
@@ -19,15 +17,19 @@ interface EventInfo {
 interface EventCardsProps {
   events: DB_Events[];
   date: string | null;
+  onDelete: (id: number) => void;
 }
 
-export default function Calendar() {
+interface CalendarProps {
+  db_events: DB_Events[];
+  onDeleteClicked: (id: number) => void;
+}
+
+export default function Calendar({ db_events, onDeleteClicked }: CalendarProps) {
   const [calendarHeight, setCalendarHeight] = useState<string | number>('auto');
   const calendarRef = useRef<FullCalendar | null>(null);
   const [selectedEvents, setSelectedEvents] = useState<DB_Events[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  // ! : 외부에서 이벤트 리스트를 받아오게 된다면 zustand 스토어도 필요 없을거 같습니다!
-  const { events, addEvents, db_events, addDBEvents } = useEventState();
 
   /*
   const handleDateClick = (clickInfo: EventClickArg) => {
@@ -124,17 +126,10 @@ export default function Calendar() {
     };
   }, [updateSize]);
 
-  // const [isLoaded, setIsLoaded] = useState(false); // 데이터 로딩 상태
-
-  // !: 이베트를 받아온다면 필요없는 코드가 될 수 있을거 같아요.
-  useEffect(() => {
-    getPersonalSchedule().then((schedule) => {
-      schedule.map((x) => {
-        addDBEvents({ ...x });
-        addEvents({ ...x, start: x.start_date, end: x.end_date });
-      });
-    });
-  }, [events, addEvents, addDBEvents]);
+  const events: Events[] = [];
+  db_events.map((event) => {
+    events.push({ ...event, start: event.start_date, end: event.end_date });
+  });
 
   return (
     <div>
@@ -175,7 +170,7 @@ export default function Calendar() {
         />
       </div>
       <div className="eventCardList mt-10">
-        {selectedDate && <EventCards events={selectedEvents} date={selectedDate} />}
+        {selectedDate && <EventCards events={selectedEvents} date={selectedDate} onDelete={onDeleteClicked} />}
       </div>
     </div>
   );
@@ -192,7 +187,7 @@ function renderEventContent(eventInfo: EventInfo) {
   );
 }
 
-function EventCards({ events, date }: EventCardsProps) {
+function EventCards({ events, date, onDelete }: EventCardsProps) {
   console.log(events, date);
   const [menuOpen, setMenuOpen] = useState(-1);
 
@@ -204,17 +199,6 @@ function EventCards({ events, date }: EventCardsProps) {
       </div>
     );
   }
-
-  const onDeleteClicked = (id: number) => {
-    console.log('delete : ', id);
-    deletePersonalSchedule(id)
-      .then((val) => {
-        console.log('delete done!', val);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   return (
     <div>
@@ -249,7 +233,7 @@ function EventCards({ events, date }: EventCardsProps) {
                         end_date={event.end_date}
                       />
                     </li>
-                    <li className="cursor-pointer p-2 hover:bg-gray-100" onClick={() => onDeleteClicked(event.id)}>
+                    <li className="cursor-pointer p-2 hover:bg-gray-100" onClick={() => onDelete(event.id)}>
                       삭제
                     </li>
                   </ul>
