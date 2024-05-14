@@ -27,7 +27,6 @@ export const useEventState = create<EventsState>()((set) => ({
       }
     }),
   db_events: [],
-  addEvents: (newEvent: Events) => set((state) => ({ events: [...state.events, newEvent] })),
   initEvents: () => set(() => ({ events: [] })),
   addDBEvents: (newEvent: DB_Events) => set((state) => ({ db_events: [...state.db_events, newEvent] })),
 }));
