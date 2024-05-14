@@ -218,7 +218,7 @@ function EventCards({ events, date }: EventCardsProps) {
 
   return (
     <div>
-      <h2 className="ml-2 mb-2">{date}</h2>
+      <h2 className="mb-2 ml-2">{date}</h2>
       <div className="flex gap-5 overflow-x-auto">
         {events.map((event, index) => {
           const eventDateRange = formatDateRange(event.start_date, event.end_date);
