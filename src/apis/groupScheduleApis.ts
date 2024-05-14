@@ -10,6 +10,13 @@ interface addGroupShedule {
 }
 
 export const addGroupScheduleFetch = async ({ startDate, endDate, newMemberList, ...props }: addGroupShedule) => {
+  // 현재 로그인된 사용자를 가져온다.
+  const { data: user, error: userError } = await supabase.auth.getUser();
+
+  if (userError) {
+    throw userError;
+  }
+
   // 그룹을 생성한다.
   const { data: groupInfo, error: groupInfoError } = await supabase
     .from('groups')
@@ -27,12 +34,15 @@ export const addGroupScheduleFetch = async ({ startDate, endDate, newMemberList,
   }
 
   // 그룹에 멤버를 추가한다.
-  const { error: groupMemberError } = await supabase.from('group_user_ralations').insert(
-    newMemberList.map((member) => ({
-      group_id: groupInfo.id,
-      user_id: member.id,
-    })),
-  );
+  const newRelationSchema = newMemberList.map((member) => ({
+    group_id: groupInfo.id,
+    user_id: member.id,
+  }));
+  newRelationSchema.push({
+    group_id: groupInfo.id,
+    user_id: user.user.id,
+  });
+  const { error: groupMemberError } = await supabase.from('group_user_ralations').insert(newRelationSchema);
   if (groupMemberError) {
     throw groupMemberError;
   }
