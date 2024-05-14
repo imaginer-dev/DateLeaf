@@ -3,6 +3,7 @@ import { createQueryKeyStore } from '@lukemorales/query-key-factory';
 export const queries = createQueryKeyStore({
   auth: {
     isLogin: null,
+    profile: null,
   },
   session: {
     getSession: null,
@@ -19,5 +20,6 @@ export const queries = createQueryKeyStore({
     updateMember: null,
     getAllMember: (groupId: string) => [groupId],
     add: null,
+    getAllByUserId: (userId: string) => [userId],
   },
 });

@@ -41,10 +41,6 @@ const EditGroupSchedulePage = () => {
     mutate(updatePayload);
   };
 
-  if (updateIsPending) {
-    // TODO: 로딩 스피너 표시
-  }
-
   return (
     <>
       {isLoading ? (

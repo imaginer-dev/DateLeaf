@@ -124,7 +124,7 @@ export type Database = {
           {
             foreignKeyName: 'groups_owner_id_fkey';
             columns: ['owner_id'];
-            isOneToOne: true;
+            isOneToOne: false;
             referencedRelation: 'users';
             referencedColumns: ['id'];
           },
