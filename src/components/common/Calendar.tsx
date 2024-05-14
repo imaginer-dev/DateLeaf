@@ -5,19 +5,10 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { useRef, useState, useEffect, useCallback } from 'react';
 import { useEventState } from '@/stores/myEventsStore';
-import { getPersonalSchedule } from '@/apis/personalScheduleApi';
-import { Events } from '../../utils/index.ts';
+import { getPersonalSchedule, deletePersonalSchedule } from '@/apis/personalScheduleApi';
+import { DB_Events } from '../../utils/index.ts';
 import { formatDateRange, formatTime } from '../../utils/dateUtils';
-/*
-type Event = {
-  title: string;
-  start: string;
-  end: string;
-  backgroundColor?: string;
-  borderColor?: string;
-  textColor?: string;
-};
-*/
+import CreateEventButton from '@/components/MyCalendar/CreateEventButton.tsx';
 
 interface EventInfo {
   timeText: string;
@@ -27,15 +18,16 @@ interface EventInfo {
 }
 
 interface EventCardsProps {
-  events: Events[];
+  events: DB_Events[];
   date: string | null;
 }
 
 export default function Calendar() {
   const [calendarHeight, setCalendarHeight] = useState<string | number>('auto');
   const calendarRef = useRef<FullCalendar | null>(null);
-  const [selectedEvents, setSelectedEvents] = useState<Events[]>([]);
+  const [selectedEvents, setSelectedEvents] = useState<DB_Events[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const { events, addEvents, db_events, addDBEvents } = useEventState();
   // ! : 외부에서 이벤트 리스트를 받아오게 된다면 zustand 스토어도 필요 없을거 같습니다!
   const { events, addEvents } = useEventState();
 
@@ -58,10 +50,10 @@ export default function Calendar() {
     const clickedDateStr = dateClickInfo.dateStr;
     setSelectedDate(clickedDateStr);
     setSelectedEvents(
-      events.filter(
+      db_events.filter(
         (event) =>
-          clickedDateStr >= event.start.split('T')[0] &&
-          clickedDateStr <= (event.end ? event.end.split('T')[0] : event.start.split('T')[0]),
+          clickedDateStr >= event.start_date.split('T')[0] &&
+          clickedDateStr <= (event.end_date ? event.end_date.split('T')[0] : event.start_date.split('T')[0]),
       ),
     );
   };
@@ -89,26 +81,6 @@ export default function Calendar() {
   const updateSize = useCallback(() => {
     setCalendarHeight(window.innerWidth < 768 ? 500 : 'auto');
   }, []);
-
-  function convertEvents(
-    events: {
-      title: string;
-      start_date: string;
-      end_date: string;
-      backgroundColor?: string;
-      borderColor?: string;
-      textColor?: string;
-    }[],
-  ): Events[] {
-    return events.map((event) => ({
-      title: event.title,
-      start: event.start_date,
-      end: event.end_date,
-      backgroundColor: event.backgroundColor || '#3788d8',
-      borderColor: event.borderColor || '#296c98',
-      textColor: event.textColor || '#ffffff',
-    }));
-  }
 
   /*
   const updateTitle = () => {
@@ -158,22 +130,13 @@ export default function Calendar() {
 
   // !: 이베트를 받아온다면 필요없는 코드가 될 수 있을거 같아요.
   useEffect(() => {
-    if (!isLoaded) {
-      getPersonalSchedule().then((schedule) => {
-        const uniqueEvents = schedule.filter(
-          (newEvent) =>
-            !events.some(
-              (existingEvent) => existingEvent.start === newEvent.start_date && existingEvent.title === newEvent.title,
-            ),
-        );
-        if (uniqueEvents.length > 0) {
-          const eventsToAdd = convertEvents(uniqueEvents);
-          eventsToAdd.forEach((eventToAdd) => addEvents(eventToAdd));
-          setIsLoaded(true);
-        }
+    getPersonalSchedule().then((schedule) => {
+      schedule.map((x) => {
+        addDBEvents({ ...x });
+        addEvents({ ...x, start: x.start_date, end: x.end_date });
       });
-    }
-  }, [events, addEvents]);
+    });
+  }, []);
 
   return (
     <div>
@@ -242,13 +205,24 @@ function EventCards({ events, date }: EventCardsProps) {
     );
   }
 
+  const onDeleteClicked = (id: number) => {
+    console.log('delete : ', id);
+    deletePersonalSchedule(id)
+      .then((val) => {
+        console.log('delete done!', val);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div>
       <h2 className="ml-2">{date}</h2>
       <div className="flex gap-5 overflow-x-auto">
         {events.map((event, index) => {
-          const eventDateRange = formatDateRange(event.start, event.end);
-          const eventTime = formatTime(event.start);
+          const eventDateRange = formatDateRange(event.start_date, event.end_date);
+          const eventTime = formatTime(event.start_date);
           return (
             <div key={index} className="relative min-h-[150px] min-w-[240px] bg-white p-4 text-black">
               <h3>{event.title}</h3>
@@ -267,8 +241,17 @@ function EventCards({ events, date }: EventCardsProps) {
               {menuOpen === index && (
                 <div className="absolute right-0 top-10 z-10 rounded-lg bg-white shadow-md">
                   <ul>
-                    <li className="cursor-pointer p-2 hover:bg-gray-100">편집</li>
-                    <li className="cursor-pointer p-2 hover:bg-gray-100">삭제</li>
+                    <li className="cursor-pointer p-2 hover:bg-gray-100">
+                      <CreateEventButton
+                        id={event.id}
+                        title={event.title}
+                        start_date={event.start_date}
+                        end_date={event.end_date}
+                      />
+                    </li>
+                    <li className="cursor-pointer p-2 hover:bg-gray-100" onClick={() => onDeleteClicked(event.id)}>
+                      삭제
+                    </li>
                   </ul>
                 </div>
               )}
