@@ -177,7 +177,7 @@ export default function Calendar() {
 
   return (
     <div>
-      <div className="rounded bg-white p-6 px-4 sm:px-0">
+      <div className="rounded bg-white p-6 px-4">
         <FullCalendar
           ref={calendarRef}
           plugins={[dayGridPlugin, interactionPlugin]}
