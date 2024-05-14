@@ -11,10 +11,10 @@ const MyCalendarPage: React.FC = () => {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="rounded p-6 px-4 sm:px-0">
             <Calendar />
+            <CreateEventButton />
           </div>
         </div>
       </main>
-      <CreateEventButton />
     </div>
   );
 };

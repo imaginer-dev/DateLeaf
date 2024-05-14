@@ -71,6 +71,25 @@
 }
 
 @media (min-width: 1024px) {
+  main {
+    padding-left: 15%;
+    padding-right: 25%;
+  }
+  .eventCardList {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 25%;
+    height: 100%;
+    padding: 0 1rem;
+    padding-left: 0;
+    margin-top: 4rem;
+  }
+  .eventCardList .flex {
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-flow: column;
+  }
   .drawer-toggle {
     display: none;
   }

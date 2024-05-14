@@ -5,6 +5,6 @@ import LoginPage from './LoginPage';
 import { NotFound } from './Notfound';
 import MyCalendarPage from './MyCalendarPage';
 
-import * as Policy from './Policy/index';
+import * as Policy from './Policy';
 
 export { ResetPwPage as ResetPwPage, JoinPage, Loading, LoginPage, NotFound, Policy, MyCalendarPage };
