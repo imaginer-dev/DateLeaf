@@ -11,6 +11,13 @@
   }
 }
 
+button {
+  cursor: pointer;
+}
+
+.navHeight {
+  height: 64px;
+}
 .userInvite {
   display: flex;
   justify-content: center;
