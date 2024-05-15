@@ -22,7 +22,7 @@ export const updateUserProfile = async ({ id, user_nickname, file }: UpdateUserP
   const bucketName = 'profile';
 
   if (file) {
-    const filePath = `profile_images/${id}/${file.name}`;
+    const filePath = `public/${id}_${file.name}`;
     console.log(`Uploading file to path: ${filePath}`);
 
     const { error: uploadError } = await supabase.storage.from(bucketName).upload(filePath, file, { upsert: true });
