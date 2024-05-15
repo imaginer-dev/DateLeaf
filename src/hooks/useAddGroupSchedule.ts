@@ -13,6 +13,7 @@ export const useAddGroupSchedule = () => {
   const failDialogRef = useRef<DialogElement | null>(null);
 
   const addGroupSchedule = (e: React.FormEvent<HTMLFormElement>, userList: Member[]) => {
+    e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const newGroupSchedule = {
       title: formData.get('name') as string,
