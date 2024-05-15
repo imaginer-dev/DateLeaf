@@ -53,13 +53,21 @@ const CreateEventDialog = ({ id, title, start_date, end_date }: eventProps) => {
         end: endDate === '' ? startDate : endDate,
       };
       if (id) {
-        updatePersonalSchedule(id, newEvent).catch((err) => {
-          console.log(err);
-        });
+        updatePersonalSchedule(id, newEvent)
+          .then(() => {
+            location.href = '/';
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       } else {
-        addPersonalSchedule(newEvent).catch((err) => {
-          console.log(err);
-        });
+        addPersonalSchedule(newEvent)
+          .then(() => {
+            location.href = '/';
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
     }
 
