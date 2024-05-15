@@ -1,4 +1,3 @@
-import DialogButton from '@/components/common/DialogButton';
 import { InputRef } from '../common/InputForm.tsx';
 import { useState, useRef, useEffect } from 'react';
 import { Events } from '@/utils/index.ts';
@@ -11,7 +10,7 @@ export interface eventProps {
   end_date?: string;
 }
 
-const CreateEventButton = ({ id, title, start_date, end_date }: eventProps) => {
+const CreateEventDialog = ({ id, title, start_date, end_date }: eventProps) => {
   const [eventTitle, setTitle] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -78,7 +77,7 @@ const CreateEventButton = ({ id, title, start_date, end_date }: eventProps) => {
     }
   };
 
-  const eventForm = (
+  return (
     <div>
       <hr className="mt-1" />
       <InputRef title="일정 제목" placeholder="새 일정 제목" onChange={onTitleChanged} ref={titleRef} />
@@ -90,16 +89,6 @@ const CreateEventButton = ({ id, title, start_date, end_date }: eventProps) => {
       </button>
     </div>
   );
-  return (
-    <div className="p-8 pl-0 pr-0">
-      <DialogButton
-        classname="btn bg-primary text-base-100 w-full"
-        name={id ? '수정' : '새 일정 추가하기'}
-        title={id ? '일정 수정' : '일정 추가'}
-        desc={''}
-        children={eventForm}
-      />
-    </div>
-  );
 };
-export default CreateEventButton;
+
+export default CreateEventDialog;
