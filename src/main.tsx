@@ -11,6 +11,7 @@ import EditGroupSchedule from './pages/EditGroupSchedulePage.tsx';
 import AddGroupSchedulePage from './pages/AddGroupSchedulePage.tsx';
 import GroupSchedulePage from './pages/GroupSchedulePage.tsx';
 import ProfilePage from './pages/ProfilePage.tsx';
+import SettingPage from './pages/SettingPage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
       {
         path: '/profile',
         element: <ProfilePage />,
+      },
+      {
+        path: '/setting',
+        element: <SettingPage />,
       },
     ],
   },
