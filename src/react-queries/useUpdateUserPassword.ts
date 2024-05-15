@@ -1,5 +1,5 @@
 import { isLogIn } from '@/apis/authApis';
-import updateUserPassword from '@/apis/updateUserApi';
+import { updateUserPassword } from '@/apis/updateUserApi';
 import { useChangePasswordState } from '@/stores/changePasswordStore';
 import supabase from '@/supabase';
 import { LooseValidation, ValidateProcessor } from '@/utils/authUtils';
