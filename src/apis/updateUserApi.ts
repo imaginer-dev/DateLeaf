@@ -19,10 +19,12 @@ interface UpdateUserProfileParams {
 export const updateUserProfile = async ({ id, user_nickname, file }: UpdateUserProfileParams) => {
   let imageUrl: string | null = null;
 
+  console.log(`Updating profile for user: ${id}`);
+
   const bucketName = 'profile';
 
   if (file) {
-    const filePath = `public/${id}_${file.name}`;
+    const filePath = `${id}/profile.${file.name.split('.').pop()}`;
     console.log(`Uploading file to path: ${filePath}`);
 
     const { error: uploadError } = await supabase.storage.from(bucketName).upload(filePath, file, { upsert: true });

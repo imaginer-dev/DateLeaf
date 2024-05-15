@@ -19,9 +19,9 @@ const ProfileIcon = ({
       />
     </svg>
   ) : (
-    <div className="avatar overflow-hidden rounded-full">
-      <div className="w-full rounded">
-        <img src={imageUrl} alt="Profile" />
+    <div className={`avatar h-[49[px]] w-[49px] overflow-hidden rounded-full`}>
+      <div>
+        <img className="object-cover" src={imageUrl} alt="Profile" />
       </div>
     </div>
   );
