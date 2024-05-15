@@ -1,13 +1,13 @@
 const ProfileIcon = ({
   imageUrl,
-  width = "49", // 기본 가로 크기
-  height = "49", // 기본 세로 크기
-  fill = "white" // 기본 색상
+  width = '49', // 기본 가로 크기
+  height = '49', // 기본 세로 크기
+  fill = 'white', // 기본 색상
 }: {
-  imageUrl: string | null,
-  width?: string,
-  height?: string,
-  fill?: string
+  imageUrl: string | null;
+  width?: string;
+  height?: string;
+  fill?: string;
 }) => {
   return imageUrl === null ? (
     <svg width={width} height={height} viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg">
