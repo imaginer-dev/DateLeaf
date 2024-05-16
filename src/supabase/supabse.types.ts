@@ -87,10 +87,12 @@ export type Database = {
         Row: {
           color: string | null;
           created_at: string;
+          description: string | null;
           end_date: string;
           exclude_time_end: string | null;
           exclude_time_start: string | null;
           id: number;
+          memo: string | null;
           name: string;
           open: boolean;
           owner_id: string;
@@ -99,10 +101,12 @@ export type Database = {
         Insert: {
           color?: string | null;
           created_at?: string;
+          description?: string | null;
           end_date: string;
           exclude_time_end?: string | null;
           exclude_time_start?: string | null;
           id?: number;
+          memo?: string | null;
           name: string;
           open: boolean;
           owner_id?: string;
@@ -111,10 +115,12 @@ export type Database = {
         Update: {
           color?: string | null;
           created_at?: string;
+          description?: string | null;
           end_date?: string;
           exclude_time_end?: string | null;
           exclude_time_start?: string | null;
           id?: number;
+          memo?: string | null;
           name?: string;
           open?: boolean;
           owner_id?: string;
@@ -208,7 +214,10 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      'Insert group owner to relations': {
+        Args: Record<PropertyKey, never>;
+        Returns: Record<string, unknown>;
+      };
     };
     Enums: {
       [_ in never]: never;

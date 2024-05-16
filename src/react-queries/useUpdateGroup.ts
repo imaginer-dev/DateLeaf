@@ -1,17 +1,18 @@
-import { updateGroupSchedule, updateGroupScheduleMember } from '@/apis/groupScheduleApis';
 import { useMutation } from '@tanstack/react-query';
 import { queries } from './queryKeys';
 import { Member } from '@/types/Member';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
+import { updateGroup } from '@/apis/updateGroupApi.ts';
+import { updateGroupMember } from '@/apis/updateGroupMemberApi.ts';
 
-interface UpdateGroupSchedule {
+interface UpdateGroup {
   name: string;
   description: string;
   startDate: string;
   endDate: string;
   memo: string;
-  scheduleId: string;
+  groupId: string;
   newMemberList: Member[];
 }
 
@@ -20,21 +21,21 @@ interface DialogElement {
   closeModal: () => void;
 }
 
-export const useUpdateGroupSchedule = () => {
+export const useUpdateGroup = () => {
   const navigator = useNavigate();
 
   const errorDialogRef = useRef<DialogElement | null>(null);
   const successDialog = useRef<DialogElement | null>(null);
 
   const {
-    mutate: updateGroupScheduleMutate,
-    isPending: updateGroupScheduleIsPending,
-    isSuccess: updateGroupScheduleIsSuccess,
-    isError: updateGroupScheduleIsError,
-    reset: updateGroupScheduleReset,
+    mutate: updateGroupMutate,
+    isPending: updateGroupIsPending,
+    isSuccess: updateGroupIsSuccess,
+    isError: updateGroupIsError,
+    reset: updateGroupReset,
   } = useMutation({
     mutationKey: queries.groupSchedule.update.queryKey,
-    mutationFn: updateGroupSchedule,
+    mutationFn: updateGroup,
   });
 
   const {
@@ -45,42 +46,36 @@ export const useUpdateGroupSchedule = () => {
     reset: updateGroupMemberReset,
   } = useMutation({
     mutationKey: queries.group.updateMember.queryKey,
-    mutationFn: updateGroupScheduleMember,
+    mutationFn: updateGroupMember,
   });
 
-  const mutate = (data: UpdateGroupSchedule) => {
-    updateGroupScheduleMutate(data);
+  const mutate = (data: UpdateGroup) => {
+    updateGroupMutate(data);
     updateGroupMemberMutate({
       updatedMemberList: data.newMemberList,
-      groupId: data.scheduleId,
+      groupId: data.groupId,
     });
   };
 
   useEffect(() => {
-    if (updateGroupScheduleIsSuccess && updateGroupMemberIsSuccess) {
+    if (updateGroupIsSuccess && updateGroupMemberIsSuccess) {
       successDialog.current?.openModal();
       updateGroupMemberReset();
-      updateGroupScheduleReset();
+      updateGroupReset();
     }
-  }, [
-    updateGroupScheduleIsSuccess,
-    updateGroupMemberIsSuccess,
-    navigator,
-    updateGroupMemberReset,
-    updateGroupScheduleReset,
-  ]);
+  }, [updateGroupIsSuccess, updateGroupMemberIsSuccess, navigator, updateGroupMemberReset, updateGroupReset]);
 
   useEffect(() => {
-    if (updateGroupScheduleIsError || updateGroupMemberIsError) {
+    if (updateGroupIsError || updateGroupMemberIsError) {
       errorDialogRef.current?.openModal();
       updateGroupMemberReset();
-      updateGroupScheduleReset();
+      updateGroupReset();
     }
-  }, [updateGroupScheduleIsError, updateGroupMemberIsError, updateGroupMemberReset, updateGroupScheduleReset]);
+  }, [updateGroupIsError, updateGroupMemberIsError, updateGroupMemberReset, updateGroupReset]);
 
   return {
     mutate,
-    isPending: updateGroupScheduleIsPending || updateGroupMemberIsPending,
+    isPending: updateGroupIsPending || updateGroupMemberIsPending,
     errorDialogRef,
     successDialog,
   };

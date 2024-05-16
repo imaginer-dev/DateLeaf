@@ -5,9 +5,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ChangePasswordPage from './pages/ChangePasswordPage.tsx';
 import { JoinPage, LoginPage, NotFound, Policy, ResetPwPage } from './pages/index.ts';
 import ProtectedRoute from './providers/ProtectedRoute.tsx';
-import EditGroupSchedule from './pages/EditGroupSchedulePage.tsx';
-import AddGroupSchedulePage from './pages/AddGroupSchedulePage.tsx';
-import GroupSchedulePage from './pages/GroupSchedulePage.tsx';
+import EditGroupSchedule from './pages/EditGroupPage.tsx';
+import AddGroupSchedulePage from './pages/AddGroupPage.tsx';
+import GroupCalendarPage from './pages/GroupCalendarPage.tsx';
 import ProfilePage from './pages/ProfilePage.tsx';
 import App from '@/App.tsx';
 
@@ -21,12 +21,12 @@ const router = createBrowserRouter([
         element: <App />,
       },
       {
-        path: '/group/:groupId/edit/:scheduleId',
+        path: '/group/:groupId/edit',
         element: <EditGroupSchedule />,
       },
       {
         path: '/group/:groupId',
-        element: <GroupSchedulePage />,
+        element: <GroupCalendarPage />,
       },
       {
         path: '/add-group',

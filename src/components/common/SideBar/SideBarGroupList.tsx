@@ -31,7 +31,7 @@ const SideBarGroupList: FC<Props> = ({ userId }) => {
           key={group.id + 'sidebar-group-list'}
         >
           <Link to={`/group/${group.id}`}>{group.name}</Link>
-          <Link to={`/group/${group.id}/edit/${group.id}`}>
+          <Link to={`/group/${group.id}/edit`}>
             <PencilIcon />
           </Link>
         </li>
