@@ -3,9 +3,9 @@ import Calendar from '../components/common/Calendar.tsx';
 import CreateEventDialog from '@/components/MyCalendar/CreateEventButton.tsx';
 import HamburgerButton from '@/components/common/SideBar/HamburgerButton.tsx';
 import { deletePersonalSchedule, getPersonalSchedule } from '@/apis/personalScheduleApi';
-import { useEventState } from '@/stores/myEventsStore';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Dialog from '@/components/common/Dialog.tsx';
+import { DB_Events } from '@/utils/index.ts';
 
 interface DialogElement {
   openModal: () => void;
@@ -13,18 +13,13 @@ interface DialogElement {
 }
 
 const MyCalendarPage: React.FC = () => {
-  const { db_events, addDBEvents, initDBEvents } = useEventState();
-
-  console.log('db_events : ', db_events);
+  const [db_events, setDBEvents] = useState<DB_Events[]>([]);
 
   useEffect(() => {
     getPersonalSchedule().then((schedule) => {
-      initDBEvents();
-      schedule.map((x) => {
-        addDBEvents({ ...x });
-      });
+      setDBEvents(schedule);
     });
-  }, [addDBEvents, initDBEvents]);
+  }, [db_events]);
 
   const onDeleteClicked = (id: number) => {
     console.log('delete : ', id);
