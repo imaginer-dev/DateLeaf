@@ -1,11 +1,12 @@
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { DB_Events, Events } from '@/utils';
 import { formatDateRange } from '@/utils/dateUtils.ts';
 import CreateEventDialog from '@/components/MyCalendar/CreateEventButton.tsx';
 import Dialog from './Dialog.tsx';
+import { getDateListFromStartDateToEndDate } from '@/utils/getDateListFromStartdateToEnddate.ts';
 
 interface DialogElement {
   openModal: () => void;
@@ -17,6 +18,7 @@ interface EventInfo {
   event: {
     title: string;
   };
+  backgroundColor: string;
 }
 
 interface EventCardsProps {
@@ -28,25 +30,60 @@ interface EventCardsProps {
 interface CalendarProps {
   db_events: DB_Events[];
   onDeleteClicked: (id: number) => void;
+  isGroupCalendar?: boolean;
+  startDate?: string;
+  endDate?: string;
 }
 
-export default function Calendar({ db_events, onDeleteClicked }: CalendarProps) {
+export default memo(function Calendar({
+  db_events,
+  onDeleteClicked,
+  isGroupCalendar,
+  startDate,
+  endDate,
+}: CalendarProps) {
   const [calendarHeight, setCalendarHeight] = useState<string | number>('auto');
   const calendarRef = useRef<FullCalendar | null>(null);
   const [selectedEvents, setSelectedEvents] = useState<DB_Events[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [isChaged, setIsChanged] = useState(false);
+
+  const events: Events[] = useMemo(
+    () =>
+      db_events.map((event) => ({
+        ...event,
+        start: event.start_date,
+        end: event.end_date,
+      })),
+    [db_events],
+  );
+
+  useEffect(() => {
+    if (isGroupCalendar && db_events.length > 0) {
+      const dateList = getDateListFromStartDateToEndDate(startDate!, endDate!);
+
+      const eventDateList = db_events.map((event) => event.start_date.split('T')[0]);
+      const formatedList = dateList.filter((date) => !eventDateList.includes(date));
+
+      const dateTableDataList = formatedList.map((date) => {
+        return document.querySelector(`[data-date="${date}"]`);
+      });
+
+      dateTableDataList.forEach((dateTableData) => {
+        const existingClassName = dateTableData?.className;
+        const newClassName = existingClassName + ' bg-gray-200';
+        dateTableData?.setAttribute('class', newClassName);
+      });
+    }
+  }, [isGroupCalendar, startDate, endDate, db_events, isChaged]);
 
   const handleDateSelection = (dateClickInfo: { dateStr: string }) => {
-    console.log(dateClickInfo);
     const clickedDateStr = dateClickInfo.dateStr;
     setSelectedDate(clickedDateStr);
-    setSelectedEvents(
-      db_events.filter(
-        (event) =>
-          clickedDateStr >= event.start_date.split('T')[0] &&
-          clickedDateStr <= (event.end_date ? event.end_date.split('T')[0] : event.start_date.split('T')[0]),
-      ),
+    const clickedDateEvents = db_events.filter(
+      (event) => clickedDateStr >= event.start_date.split('T')[0] && clickedDateStr <= event.end_date.split('T')[0],
     );
+    setSelectedEvents(clickedDateEvents);
   };
 
   const handlePrev = () => {
@@ -54,6 +91,7 @@ export default function Calendar({ db_events, onDeleteClicked }: CalendarProps) 
     if (calendarApi) {
       calendarApi.prev();
       setSelectedDate(null);
+      setIsChanged((prev) => !prev);
     } else {
       console.error('Calendar API is not available.');
     }
@@ -64,6 +102,7 @@ export default function Calendar({ db_events, onDeleteClicked }: CalendarProps) 
     if (calendarApi) {
       calendarApi.next();
       setSelectedDate(null);
+      setIsChanged((prev) => !prev);
     } else {
       console.error('Calendar API is not available.');
     }
@@ -82,11 +121,6 @@ export default function Calendar({ db_events, onDeleteClicked }: CalendarProps) 
     };
   }, [updateSize]);
 
-  const events: Events[] = [];
-  db_events.map((event) => {
-    events.push({ ...event, start: event.start_date, end: event.end_date });
-  });
-
   return (
     <div>
       <div className="rounded bg-white p-7 px-4">
@@ -97,10 +131,10 @@ export default function Calendar({ db_events, onDeleteClicked }: CalendarProps) 
           events={events}
           // eventClick={handleDateClick}
           dateClick={handleDateSelection}
-          dayMaxEvents={2} //Max개수까지보이고 나머지는 more
+          dayMaxEvents={5} //Max개수까지보이고 나머지는 more
           //navLinks={true} // 날짜/주 이름을 클릭하여 뷰를 변경할 수 있습니다.
           editable={true} // 이벤트를 수정할 수 있습니다.
-          eventContent={renderEventContent}
+          eventContent={isGroupCalendar ? groupEventContent : renderEventContent}
           contentHeight={calendarHeight}
           titleFormat={{
             year: 'numeric',
@@ -130,7 +164,7 @@ export default function Calendar({ db_events, onDeleteClicked }: CalendarProps) 
       </div>
     </div>
   );
-}
+});
 
 function renderEventContent(eventInfo: EventInfo) {
   return (
@@ -143,8 +177,16 @@ function renderEventContent(eventInfo: EventInfo) {
   );
 }
 
+function groupEventContent(eventInfo: EventInfo) {
+  eventInfo.backgroundColor;
+  return (
+    <div className={'w-full overflow-x-hidden'}>
+      <div className={`badge text-xs ${eventInfo.backgroundColor}`}>{eventInfo.event.title}</div>
+    </div>
+  );
+}
+
 function EventCards({ events, date, onDelete }: EventCardsProps) {
-  console.log(events, date);
   const [menuOpen, setMenuOpen] = useState(-1);
 
   const dialogRef = useRef<DialogElement | null>(null);
