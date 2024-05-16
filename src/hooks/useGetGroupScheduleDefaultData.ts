@@ -1,13 +1,13 @@
 import { useGetAllMember } from '@/react-queries/useGetAllMember';
-import { useGetOneGroupSchedule } from '@/react-queries/useGetOneGroupSchedule';
+import { useGetOneGroup } from '@/react-queries/useGetOneGroup.ts';
 
-export const useGetGroupScheduleDefaultData = (scheduleId: string, groupId: string) => {
+export const useGetGroupScheduleDefaultData = (groupId: string) => {
   const {
-    data: groupScheduleData,
-    isLoading: groupScheduleIsLoading,
-    error: groupScheduleError,
-    isError: groupScheduleIsError,
-  } = useGetOneGroupSchedule(scheduleId);
+    data: groupData,
+    isLoading: groupIsLoading,
+    error: groupError,
+    isError: groupIsError,
+  } = useGetOneGroup(groupId);
 
   const {
     data: groupMemberData,
@@ -17,10 +17,10 @@ export const useGetGroupScheduleDefaultData = (scheduleId: string, groupId: stri
   } = useGetAllMember(groupId);
 
   return {
-    groupScheduleData,
+    groupData,
     groupMemberData,
-    isLoading: groupScheduleIsLoading || groupMemberIsLoading,
-    error: groupScheduleError ?? groupMemberError,
-    isError: groupScheduleIsError || groupMemberIsError,
+    isLoading: groupIsLoading || groupMemberIsLoading,
+    error: groupError ?? groupMemberError,
+    isError: groupIsError || groupMemberIsError,
   };
 };

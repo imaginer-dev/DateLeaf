@@ -1,6 +1,6 @@
-import { getAllGroupMembers } from '@/apis/groupScheduleApis';
 import { useQuery } from '@tanstack/react-query';
 import { queries } from './queryKeys';
+import { getAllGroupMembers } from '@/apis/getAllGroupMember.ts';
 
 export const useGetAllMember = (groupId: string) =>
   useQuery({

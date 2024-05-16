@@ -16,7 +16,7 @@ export const useAddGroupSchedule = () => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const newGroupSchedule = {
-      title: formData.get('name') as string,
+      name: formData.get('name') as string,
       description: formData.get('description') as string,
       startDate: formData.get('startDate') as string,
       endDate: formData.get('endDate') as string,
