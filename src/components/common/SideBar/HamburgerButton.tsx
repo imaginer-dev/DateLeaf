@@ -3,6 +3,7 @@ import SideBarGroupList from './SideBarGroupList';
 import SideBarProfile from './SideBarProfile';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import SideBarSignOutButton from '@/components/common/SideBar/SideBarSignOutButton.tsx';
 
 const HamburgerButton = () => {
   const { data: user, isLoading, isError } = useGetProfile();
@@ -33,9 +34,12 @@ const HamburgerButton = () => {
         </label>
         <div className="drawer-side lg:w-80">
           <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
-          <ul className="menu min-h-full w-80 bg-base-200 p-4">
-            <SideBarProfile imageUrl={user?.image_url ?? null} userName={user?.user_name ?? ''} />
-            <SideBarGroupList userId={user?.id ?? ''} />
+          <ul className="menu min-h-full w-80 flex-col justify-between bg-base-200 p-4">
+            <div>
+              <SideBarProfile imageUrl={user?.image_url ?? null} userName={user?.user_name ?? ''} />
+              <SideBarGroupList userId={user?.id ?? ''} />
+            </div>
+            <SideBarSignOutButton />
           </ul>
         </div>
       </div>

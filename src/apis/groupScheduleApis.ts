@@ -1,5 +1,6 @@
 import supabase from '@/supabase';
 import { Member } from '@/types/Member';
+
 interface addGroupShedule {
   title: string;
   description: string;
@@ -72,6 +73,20 @@ interface UpdateGroupScheduleMember {
   updatedMemberList: Member[];
   groupId: string;
 }
+
+export const getOneGroup = async (groupId: string) => {
+  const { data, error } = await supabase.from('groups').select('*').eq('id', +groupId);
+
+  if (error) {
+    throw error;
+  }
+
+  if (!data) {
+    throw new Error('데이터를 찾을 수 없습니다.');
+  }
+
+  return data[0];
+};
 
 export const getOneGroupSchedule = async (scheduleId: string) => {
   const { data, error } = await supabase.from('group_schedules').select('*').eq('id', +scheduleId);
