@@ -5,7 +5,13 @@ import { useRef, useState, useEffect, useCallback } from 'react';
 // import { formatDateRange, formatTime } from '../../utils/dateUtils';
 import { Events, DB_Events } from '../../utils/index.ts';
 import { formatDateRange } from '../../utils/dateUtils';
-import CreateEventButton from '@/components/MyCalendar/CreateEventButton.tsx';
+import CreateEventDialog from '@/components/MyCalendar/CreateEventButton.tsx';
+import Dialog from './Dialog.tsx';
+
+interface DialogElement {
+  openModal: () => void;
+  closeModal: () => void;
+}
 
 interface EventInfo {
   timeText: string;
@@ -191,6 +197,13 @@ function EventCards({ events, date, onDelete }: EventCardsProps) {
   console.log(events, date);
   const [menuOpen, setMenuOpen] = useState(-1);
 
+  const dialogRef = useRef<DialogElement | null>(null);
+  const openModal = (dialogRef: React.RefObject<DialogElement>) => {
+    if (dialogRef.current) {
+      dialogRef.current?.openModal();
+    }
+  };
+
   if (!events.length) {
     return (
       <div className="min-h-[150px] min-w-[240px] bg-white p-4 text-black">
@@ -225,14 +238,22 @@ function EventCards({ events, date, onDelete }: EventCardsProps) {
               {menuOpen === index && (
                 <div className="absolute right-0 top-10 z-10 rounded-lg bg-white shadow-md">
                   <ul>
-                    <li className="cursor-pointer p-2 hover:bg-gray-100">
-                      <CreateEventButton
-                        id={event.id}
-                        title={event.title}
-                        start_date={event.start_date}
-                        end_date={event.end_date}
-                      />
+                    <li className="cursor-pointer p-2 hover:bg-gray-100" onClick={() => openModal(dialogRef)}>
+                      수정
                     </li>
+                    <Dialog
+                      ref={dialogRef}
+                      title="일정 수정"
+                      desc={''}
+                      children={
+                        <CreateEventDialog
+                          id={event.id}
+                          title={event.title}
+                          start_date={event.start_date}
+                          end_date={event.end_date}
+                        />
+                      }
+                    />
                     <li className="cursor-pointer p-2 hover:bg-gray-100" onClick={() => onDelete(event.id)}>
                       삭제
                     </li>
