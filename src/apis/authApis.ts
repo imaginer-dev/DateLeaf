@@ -70,3 +70,12 @@ export const searchUser = async (nickname: string) => {
 
   return profiles;
 };
+
+export const signOut = async () => {
+  const { error } = await supabase.auth.signOut();
+  if (error) {
+    throw error;
+  }
+
+  return true;
+};
