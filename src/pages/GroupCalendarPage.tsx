@@ -67,8 +67,25 @@ const GroupCalendarPage = () => {
             backgroundColor,
           };
         })
-        .flat(),
-    [memberInfoList?.memberScheduleList, memberInfoList?.memberList, backgroundColorMap, colorIndex],
+        .flat()
+        .filter((item) => {
+          const groupStartDate = data?.start_date;
+          const groupEndDate = data?.end_date;
+
+          if (!groupStartDate || !groupEndDate) return false;
+
+          return (
+            new Date(item.start_date) >= new Date(groupStartDate) && new Date(item.end_date) <= new Date(groupEndDate)
+          );
+        }),
+    [
+      memberInfoList?.memberScheduleList,
+      memberInfoList?.memberList,
+      backgroundColorMap,
+      colorIndex,
+      data?.start_date,
+      data?.end_date,
+    ],
   );
 
   const onDelete = useCallback((id: number) => {

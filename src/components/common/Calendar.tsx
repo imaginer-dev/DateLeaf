@@ -61,8 +61,23 @@ export default memo(function Calendar({
   useEffect(() => {
     if (isGroupCalendar && db_events.length > 0) {
       const dateList = getDateListFromStartDateToEndDate(startDate!, endDate!);
+      console.log(startDate);
+      console.log(endDate);
 
       const eventDateList = db_events.map((event) => event.start_date.split('T')[0]);
+
+      console.log(dateList);
+
+      const allDateTableList = eventDateList.map((date) => {
+        return document.querySelector(`[data-date="${date}"]`);
+      });
+
+      allDateTableList.forEach((date) => {
+        const existingClassName = date?.className;
+        const newClassName = existingClassName + ' bg-base-200';
+        date?.setAttribute('class', newClassName);
+      });
+
       const formatedList = dateList.filter((date) => !eventDateList.includes(date));
 
       const dateTableDataList = formatedList.map((date) => {
@@ -71,7 +86,7 @@ export default memo(function Calendar({
 
       dateTableDataList.forEach((dateTableData) => {
         const existingClassName = dateTableData?.className;
-        const newClassName = existingClassName + ' bg-gray-200';
+        const newClassName = existingClassName + ' bg-success';
         dateTableData?.setAttribute('class', newClassName);
       });
     }
