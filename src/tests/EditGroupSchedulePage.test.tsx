@@ -1,11 +1,11 @@
 import { describe, expect, it, vi } from 'vitest';
 import { groupScheduleFixture } from './fixtures/groupScheduleFixture';
 import { render, screen, waitFor } from '@testing-library/react';
-import EditGroupPage from '@/pages/EditGroupSchedulePage';
+import EditGroupPage from '@/pages/EditGroupPage.tsx';
 import wrapper from './helpers/wrapper';
-import { getAllGroupMembers, getOneGroupSchedule } from '@/apis/groupScheduleApis';
 import { dateToYYMMDD } from '@/utils/dateUtils';
 import { memberListFixture } from './fixtures/memberFixture';
+import { getAllGroupMembers } from '@/apis/getAllGroupMember.ts';
 
 vi.mock('react-router-dom', () => ({
   useNavigate: () => vi.fn(),
@@ -16,7 +16,6 @@ vi.mock('@/apis/groupScheduleApis');
 
 describe('EditGroupPage', () => {
   it('페이지 파라미터를 통해 그룹의 기본값을 받아올 수 있어야 한다.', async () => {
-    vi.mocked(getOneGroupSchedule).mockResolvedValueOnce(groupScheduleFixture[0]);
     vi.mocked(getAllGroupMembers).mockResolvedValueOnce(memberListFixture);
     render(<EditGroupPage />, {
       wrapper: wrapper,

@@ -1,5 +1,5 @@
-import { getAllGroupMembers } from '@/apis/groupScheduleApis.ts';
 import supabase from '@/supabase';
+import { getAllGroupMembers } from '@/apis/getAllGroupMember.ts';
 
 export const getAllMemberSchedule = async (groupId: string) => {
   const memberList = await getAllGroupMembers(groupId);

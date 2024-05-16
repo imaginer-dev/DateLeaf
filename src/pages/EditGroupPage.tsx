@@ -3,26 +3,22 @@ import AppBar from '@/components/common/AppBar';
 import { useParams } from 'react-router-dom';
 import { Loading } from '.';
 import { Member } from '@/types/Member';
-import { useUpdateGroupSchedule } from '@/react-queries/useUpdateGroupSchedule';
+import { useUpdateGroup } from '@/react-queries/useUpdateGroup.ts';
 import { useGetGroupScheduleDefaultData } from '@/hooks/useGetGroupScheduleDefaultData';
 import Dialog from '@/components/common/Dialog';
 
-const EditGroupSchedulePage = () => {
-  const params = useParams<{ groupId: string; scheduleId: string }>();
-  const scheduleId = params.scheduleId!;
+const EditGroupPage = () => {
+  const params = useParams<{ groupId: string }>();
   const groupId = params.groupId!;
 
-  const { groupMemberData, groupScheduleData, error, isLoading, isError } = useGetGroupScheduleDefaultData(
-    scheduleId,
-    groupId,
-  );
-  const { mutate, successDialog, errorDialogRef, isPending: updateIsPending } = useUpdateGroupSchedule();
+  const { groupMemberData, groupData, error, isLoading, isError } = useGetGroupScheduleDefaultData(groupId);
+  const { mutate, successDialog, errorDialogRef, isPending: updateIsPending } = useUpdateGroup();
 
   if (isError) {
     return <div>{error!.message}</div>;
   }
 
-  if ((!groupMemberData || !groupScheduleData) && !isLoading) {
+  if ((!groupMemberData || !groupData) && !isLoading) {
     return <div>데이터를 찾을 수 없습니다.</div>;
   }
 
@@ -35,7 +31,7 @@ const EditGroupSchedulePage = () => {
       startDate: formData.get('startDate') as string,
       endDate: formData.get('endDate') as string,
       memo: formData.get('memo') as string,
-      scheduleId,
+      groupId,
       newMemberList: userList,
     };
     mutate(updatePayload);
@@ -47,14 +43,14 @@ const EditGroupSchedulePage = () => {
         <Loading display="spinner" size="lg" color="primary" />
       ) : (
         <div className="flex min-h-dvh w-screen flex-col overflow-x-hidden px-4">
-          <AppBar backButton title={'모임 일정 수정하기'} />
+          <AppBar backButton title={'모임 수정하기'} />
           <GroupForm
             onSubmit={handleSubmit}
-            name={groupScheduleData!.title}
-            description={groupScheduleData!.description}
-            startDate={groupScheduleData!.start_date}
-            endDate={groupScheduleData!.end_date}
-            memo={groupScheduleData!.memo}
+            name={groupData!.name}
+            description={groupData!.description}
+            startDate={groupData!.start_date}
+            endDate={groupData!.end_date}
+            memo={groupData!.memo}
             memberList={groupMemberData}
             isLoading={updateIsPending}
           />
@@ -66,4 +62,4 @@ const EditGroupSchedulePage = () => {
   );
 };
 
-export default EditGroupSchedulePage;
+export default EditGroupPage;

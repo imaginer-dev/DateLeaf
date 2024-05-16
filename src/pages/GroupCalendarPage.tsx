@@ -8,9 +8,7 @@ import { DB_Events } from '@/utils';
 import { useGetOneGroup } from '@/react-queries/useGetOneGroup.ts';
 import { useGetAllMemberSchedule } from '@/react-queries/useGetAllMemberSchedule.ts';
 
-const GroupSchedulePage = () => {
-  // TODO: 캘린더 수정해서 이벤트 리스트를 외부에서 받을 수 있도록 해야함.
-  // TODO: 그룹 스케줄을 받아오는게 아닌 그룹 정보를 받아와 이름을 표현해줘야 한다.
+const GroupCalendarPage = () => {
   const params = useParams<{ groupId: string }>();
   const groupId = params.groupId!;
 
@@ -47,7 +45,7 @@ const GroupSchedulePage = () => {
     <div className="lg:ml-80">
       {(isLoading || memberScheduleListLoading) && <Loading size="lg" display="spinner" color="primary" />}
       <AppBar backButton={false} IconButton={<HamburgerButton />} calendarName={data?.name ?? ''} />
-      <main className="z-1 relative flex-grow">
+      <main className="z-1 main-padding-right relative flex-grow">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="rounded bg-white p-6 px-4 sm:px-0">
             <Calendar db_events={db_events} onDeleteClicked={onDelete} />
@@ -59,4 +57,4 @@ const GroupSchedulePage = () => {
   );
 };
 
-export default GroupSchedulePage;
+export default GroupCalendarPage;
