@@ -1,10 +1,9 @@
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { useRef, useState, useEffect, useCallback } from 'react';
-// import { formatDateRange, formatTime } from '../../utils/dateUtils';
-import { Events, DB_Events } from '../../utils/index.ts';
-import { formatDateRange } from '../../utils/dateUtils';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { DB_Events, Events } from '@/utils';
+import { formatDateRange } from '@/utils/dateUtils.ts';
 import CreateEventDialog from '@/components/MyCalendar/CreateEventButton.tsx';
 import Dialog from './Dialog.tsx';
 
@@ -36,20 +35,6 @@ export default function Calendar({ db_events, onDeleteClicked }: CalendarProps) 
   const calendarRef = useRef<FullCalendar | null>(null);
   const [selectedEvents, setSelectedEvents] = useState<DB_Events[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-
-  /*
-  const handleDateClick = (clickInfo: EventClickArg) => {
-    if (clickInfo.event.start) {
-      const clickStartDate = new Date(clickInfo.event.start);
-      setSelectedDate(clickStartDate);
-
-      const clickedStartDate = new Date(clickInfo.event.start).toDateString();
-      setSelectedEvents(events.filter((event) => new Date(event.start).toDateString() === clickedStartDate));
-    } else {
-      console.log('not available');
-    }
-  };
-  */
 
   const handleDateSelection = (dateClickInfo: { dateStr: string }) => {
     console.log(dateClickInfo);
@@ -88,47 +73,12 @@ export default function Calendar({ db_events, onDeleteClicked }: CalendarProps) 
     setCalendarHeight(window.innerWidth < 768 ? 500 : 'auto');
   }, []);
 
-  /*
-  const updateTitle = () => {
-    const calendarApi = calendarRef?.current?.getApi();
-    if (calendarApi) {
-      const calendarView = calendarApi.view;
-      console.log('View start date:', calendarView.currentStart);
-
-      const date = new Date(calendarView.currentStart);
-      const year = date.getFullYear();
-      const month = (date.getMonth() + 1).toString().padStart(2, '0');
-      const newTitle = `${year}.${month}`;
-
-      const titleElement = document.querySelector('.fc-toolbar-title');
-      if (titleElement) {
-        titleElement.textContent = newTitle;
-      }
-    }
-  };
-  */
-
   useEffect(() => {
-    /*
-    const calendarApi = calendarRef?.current?.getApi();
-    if (calendarApi) {
-      calendarApi.on('datesSet', updateTitle);
-    }
-
-    updateTitle(); // 컴포넌트 마운트 시 제목 업데이트
-    */
-
-    /* 캘린더 - 반응형 사이즈 */
     window.addEventListener('resize', updateSize);
     updateSize(); // 컴포넌트 마운트 시 화면 크기에 따른 업데이트
 
     return () => {
       window.removeEventListener('resize', updateSize);
-      /*
-      if (calendarApi) {
-        calendarApi.off('datesSet', updateTitle);
-      }
-      */
     };
   }, [updateSize]);
 
