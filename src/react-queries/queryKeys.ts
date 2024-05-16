@@ -15,6 +15,7 @@ export const queries = createQueryKeyStore({
   },
   group: {
     getOne: (groupId: string) => [groupId],
+    getAllMemberSchedule: (groupId: string) => [groupId],
     getAll: null,
     update: null,
     updateMember: null,
