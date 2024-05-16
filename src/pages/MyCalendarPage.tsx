@@ -2,7 +2,7 @@ import AppBar from '@/components/common/AppBar.tsx';
 import Calendar from '../components/common/Calendar.tsx';
 import CreateEventDialog from '@/components/MyCalendar/CreateEventButton.tsx';
 import HamburgerButton from '@/components/common/SideBar/HamburgerButton.tsx';
-import { getPersonalSchedule, deletePersonalSchedule } from '@/apis/personalScheduleApi';
+import { deletePersonalSchedule, getPersonalSchedule } from '@/apis/personalScheduleApi';
 import { useEventState } from '@/stores/myEventsStore';
 import { useEffect, useRef } from 'react';
 import Dialog from '@/components/common/Dialog.tsx';
@@ -14,6 +14,8 @@ interface DialogElement {
 
 const MyCalendarPage: React.FC = () => {
   const { db_events, addDBEvents } = useEventState();
+
+  console.log('dv_events : ', db_events);
 
   useEffect(() => {
     getPersonalSchedule().then((schedule) => {
@@ -45,7 +47,7 @@ const MyCalendarPage: React.FC = () => {
   return (
     <div className="lg:ml-80">
       <AppBar backButton={false} IconButton={<HamburgerButton />} calendarName="내 캘린더" />
-      <main className="z-1 relative flex-grow">
+      <main className="z-1 main-padding-right relative flex-grow">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div>
             <Calendar db_events={db_events} onDeleteClicked={onDeleteClicked} />
