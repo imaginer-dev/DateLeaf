@@ -46,29 +46,32 @@ const CreateEventDialog = ({ id, title, start_date, end_date }: eventProps) => {
   };
 
   const onCreateClicked = () => {
-    if (eventTitle !== '' && startDate !== '') {
-      const newEvent: Events = {
-        title: eventTitle,
-        start: startDate,
-        end: endDate === '' ? startDate : endDate,
-      };
-      if (id) {
-        updatePersonalSchedule(id, newEvent)
-          .then(() => {
-            location.href = '/';
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } else {
-        addPersonalSchedule(newEvent)
-          .then(() => {
-            location.href = '/';
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
+    if (eventTitle === '' || startDate === '' || startDate > endDate) {
+      console.log('please check input value:', eventTitle, startDate, endDate);
+      return;
+    }
+
+    const newEvent: Events = {
+      title: eventTitle,
+      start: startDate,
+      end: endDate === '' ? startDate : endDate,
+    };
+    if (id) {
+      updatePersonalSchedule(id, newEvent)
+        .then(() => {
+          location.href = '/';
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      addPersonalSchedule(newEvent)
+        .then(() => {
+          location.href = '/';
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
 
     setTitle('');
@@ -88,9 +91,32 @@ const CreateEventDialog = ({ id, title, start_date, end_date }: eventProps) => {
   return (
     <div>
       <hr className="mt-1" />
-      <InputRef title="일정 제목" placeholder="새 일정 제목" onChange={onTitleChanged} ref={titleRef} />
-      <InputRef type="date" title="시작 날짜" placeholder="YYYY-MM-DD" onChange={onStartDateChanged} ref={startRef} />
-      <InputRef type="date" title="끝 날짜" placeholder="YYYY-MM-DD" onChange={onEndDateChanged} ref={endRef} />
+      <InputRef
+        title="일정 제목"
+        placeholder="새 일정 제목"
+        onChange={onTitleChanged}
+        ref={titleRef}
+        error={eventTitle === ''}
+        errorText="일정 제목을 입력해주세요."
+      />
+      <InputRef
+        type="date"
+        title="시작 날짜"
+        placeholder="YYYY-MM-DD"
+        onChange={onStartDateChanged}
+        ref={startRef}
+        error={startDate === ''}
+        errorText="시작 날짜를 입력해주세요."
+      />
+      <InputRef
+        type="date"
+        title="끝 날짜"
+        placeholder="YYYY-MM-DD"
+        onChange={onEndDateChanged}
+        ref={endRef}
+        error={startDate > endDate}
+        errorText="끝 날짜는 시작날짜보다 늦게 해주세요."
+      />
       <hr className="mb-2 mt-2" />
       <button className="btn w-full bg-primary text-base-100" onClick={onCreateClicked}>
         {id ? '수정하기' : '추가하기'}
