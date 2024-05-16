@@ -16,7 +16,7 @@
 그때마다 수많은 일정들의 조율에서 오는 피로가 즐기고자 시작한 일이 되려 힘들어지는 이유가 되기도 합니다.<br>
 우리는 그러한 사람들의 불편함을 인지하였고, 이 부분을 자동화로 만들어서 보다 편리하게 모임 계획을 세울수 있도록 했습니다.
 
-## YUO CAN DO.
+## YOU CAN DO.
 ![image](https://github.com/imaginer-dev/DateLeaf/assets/81802112/6663f95b-a2b0-4faa-830b-8e1ba1e7bf39)
 
 ![image](https://github.com/imaginer-dev/DateLeaf/assets/81802112/04b0f787-c0d4-4088-8978-0f9adf97604b)
@@ -24,11 +24,10 @@
 ## WHAT WE DO
 
 
-## WE USEED
-![image](https://github.com/imaginer-dev/DateLeaf/assets/81802112/00215aaa-77ea-405a-867f-c45726d8d44a)
-
-
+## WE USED
+![image](https://github.com/imaginer-dev/DateLeaf/assets/81802112/3cd4ee87-e28a-49d1-81ba-cef8bd8c46b7)
 
 ## OUR CHALLENGE
 
 ## WHO WE ARE
+이예서
