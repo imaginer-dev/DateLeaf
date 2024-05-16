@@ -38,6 +38,7 @@ export default function Calendar({ db_events, onDeleteClicked }: CalendarProps) 
 
   const handleDateSelection = (dateClickInfo: { dateStr: string }) => {
     console.log(dateClickInfo);
+    console.log(db_events);
     const clickedDateStr = dateClickInfo.dateStr;
     setSelectedDate(clickedDateStr);
     setSelectedEvents(

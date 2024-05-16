@@ -13,23 +13,25 @@ interface DialogElement {
 }
 
 const MyCalendarPage: React.FC = () => {
-  const { db_events, addDBEvents } = useEventState();
+  const { db_events, addDBEvents, initDBEvents } = useEventState();
 
-  console.log('dv_events : ', db_events);
+  console.log('db_events : ', db_events);
 
   useEffect(() => {
     getPersonalSchedule().then((schedule) => {
+      initDBEvents();
       schedule.map((x) => {
         addDBEvents({ ...x });
       });
     });
-  }, [addDBEvents]);
+  }, [addDBEvents, initDBEvents]);
 
   const onDeleteClicked = (id: number) => {
     console.log('delete : ', id);
     deletePersonalSchedule(id)
       .then((val) => {
         console.log('delete done!', val);
+        location.href = '/';
       })
       .catch((err) => {
         console.log(err);
