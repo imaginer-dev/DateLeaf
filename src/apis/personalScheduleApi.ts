@@ -2,7 +2,14 @@ import supabase from '@/supabase';
 import { Events } from '@/utils/index';
 
 export const getPersonalSchedule = async () => {
-  const { data, error } = await supabase.from('personal_schedules').select();
+  const { data: userData, error: userError } = await supabase.auth.getUser();
+
+  if (userError) {
+    throw userError;
+  }
+
+  const { data, error } = await supabase.from('personal_schedules').select('*').eq('user_id', userData.user.id);
+
   if (error) {
     throw error;
   }

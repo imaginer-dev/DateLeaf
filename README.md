@@ -1,13 +1,33 @@
 # DateLeaf
+> **DateLeaf**는 다수의 사람들과의 **모임 시간**을 보다 **편리하게 계획**하기 위한 **스케줄러** 입니다.
+<br><br>
+모임을 잡으면서 모든 인원의 일정을 일일이 맞추기 어려울 때,<br>
+매번 번거로운 투표와 생각지 못한 이중약속으로 난감할 때,<br>
+한 번에 너무 많은 스케쥴이 발생하여 나조차도 모든 일정을 기억하기 힘들 때,<br>
+서로의 일정을 입력만 하면 모두가 가능한 날짜와 시간을 자동으로 계산하여<br>
+보다 편리하게 모임 계획을 세울수 있도록 도와줍니다.
 
-<h2 tabindex="-1" class="heading-element" dir="auto"> 친구와 함께하는 일정 관리 서비스 <a target="_blank" rel="noopener noreferrer nofollow" href="https://www.date-leaf.com"><img src="https://www.date-leaf.com" width="30" data-canonical-src="" style="max-width: 100%;"></a></h2>
+![intro](https://github.com/imaginer-dev/DateLeaf/assets/81802112/57386410-3cda-438d-9368-9216991f607f)
 
-‘날짜‘와 ‘잎사귀‘를 결합하여, 시간이 자연스럽게 흐르는 것을 나타내며, 각 일정이 잎사귀처럼 하나하나 소중함을 강조합니다.
 
-<img src="https://camo.githubusercontent.com/9b8caad5e3d6b3d65bf1a7f5552ffd8136bdf6e0e9d2a79884a5d52c367b9e10/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f547970655363726970742d342e382e342d3331373843363f6c6f676f3d74797065736372697074" data-canonical-src="https://img.shields.io/badge/TypeScript-4.8.4-3178C6?logo=typescript" style="max-width: 100%;">
+## WHAT FOR?
+현대사회에 불고 있는 자기계발 열풍은, 일시적인 유행을 넘어 하나의 사회 현상으로 자리매김하였습니다.<br>
+이러한 자기계발의 시대에 사람들은 규모도 종류도 다양한 모임 활동을 하게되는데<br>
+그때마다 수많은 일정들의 조율에서 오는 피로가 즐기고자 시작한 일이 되려 힘들어지는 이유가 되기도 합니다.<br>
+우리는 그러한 사람들의 불편함을 인지하였고, 이 부분을 자동화로 만들어서 보다 편리하게 모임 계획을 세울수 있도록 했습니다.
 
-<div class="markdown-heading" dir="auto"><h2 tabindex="-1" class="heading-element" dir="auto">🚀 프로젝트 소개</h2><a id="user-content--프로젝트-소개" class="anchor" aria-label="Permalink: 🚀 프로젝트 소개" href="#-프로젝트-소개"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+## YOU CAN DO.
+![image](https://github.com/imaginer-dev/DateLeaf/assets/81802112/6663f95b-a2b0-4faa-830b-8e1ba1e7bf39)
 
-<div class="markdown-heading" dir="auto"><h2 tabindex="-1" class="heading-element" dir="auto">🛠 주요 기능</h2><a id="user-content--주요-기능" class="anchor" aria-label="Permalink: 🛠 주요 기능" href="#-주요-기능"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+![image](https://github.com/imaginer-dev/DateLeaf/assets/81802112/04b0f787-c0d4-4088-8978-0f9adf97604b)
 
-<div class="markdown-heading" dir="auto"><h2 tabindex="-1" class="heading-element" dir="auto">📚 팀 IMAGINER 개발 일지</h2><a id="user-content--팀-IMAGINER-개발-일지" class="anchor" aria-label="Permalink: 📚 팀 IMAGINER 개발 일지" href="#-팀-IMAGINER-개발-일지"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a></div>
+## WHAT WE DO
+
+
+## WE USED
+![image](https://github.com/imaginer-dev/DateLeaf/assets/81802112/3cd4ee87-e28a-49d1-81ba-cef8bd8c46b7)
+
+## OUR CHALLENGE
+
+## WHO WE ARE
+이예서

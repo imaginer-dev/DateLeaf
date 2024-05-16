@@ -1,7 +1,7 @@
 import AppBar from '@/components/common/AppBar';
 import HamburgerButton from '@/components/common/SideBar/HamburgerButton';
 import Calendar from '@/components/common/Calendar';
-import CreateEventButton from '@/components/MyCalendar/CreateEventButton';
+import CreateEventDialog from '@/components/MyCalendar/CreateEventButton';
 import { useParams } from 'react-router-dom';
 import { useGetOneGroupSchedule } from '@/react-queries/useGetOneGroupSchedule';
 import { Loading } from '.';
@@ -42,7 +42,7 @@ const GroupSchedulePage = () => {
           </div>
         </div>
       </main>
-      <CreateEventButton />
+      <CreateEventDialog />
     </div>
   );
 };

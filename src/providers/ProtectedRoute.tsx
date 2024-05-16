@@ -1,13 +1,8 @@
 import { Loading } from '@/pages';
 import { useGetSession } from '@/react-queries/useGetSession';
-import { FC, ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
-interface Props {
-  children: ReactNode;
-}
-
-const ProtectedRoute: FC<Props> = ({ children }) => {
+const ProtectedRoute = () => {
   const { data, isError, error, isLoading } = useGetSession();
   const navigate = useNavigate();
 
@@ -23,7 +18,7 @@ const ProtectedRoute: FC<Props> = ({ children }) => {
     navigate('/login');
   }
 
-  return children;
+  return <Outlet />;
 };
 
 export default ProtectedRoute;

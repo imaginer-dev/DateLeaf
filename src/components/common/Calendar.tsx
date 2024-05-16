@@ -1,11 +1,16 @@
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { useRef, useState, useEffect, useCallback } from 'react';
-// import { formatDateRange, formatTime } from '../../utils/dateUtils';
-import { Events, DB_Events } from '../../utils/index.ts';
-import { formatDateRange } from '../../utils/dateUtils';
-import CreateEventButton from '@/components/MyCalendar/CreateEventButton.tsx';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { DB_Events, Events } from '@/utils';
+import { formatDateRange } from '@/utils/dateUtils.ts';
+import CreateEventDialog from '@/components/MyCalendar/CreateEventButton.tsx';
+import Dialog from './Dialog.tsx';
+
+interface DialogElement {
+  openModal: () => void;
+  closeModal: () => void;
+}
 
 interface EventInfo {
   timeText: string;
@@ -30,20 +35,6 @@ export default function Calendar({ db_events, onDeleteClicked }: CalendarProps) 
   const calendarRef = useRef<FullCalendar | null>(null);
   const [selectedEvents, setSelectedEvents] = useState<DB_Events[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-
-  /*
-  const handleDateClick = (clickInfo: EventClickArg) => {
-    if (clickInfo.event.start) {
-      const clickStartDate = new Date(clickInfo.event.start);
-      setSelectedDate(clickStartDate);
-
-      const clickedStartDate = new Date(clickInfo.event.start).toDateString();
-      setSelectedEvents(events.filter((event) => new Date(event.start).toDateString() === clickedStartDate));
-    } else {
-      console.log('not available');
-    }
-  };
-  */
 
   const handleDateSelection = (dateClickInfo: { dateStr: string }) => {
     console.log(dateClickInfo);
@@ -82,47 +73,12 @@ export default function Calendar({ db_events, onDeleteClicked }: CalendarProps) 
     setCalendarHeight(window.innerWidth < 768 ? 500 : 'auto');
   }, []);
 
-  /*
-  const updateTitle = () => {
-    const calendarApi = calendarRef?.current?.getApi();
-    if (calendarApi) {
-      const calendarView = calendarApi.view;
-      console.log('View start date:', calendarView.currentStart);
-
-      const date = new Date(calendarView.currentStart);
-      const year = date.getFullYear();
-      const month = (date.getMonth() + 1).toString().padStart(2, '0');
-      const newTitle = `${year}.${month}`;
-
-      const titleElement = document.querySelector('.fc-toolbar-title');
-      if (titleElement) {
-        titleElement.textContent = newTitle;
-      }
-    }
-  };
-  */
-
   useEffect(() => {
-    /*
-    const calendarApi = calendarRef?.current?.getApi();
-    if (calendarApi) {
-      calendarApi.on('datesSet', updateTitle);
-    }
-
-    updateTitle(); // 컴포넌트 마운트 시 제목 업데이트
-    */
-
-    /* 캘린더 - 반응형 사이즈 */
     window.addEventListener('resize', updateSize);
     updateSize(); // 컴포넌트 마운트 시 화면 크기에 따른 업데이트
 
     return () => {
       window.removeEventListener('resize', updateSize);
-      /*
-      if (calendarApi) {
-        calendarApi.off('datesSet', updateTitle);
-      }
-      */
     };
   }, [updateSize]);
 
@@ -191,6 +147,13 @@ function EventCards({ events, date, onDelete }: EventCardsProps) {
   console.log(events, date);
   const [menuOpen, setMenuOpen] = useState(-1);
 
+  const dialogRef = useRef<DialogElement | null>(null);
+  const openModal = (dialogRef: React.RefObject<DialogElement>) => {
+    if (dialogRef.current) {
+      dialogRef.current?.openModal();
+    }
+  };
+
   if (!events.length) {
     return (
       <div className="min-h-[150px] min-w-[240px] bg-white p-4 text-black">
@@ -225,14 +188,22 @@ function EventCards({ events, date, onDelete }: EventCardsProps) {
               {menuOpen === index && (
                 <div className="absolute right-0 top-10 z-10 rounded-lg bg-white shadow-md">
                   <ul>
-                    <li className="cursor-pointer p-2 hover:bg-gray-100">
-                      <CreateEventButton
-                        id={event.id}
-                        title={event.title}
-                        start_date={event.start_date}
-                        end_date={event.end_date}
-                      />
+                    <li className="cursor-pointer p-2 hover:bg-gray-100" onClick={() => openModal(dialogRef)}>
+                      수정
                     </li>
+                    <Dialog
+                      ref={dialogRef}
+                      title="일정 수정"
+                      desc={''}
+                      children={
+                        <CreateEventDialog
+                          id={event.id}
+                          title={event.title}
+                          start_date={event.start_date}
+                          end_date={event.end_date}
+                        />
+                      }
+                    />
                     <li className="cursor-pointer p-2 hover:bg-gray-100" onClick={() => onDelete(event.id)}>
                       삭제
                     </li>
