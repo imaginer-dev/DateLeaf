@@ -16,7 +16,7 @@ const SideBarProfile: FC<Props> = ({ userName, imageUrl }) => {
   return (
     <div className="flex w-full flex-row justify-between border-b-2 border-white pb-4">
       <Link to={`/profile`} className="flex flex-row items-center gap-1 text-lg">
-        <ProfileIcon imageUrl={imageUrl} />
+        <ProfileIcon  width="49px" height="49px" imageUrl={imageUrl} />
         <span className="ml-2">{userName}</span>
       </Link>
       <div className="flex flex-row items-center gap-2">
