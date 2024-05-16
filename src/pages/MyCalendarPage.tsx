@@ -19,7 +19,7 @@ const MyCalendarPage: React.FC = () => {
     getPersonalSchedule().then((schedule) => {
       setDBEvents(schedule);
     });
-  }, [db_events]);
+  }, []);
 
   const onDeleteClicked = (id: number) => {
     console.log('delete : ', id);
