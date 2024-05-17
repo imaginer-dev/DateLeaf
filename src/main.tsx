@@ -71,11 +71,11 @@ const router = createBrowserRouter([
         children: [
           {
             path: 'personalInfo',
-            element: <Policy.PersonalInfoPage />,
+            element: <Policy.PersonalInfoShowPage />,
           },
           {
             path: 'usecondition',
-            element: <Policy.UseConditionPage />,
+            element: <Policy.UseConditionShowPage />,
           },
         ],
       },
