@@ -10,7 +10,7 @@ interface AppBarProps {
 
 const AppBar: FC<AppBarProps> = ({ title = null, backButton = true, IconButton = null, calendarName = null }) => {
   return (
-    <nav className="grid grid-cols-5 px-5 py-5 lg:justify-items-start">
+    <nav className="grid grid-cols-5 px-5 py-5 lg:justify-items-center">
       <div className="col-span-1">{backButton ? <HistoryBackButton /> : IconButton ?? <span />}</div>
       {title === null ? (
         <div className="col-span-2"></div>
