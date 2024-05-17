@@ -12,7 +12,7 @@ const EditGroupPage = () => {
   const groupId = params.groupId!;
 
   const { groupMemberData, groupData, error, isLoading, isError } = useGetGroupScheduleDefaultData(groupId);
-  const { mutate, successDialog, errorDialogRef, isPending: updateIsPending } = useUpdateGroup();
+  const { mutate, errorText, successDialog, errorDialogRef, isPending: updateIsPending } = useUpdateGroup();
 
   if (isError) {
     return <div>{error!.message}</div>;
@@ -54,7 +54,7 @@ const EditGroupPage = () => {
             memberList={groupMemberData}
             isLoading={updateIsPending}
           />
-          <Dialog ref={errorDialogRef} desc="오류가 발생했습니다. 다시시도해 주세요." />
+          <Dialog ref={errorDialogRef} desc={errorText} />
           <Dialog ref={successDialog} desc="성공적으로 수정했습니다." />
         </div>
       )}

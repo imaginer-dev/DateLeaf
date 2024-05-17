@@ -184,7 +184,7 @@ export default memo(function Calendar({
 function renderEventContent(eventInfo: EventInfo) {
   return (
     <>
-      <div className="w-full border-0 bg-secondary p-0.5 text-white">
+      <div className="line-clamp-1 w-full text-wrap border-0 bg-secondary p-0.5 text-white">
         <b className="border-0">{eventInfo.timeText}</b>
         <i> {eventInfo.event.title}</i>
       </div>
