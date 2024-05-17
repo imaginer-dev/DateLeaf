@@ -24,7 +24,7 @@ const AppBar: FC<AppBarProps> = ({ title = null, backButton = true, IconButton =
           style={{
             backgroundColor: 'rgba(226, 230, 218, 0.5)',
           }}
-          className="col-span-2 h-full rounded-lg py-1.5 text-center text-sm font-bold lg:w-full lg:col-span-5"
+          className="col-span-2 h-full rounded-lg py-1.5 text-center text-sm font-bold lg:col-span-5 lg:w-full"
         >
           {calendarName}
         </div>
