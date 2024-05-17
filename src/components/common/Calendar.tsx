@@ -46,7 +46,7 @@ export default memo(function Calendar({
   const calendarRef = useRef<FullCalendar | null>(null);
   const [selectedEvents, setSelectedEvents] = useState<DB_Events[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [isChaged, setIsChanged] = useState(false);
+  const [isChanged, setIsChanged] = useState(false);
 
   const events: Events[] = useMemo(
     () =>
@@ -90,7 +90,7 @@ export default memo(function Calendar({
         dateTableData?.setAttribute('class', newClassName);
       });
     }
-  }, [isGroupCalendar, startDate, endDate, db_events, isChaged]);
+  }, [isGroupCalendar, startDate, endDate, db_events, isChanged]);
 
   const handleDateSelection = (dateClickInfo: { dateStr: string }) => {
     const clickedDateStr = dateClickInfo.dateStr;
