@@ -32,6 +32,9 @@ dependencies:
   axios:
     specifier: ^1.6.8
     version: 1.6.8
+  browser-image-compression:
+    specifier: ^2.0.2
+    version: 2.0.2
   daisyui:
     specifier: ^4.10.2
     version: 4.10.2(postcss@8.4.38)
@@ -5034,6 +5037,13 @@ packages:
     resolution:
       { integrity: sha512-nfulgvOR6S4gt9UKCeGJOuSGBPGiFT6oQ/2UBnvTY/5aQ1PnksW72fhZkM30DzoRRv2WpwZf1vHHEr3mtuXIWQ== }
     dev: true
+
+  /browser-image-compression@2.0.2:
+    resolution:
+      { integrity: sha512-pBLlQyUf6yB8SmmngrcOw3EoS4RpQ1BcylI3T9Yqn7+4nrQTXJD4sJDe5ODnJdrvNMaio5OicFo75rDyJD2Ucw== }
+    dependencies:
+      uzip: 0.20201231.0
+    dev: false
 
   /browserify-zlib@0.1.4:
     resolution:
@@ -11331,6 +11341,11 @@ packages:
       { integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA== }
     hasBin: true
     dev: true
+
+  /uzip@0.20201231.0:
+    resolution:
+      { integrity: sha512-OZeJfZP+R0z9D6TmBgLq2LHzSSptGMGDGigGiEe0pr8UBe/7fdflgHlHBNDASTXB5jnFuxHpNaJywSg8YFeGng== }
+    dev: false
 
   /validate-npm-package-license@3.0.4:
     resolution:
