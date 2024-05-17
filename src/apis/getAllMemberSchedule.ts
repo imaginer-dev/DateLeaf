@@ -11,5 +11,8 @@ export const getAllMemberSchedule = async (groupId: string) => {
     .select('*')
     .in('user_id', memberIdList);
 
-  return memberScheduleList;
+  return {
+    memberScheduleList,
+    memberList,
+  };
 };

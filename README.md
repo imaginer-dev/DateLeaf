@@ -32,24 +32,28 @@
 ![image](https://github.com/imaginer-dev/DateLeaf/assets/81802112/3cd4ee87-e28a-49d1-81ba-cef8bd8c46b7)
 
 ## HOW TO USE
+
 ### Development
+
 Date Leaf를 사용하여 개발하기 위해서는 Node.js가 필요합니다.
-* run:
+
+- run:
   ```
   pnpm install
   pnpm run dev
   ```
-* to run the tests:
+- to run the tests:
+
   ```
   pnpm run test
   ```
 
-* to run the tests in the UI storybook:
+- to run the tests in the UI storybook:
   ```
   pnpm run storybook
   ```
-### Contributions
 
+### Contributions
 
 ## OUR CHALLENGE
 
