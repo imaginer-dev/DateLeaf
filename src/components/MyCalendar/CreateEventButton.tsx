@@ -1,4 +1,3 @@
-import DialogButton from '@/components/common/DialogButton';
 import { InputRef } from '../common/InputForm.tsx';
 import { useState, useRef, useEffect } from 'react';
 import { Events } from '@/utils/index.ts';
@@ -11,7 +10,7 @@ export interface eventProps {
   end_date?: string;
 }
 
-const CreateEventButton = (props: eventProps) => {
+const CreateEventDialog = ({ id, title, start_date, end_date }: eventProps) => {
   const [eventTitle, setTitle] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -20,21 +19,19 @@ const CreateEventButton = (props: eventProps) => {
   const endRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    console.log(props);
-
-    if (props.start_date) {
-      setStartDate(props.start_date);
-      startRef!.current!.value = props.start_date;
+    if (start_date) {
+      setStartDate(start_date);
+      startRef!.current!.value = start_date;
     }
-    if (props.end_date) {
-      setEndDate(props.end_date);
-      endRef!.current!.value = props.end_date;
+    if (end_date) {
+      setEndDate(end_date);
+      endRef!.current!.value = end_date;
     }
-    if (props.title) {
-      setTitle(props.title);
-      titleRef!.current!.value = props.title;
+    if (title) {
+      setTitle(title);
+      titleRef!.current!.value = title;
     }
-  }, [props]);
+  }, [start_date, end_date, title]);
 
   const onTitleChanged = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -49,21 +46,32 @@ const CreateEventButton = (props: eventProps) => {
   };
 
   const onCreateClicked = () => {
-    if (eventTitle !== '' && startDate !== '') {
-      const newEvent: Events = {
-        title: eventTitle,
-        start: startDate,
-        end: endDate === '' ? startDate : endDate,
-      };
-      if (props.id) {
-        updatePersonalSchedule(props.id, newEvent).catch((err) => {
+    if (eventTitle === '' || startDate === '' || startDate > endDate) {
+      console.log('please check input value:', eventTitle, startDate, endDate);
+      return;
+    }
+
+    const newEvent: Events = {
+      title: eventTitle,
+      start: startDate,
+      end: endDate === '' ? startDate : endDate,
+    };
+    if (id) {
+      updatePersonalSchedule(id, newEvent)
+        .then(() => {
+          location.href = '/';
+        })
+        .catch((err) => {
           console.log(err);
         });
-      } else {
-        addPersonalSchedule(newEvent).catch((err) => {
+    } else {
+      addPersonalSchedule(newEvent)
+        .then(() => {
+          location.href = '/';
+        })
+        .catch((err) => {
           console.log(err);
         });
-      }
     }
 
     setTitle('');
@@ -80,28 +88,41 @@ const CreateEventButton = (props: eventProps) => {
     }
   };
 
-  const eventForm = (
+  return (
     <div>
       <hr className="mt-1" />
-      <InputRef title="일정 제목" placeholder="새 일정 제목" onChange={onTitleChanged} ref={titleRef} />
-      <InputRef type="date" title="시작 날짜" placeholder="YYYY-MM-DD" onChange={onStartDateChanged} ref={startRef} />
-      <InputRef type="date" title="끝 날짜" placeholder="YYYY-MM-DD" onChange={onEndDateChanged} ref={endRef} />
+      <InputRef
+        title="일정 제목"
+        placeholder="새 일정 제목"
+        onChange={onTitleChanged}
+        ref={titleRef}
+        error={eventTitle === ''}
+        errorText="일정 제목을 입력해주세요."
+      />
+      <InputRef
+        type="date"
+        title="시작 날짜"
+        placeholder="YYYY-MM-DD"
+        onChange={onStartDateChanged}
+        ref={startRef}
+        error={startDate === ''}
+        errorText="시작 날짜를 입력해주세요."
+      />
+      <InputRef
+        type="date"
+        title="끝 날짜"
+        placeholder="YYYY-MM-DD"
+        onChange={onEndDateChanged}
+        ref={endRef}
+        error={startDate > endDate}
+        errorText="끝 날짜는 시작날짜보다 늦게 해주세요."
+      />
       <hr className="mb-2 mt-2" />
       <button className="btn w-full bg-primary text-base-100" onClick={onCreateClicked}>
-        {props.id ? '수정하기' : '추가하기'}
+        {id ? '수정하기' : '추가하기'}
       </button>
     </div>
   );
-  return (
-    <div className="p-8 pl-0 pr-0">
-      <DialogButton
-        classname="btn bg-primary text-base-100 w-full"
-        name={props.id ? '수정' : '새 일정 추가하기'}
-        title={props.id ? '일정 수정' : '일정 추가'}
-        desc={''}
-        children={eventForm}
-      />
-    </div>
-  );
 };
-export default CreateEventButton;
+
+export default CreateEventDialog;

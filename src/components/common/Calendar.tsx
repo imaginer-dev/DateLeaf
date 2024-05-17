@@ -1,59 +1,104 @@
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { useRef, useState, useEffect, useCallback } from 'react';
-import { useEventState } from '@/stores/myEventsStore';
-// import { formatDateRange, formatTime } from '../../utils/dateUtils';
-import { getPersonalSchedule, deletePersonalSchedule } from '@/apis/personalScheduleApi';
-import { DB_Events } from '../../utils/index.ts';
-import { formatDateRange } from '../../utils/dateUtils';
-import CreateEventButton from '@/components/MyCalendar/CreateEventButton.tsx';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { DB_Events, Events } from '@/utils';
+import { formatDateRange } from '@/utils/dateUtils.ts';
+import CreateEventDialog from '@/components/MyCalendar/CreateEventButton.tsx';
+import Dialog from './Dialog.tsx';
+import { getDateListFromStartDateToEndDate } from '@/utils/getDateListFromStartdateToEnddate.ts';
+
+interface DialogElement {
+  openModal: () => void;
+  closeModal: () => void;
+}
 
 interface EventInfo {
   timeText: string;
   event: {
     title: string;
   };
+  backgroundColor: string;
 }
 
 interface EventCardsProps {
   events: DB_Events[];
   date: string | null;
+  onDelete: (id: number) => void;
 }
 
-export default function Calendar() {
+interface CalendarProps {
+  db_events: DB_Events[];
+  onDeleteClicked: (id: number) => void;
+  isGroupCalendar?: boolean;
+  startDate?: string;
+  endDate?: string;
+}
+
+export default memo(function Calendar({
+  db_events,
+  onDeleteClicked,
+  isGroupCalendar,
+  startDate,
+  endDate,
+}: CalendarProps) {
   const [calendarHeight, setCalendarHeight] = useState<string | number>('auto');
   const calendarRef = useRef<FullCalendar | null>(null);
   const [selectedEvents, setSelectedEvents] = useState<DB_Events[]>([]);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  // ! : 외부에서 이벤트 리스트를 받아오게 된다면 zustand 스토어도 필요 없을거 같습니다!
-  const { events, addEvents, db_events, addDBEvents } = useEventState();
+  const [isChanged, setIsChanged] = useState(false);
 
-  /*
-  const handleDateClick = (clickInfo: EventClickArg) => {
-    if (clickInfo.event.start) {
-      const clickStartDate = new Date(clickInfo.event.start);
-      setSelectedDate(clickStartDate);
+  const events: Events[] = useMemo(
+    () =>
+      db_events.map((event) => ({
+        ...event,
+        start: event.start_date,
+        end: event.end_date,
+      })),
+    [db_events],
+  );
 
-      const clickedStartDate = new Date(clickInfo.event.start).toDateString();
-      setSelectedEvents(events.filter((event) => new Date(event.start).toDateString() === clickedStartDate));
-    } else {
-      console.log('not available');
+  useEffect(() => {
+    if (isGroupCalendar && db_events.length > 0) {
+      const dateList = getDateListFromStartDateToEndDate(startDate!, endDate!);
+      console.log(startDate);
+      console.log(endDate);
+
+      const eventDateList = db_events.map((event) => event.start_date.split('T')[0]);
+
+      console.log(dateList);
+
+      const allDateTableList = eventDateList.map((date) => {
+        return document.querySelector(`[data-date="${date}"]`);
+      });
+
+      allDateTableList.forEach((date) => {
+        const existingClassName = date?.className;
+        const newClassName = existingClassName + ' bg-base-200';
+        date?.setAttribute('class', newClassName);
+      });
+
+      const formatedList = dateList.filter((date) => !eventDateList.includes(date));
+
+      const dateTableDataList = formatedList.map((date) => {
+        return document.querySelector(`[data-date="${date}"]`);
+      });
+
+      dateTableDataList.forEach((dateTableData) => {
+        const existingClassName = dateTableData?.className;
+        const newClassName = existingClassName + ' bg-success';
+        dateTableData?.setAttribute('class', newClassName);
+      });
     }
-  };
-  */
+  }, [isGroupCalendar, startDate, endDate, db_events, isChanged]);
 
   const handleDateSelection = (dateClickInfo: { dateStr: string }) => {
-    console.log(dateClickInfo);
     const clickedDateStr = dateClickInfo.dateStr;
     setSelectedDate(clickedDateStr);
-    setSelectedEvents(
-      db_events.filter(
-        (event) =>
-          clickedDateStr >= event.start_date.split('T')[0] &&
-          clickedDateStr <= (event.end_date ? event.end_date.split('T')[0] : event.start_date.split('T')[0]),
-      ),
+    const clickedDateEvents = db_events.filter(
+      (event) => clickedDateStr >= event.start_date.split('T')[0] && clickedDateStr <= event.end_date.split('T')[0],
     );
+    setSelectedEvents(clickedDateEvents);
   };
 
   const handlePrev = () => {
@@ -61,6 +106,7 @@ export default function Calendar() {
     if (calendarApi) {
       calendarApi.prev();
       setSelectedDate(null);
+      setIsChanged((prev) => !prev);
     } else {
       console.error('Calendar API is not available.');
     }
@@ -71,6 +117,7 @@ export default function Calendar() {
     if (calendarApi) {
       calendarApi.next();
       setSelectedDate(null);
+      setIsChanged((prev) => !prev);
     } else {
       console.error('Calendar API is not available.');
     }
@@ -80,61 +127,14 @@ export default function Calendar() {
     setCalendarHeight(window.innerWidth < 768 ? 500 : 'auto');
   }, []);
 
-  /*
-  const updateTitle = () => {
-    const calendarApi = calendarRef?.current?.getApi();
-    if (calendarApi) {
-      const calendarView = calendarApi.view;
-      console.log('View start date:', calendarView.currentStart);
-
-      const date = new Date(calendarView.currentStart);
-      const year = date.getFullYear();
-      const month = (date.getMonth() + 1).toString().padStart(2, '0');
-      const newTitle = `${year}.${month}`;
-
-      const titleElement = document.querySelector('.fc-toolbar-title');
-      if (titleElement) {
-        titleElement.textContent = newTitle;
-      }
-    }
-  };
-  */
-
   useEffect(() => {
-    /*
-    const calendarApi = calendarRef?.current?.getApi();
-    if (calendarApi) {
-      calendarApi.on('datesSet', updateTitle);
-    }
-
-    updateTitle(); // 컴포넌트 마운트 시 제목 업데이트
-    */
-
-    /* 캘린더 - 반응형 사이즈 */
     window.addEventListener('resize', updateSize);
     updateSize(); // 컴포넌트 마운트 시 화면 크기에 따른 업데이트
 
     return () => {
       window.removeEventListener('resize', updateSize);
-      /*
-      if (calendarApi) {
-        calendarApi.off('datesSet', updateTitle);
-      }
-      */
     };
   }, [updateSize]);
-
-  // const [isLoaded, setIsLoaded] = useState(false); // 데이터 로딩 상태
-
-  // !: 이베트를 받아온다면 필요없는 코드가 될 수 있을거 같아요.
-  useEffect(() => {
-    getPersonalSchedule().then((schedule) => {
-      schedule.map((x) => {
-        addDBEvents({ ...x });
-        addEvents({ ...x, start: x.start_date, end: x.end_date });
-      });
-    });
-  }, [events, addEvents, addDBEvents]);
 
   return (
     <div>
@@ -146,10 +146,10 @@ export default function Calendar() {
           events={events}
           // eventClick={handleDateClick}
           dateClick={handleDateSelection}
-          dayMaxEvents={2} //Max개수까지보이고 나머지는 more
+          dayMaxEvents={5} //Max개수까지보이고 나머지는 more
           //navLinks={true} // 날짜/주 이름을 클릭하여 뷰를 변경할 수 있습니다.
           editable={true} // 이벤트를 수정할 수 있습니다.
-          eventContent={renderEventContent}
+          eventContent={isGroupCalendar ? groupEventContent : renderEventContent}
           contentHeight={calendarHeight}
           titleFormat={{
             year: 'numeric',
@@ -175,16 +175,16 @@ export default function Calendar() {
         />
       </div>
       <div className="eventCardList mt-10">
-        {selectedDate && <EventCards events={selectedEvents} date={selectedDate} />}
+        {selectedDate && <EventCards events={selectedEvents} date={selectedDate} onDelete={onDeleteClicked} />}
       </div>
     </div>
   );
-}
+});
 
 function renderEventContent(eventInfo: EventInfo) {
   return (
     <>
-      <div className="w-full border-0 bg-secondary p-0.5 text-white">
+      <div className="line-clamp-1 w-full text-wrap border-0 bg-secondary p-0.5 text-white">
         <b className="border-0">{eventInfo.timeText}</b>
         <i> {eventInfo.event.title}</i>
       </div>
@@ -192,9 +192,24 @@ function renderEventContent(eventInfo: EventInfo) {
   );
 }
 
-function EventCards({ events, date }: EventCardsProps) {
-  console.log(events, date);
+function groupEventContent(eventInfo: EventInfo) {
+  eventInfo.backgroundColor;
+  return (
+    <div className={'w-full overflow-x-hidden'}>
+      <div className={`badge text-xs ${eventInfo.backgroundColor}`}>{eventInfo.event.title}</div>
+    </div>
+  );
+}
+
+function EventCards({ events, date, onDelete }: EventCardsProps) {
   const [menuOpen, setMenuOpen] = useState(-1);
+
+  const dialogRef = useRef<DialogElement | null>(null);
+  const openModal = (dialogRef: React.RefObject<DialogElement>) => {
+    if (dialogRef.current) {
+      dialogRef.current?.openModal();
+    }
+  };
 
   if (!events.length) {
     return (
@@ -204,17 +219,6 @@ function EventCards({ events, date }: EventCardsProps) {
       </div>
     );
   }
-
-  const onDeleteClicked = (id: number) => {
-    console.log('delete : ', id);
-    deletePersonalSchedule(id)
-      .then((val) => {
-        console.log('delete done!', val);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   return (
     <div>
@@ -241,15 +245,23 @@ function EventCards({ events, date }: EventCardsProps) {
               {menuOpen === index && (
                 <div className="absolute right-0 top-10 z-10 rounded-lg bg-white shadow-md">
                   <ul>
-                    <li className="cursor-pointer p-2 hover:bg-gray-100">
-                      <CreateEventButton
-                        id={event.id}
-                        title={event.title}
-                        start_date={event.start_date}
-                        end_date={event.end_date}
-                      />
+                    <li className="cursor-pointer p-2 hover:bg-gray-100" onClick={() => openModal(dialogRef)}>
+                      수정
                     </li>
-                    <li className="cursor-pointer p-2 hover:bg-gray-100" onClick={() => onDeleteClicked(event.id)}>
+                    <Dialog
+                      ref={dialogRef}
+                      title="일정 수정"
+                      desc={''}
+                      children={
+                        <CreateEventDialog
+                          id={event.id}
+                          title={event.title}
+                          start_date={event.start_date}
+                          end_date={event.end_date}
+                        />
+                      }
+                    />
+                    <li className="cursor-pointer p-2 hover:bg-gray-100" onClick={() => onDelete(event.id)}>
                       삭제
                     </li>
                   </ul>
