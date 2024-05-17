@@ -8,8 +8,9 @@ export type Database = {
           created_at: string;
           description: string | null;
           end_date: string;
-          group_id: string;
+          group_id: number;
           id: number;
+          memo: string | null;
           owner_id: string;
           start_date: string;
           title: string;
@@ -18,8 +19,9 @@ export type Database = {
           created_at?: string;
           description?: string | null;
           end_date: string;
-          group_id?: string;
+          group_id: number;
           id?: number;
+          memo?: string | null;
           owner_id?: string;
           start_date: string;
           title: string;
@@ -28,8 +30,9 @@ export type Database = {
           created_at?: string;
           description?: string | null;
           end_date?: string;
-          group_id?: string;
+          group_id?: number;
           id?: number;
+          memo?: string | null;
           owner_id?: string;
           start_date?: string;
           title?: string;
@@ -39,14 +42,7 @@ export type Database = {
             foreignKeyName: 'group_schedules_group_id_fkey';
             columns: ['group_id'];
             isOneToOne: false;
-            referencedRelation: 'users';
-            referencedColumns: ['id'];
-          },
-          {
-            foreignKeyName: 'group_schedules_owner_id_fkey';
-            columns: ['owner_id'];
-            isOneToOne: false;
-            referencedRelation: 'users';
+            referencedRelation: 'groups';
             referencedColumns: ['id'];
           },
         ];
@@ -91,10 +87,12 @@ export type Database = {
         Row: {
           color: string | null;
           created_at: string;
+          description: string | null;
           end_date: string;
-          exclude_time_end: string;
-          exclude_time_start: string;
+          exclude_time_end: string | null;
+          exclude_time_start: string | null;
           id: number;
+          memo: string | null;
           name: string;
           open: boolean;
           owner_id: string;
@@ -103,10 +101,12 @@ export type Database = {
         Insert: {
           color?: string | null;
           created_at?: string;
+          description?: string | null;
           end_date: string;
-          exclude_time_end: string;
-          exclude_time_start: string;
+          exclude_time_end?: string | null;
+          exclude_time_start?: string | null;
           id?: number;
+          memo?: string | null;
           name: string;
           open: boolean;
           owner_id?: string;
@@ -115,10 +115,12 @@ export type Database = {
         Update: {
           color?: string | null;
           created_at?: string;
+          description?: string | null;
           end_date?: string;
-          exclude_time_end?: string;
-          exclude_time_start?: string;
+          exclude_time_end?: string | null;
+          exclude_time_start?: string | null;
           id?: number;
+          memo?: string | null;
           name?: string;
           open?: boolean;
           owner_id?: string;
@@ -128,7 +130,7 @@ export type Database = {
           {
             foreignKeyName: 'groups_owner_id_fkey';
             columns: ['owner_id'];
-            isOneToOne: true;
+            isOneToOne: false;
             referencedRelation: 'users';
             referencedColumns: ['id'];
           },
@@ -176,6 +178,7 @@ export type Database = {
         Row: {
           created_at: string;
           id: string;
+          image_url: string | null;
           phone: string;
           user_name: string;
           user_nickname: string | null;
@@ -183,6 +186,7 @@ export type Database = {
         Insert: {
           created_at?: string;
           id?: string;
+          image_url?: string | null;
           phone: string;
           user_name: string;
           user_nickname?: string | null;
@@ -190,6 +194,7 @@ export type Database = {
         Update: {
           created_at?: string;
           id?: string;
+          image_url?: string | null;
           phone?: string;
           user_name?: string;
           user_nickname?: string | null;
@@ -209,7 +214,10 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      'Insert group owner to relations': {
+        Args: Record<PropertyKey, never>;
+        Returns: Record<string, unknown>;
+      };
     };
     Enums: {
       [_ in never]: never;

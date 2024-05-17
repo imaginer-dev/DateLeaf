@@ -1,10 +1,11 @@
 import React from 'react';
-import Logo from '../assets/svgs/Logo.tsx';
+import Logo from '../../../assets/svgs/Logo.tsx';
 
 interface Props {
   display: 'spinner' | 'dots' | 'ring' | 'ball' | 'bars' | 'infinity';
   size: 'xs' | 'sm' | 'md' | 'lg';
   color: 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error';
+  transparent?: boolean;
 }
 
 const styleMap = {
@@ -28,12 +29,10 @@ const styleMap = {
   error: 'text-error',
 };
 
-const Loading: React.FC<Props> = ({ display, size, color }) => {
+const Loading: React.FC<Props> = ({ display, size, color, transparent = false }) => {
   return (
     <div
-      className={
-        'fixed left-0 top-0 z-50 flex h-screen w-screen flex-col items-center justify-center overflow-hidden bg-base-100'
-      }
+      className={`fixed left-0 top-0 z-50 flex h-screen w-screen flex-col items-center justify-center overflow-hidden bg-base-100 ${transparent ? 'bg-opacity-50' : ''}`}
     >
       <Logo />
       <span className={`loading absolute bottom-20 ${styleMap[display]} ${styleMap[size]} ${styleMap[color]}`}></span>
