@@ -59,25 +59,20 @@ const router = createBrowserRouter([
     path: '*',
     element: <NotFound />,
   },
-
+  {
+    path: '/setting',
+    element: <SettingPage />,
+  },
   {
     path: '/policy',
     children: [
       {
-        path: '/policy',
-        children: [
-          {
-            path: 'personalInfo',
-            element: <Policy.PersonalInfoShowPage />,
-          },
-          {
-            path: 'usecondition',
-            element: <Policy.UseConditionShowPage />,
-          },
-        ],
+        path: 'personalInfo',
+        element: <Policy.PersonalInfoShowPage />,
+      },
       {
-        path: '/setting',
-        element: <SettingPage />,
+        path: 'usecondition',
+        element: <Policy.UseConditionShowPage />,
       },
     ],
   },
