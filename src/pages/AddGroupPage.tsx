@@ -8,6 +8,9 @@ const AddGroupPage = () => {
   const { addGroupSchedule, isPending, failDialogRef, successDialogRef } = useAddGroupSchedule();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>, userList: Member[]) => {
     e.preventDefault();
+    // TODO: 멤버 1명 이상이여야 한다.
+    // TODO: 타이틀, 시작일, 종료시간 은 필수 값이며 빈 값일 수 없다.
+    // TODO: 종료일은 시작일보다 크거나 같아야 한다.
     addGroupSchedule(e, userList);
   };
 
