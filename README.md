@@ -8,6 +8,8 @@
 > 서로의 일정을 입력만 하면 모두가 가능한 날짜와 시간을 자동으로 계산하여<br>
 > 보다 편리하게 모임 계획을 세울수 있도록 도와줍니다.
 
+[-> Go to **Date Leaf** Site](https://www.date-leaf.com/)
+
 ![intro](https://github.com/imaginer-dev/DateLeaf/assets/81802112/57386410-3cda-438d-9368-9216991f607f)
 
 ## WHAT FOR?
@@ -28,6 +30,26 @@
 ## WE USED
 
 ![image](https://github.com/imaginer-dev/DateLeaf/assets/81802112/3cd4ee87-e28a-49d1-81ba-cef8bd8c46b7)
+
+## HOW TO USE
+### Development
+Date Leaf를 사용하여 개발하기 위해서는 Node.js가 필요합니다.
+* run:
+  ```
+  pnpm install
+  pnpm run dev
+  ```
+* to run the tests:
+  ```
+  pnpm run test
+  ```
+
+* to run the tests in the UI storybook:
+  ```
+  pnpm run storybook
+  ```
+### Contributions
+
 
 ## OUR CHALLENGE
 

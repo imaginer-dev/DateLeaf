@@ -4,7 +4,7 @@ const ProfileIcon = ({
   height = '49', // 기본 세로 크기
   fill = 'white', // 기본 색상
 }: {
-  imageUrl: string | null;
+  imageUrl: string | null | undefined;
   width?: string;
   height?: string;
   fill?: string;
@@ -19,8 +19,8 @@ const ProfileIcon = ({
       />
     </svg>
   ) : (
-    <div className={`avatar h-[49[px]] w-[49px] overflow-hidden rounded-full`}>
-      <div>
+    <div className={`avatar overflow-hidden rounded-full`}>
+      <div style={{ width: width, height: height }}>
         <img className="object-cover" src={imageUrl} alt="Profile" />
       </div>
     </div>
