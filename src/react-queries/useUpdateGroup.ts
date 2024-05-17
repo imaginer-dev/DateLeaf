@@ -2,9 +2,10 @@ import { useMutation } from '@tanstack/react-query';
 import { queries } from './queryKeys';
 import { Member } from '@/types/Member';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { updateGroup } from '@/apis/updateGroupApi.ts';
 import { updateGroupMember } from '@/apis/updateGroupMemberApi.ts';
+import { isValidGroupInput } from '@/utils/groupScheduleUtils.ts';
 
 interface UpdateGroup {
   name: string;
@@ -26,6 +27,8 @@ export const useUpdateGroup = () => {
 
   const errorDialogRef = useRef<DialogElement | null>(null);
   const successDialog = useRef<DialogElement | null>(null);
+
+  const [errorText, setErrorText] = useState('모임 일정 수정에 실패했습니다.');
 
   const {
     mutate: updateGroupMutate,
@@ -50,6 +53,14 @@ export const useUpdateGroup = () => {
   });
 
   const mutate = (data: UpdateGroup) => {
+    const validationResult = isValidGroupInput(data);
+
+    if (validationResult.error) {
+      errorDialogRef?.current?.openModal();
+      setErrorText(validationResult.errorText);
+      return;
+    }
+
     updateGroupMutate(data);
     updateGroupMemberMutate({
       updatedMemberList: data.newMemberList,
@@ -75,6 +86,7 @@ export const useUpdateGroup = () => {
 
   return {
     mutate,
+    errorText,
     isPending: updateGroupIsPending || updateGroupMemberIsPending,
     errorDialogRef,
     successDialog,
