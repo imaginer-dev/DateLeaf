@@ -6,7 +6,7 @@ import useSignUp from '@/react-queries/useSignUp';
 import { isAuthError } from '@supabase/supabase-js';
 import { useNavigate } from 'react-router-dom';
 import { Loading } from '@/pages';
-import Dialog from '../common/Dialog.tsx';
+import Dialog from '@/components/common/Dialog.tsx';
 
 interface DialogElement {
   openModal: () => void;
@@ -21,11 +21,22 @@ const messages = {
   EMAIL_PASSWORD_ISVAILD_ERROR: '이메일 또는 비밀번호 형식이 잘못되었습니다.',
   TERMS_ISVAILD_ERROR: '개인정보 수집 및 이용약관에 동의해주세요.',
   AUTH_ERROR: '이미 가입한 계정이 있습니다. 계정을 확인해주세요.',
+  SIGNUP_SUCCESS: '회원가입이 완료되었습니다. 이메일 인증 후 로그인해주세요.',
 };
 
 const JoinButton = () => {
-  const { nickName, name, phone, email, password, pwCheck, useTermsCheck, privacyTermsCheck, setShowError } =
-    useJoinState();
+  const {
+    nickName,
+    name,
+    phone,
+    email,
+    password,
+    pwCheck,
+    useTermsCheck,
+    privacyTermsCheck,
+    setShowError,
+    setIsSignupSuccess,
+  } = useJoinState();
   const validator = new ValidateProcessor(new LooseValidation());
   const { mutate, isPending } = useSignUp();
   const navigate = useNavigate();
@@ -94,6 +105,7 @@ const JoinButton = () => {
           }
         },
         onSuccess: () => {
+          setIsSignupSuccess(true);
           navigate('/login');
         },
       },

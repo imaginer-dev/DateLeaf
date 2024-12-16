@@ -6,7 +6,7 @@ interface Props {
   desc: string; //필수
 }
 
-interface DialogElement {
+export interface DialogElement {
   openModal: () => void;
   closeModal: () => void;
 }
