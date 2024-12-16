@@ -24,7 +24,8 @@ const messages = {
 };
 
 const JoinButton = () => {
-  const { nickName, name, phone, email, password, pwCheck, useTermsCheck, privacyTermsCheck } = useJoinState();
+  const { nickName, name, phone, email, password, pwCheck, useTermsCheck, privacyTermsCheck, setShowError } =
+    useJoinState();
   const validator = new ValidateProcessor(new LooseValidation());
   const { mutate, isPending } = useSignUp();
   const navigate = useNavigate();
@@ -34,36 +35,42 @@ const JoinButton = () => {
   const onClick = () => {
     if (!validator.isValidEmail(email) || !validator.isValidPassword(password)) {
       setDialogMessage(messages.EMAIL_PASSWORD_ISVAILD_ERROR);
+      setShowError(true);
       dialogRef.current?.openModal();
       return;
     }
 
     if (!validator.isValidName(name)) {
       setDialogMessage(messages.NAME_ISVAILD_ERROR);
+      setShowError(true);
       dialogRef.current?.openModal();
       return;
     }
 
     if (!validator.isValidNickName(nickName)) {
       setDialogMessage(messages.NICKNAME_ISVAILD_ERROR);
+      setShowError(true);
       dialogRef.current?.openModal();
       return;
     }
 
     if (!FormatPhone(phone)) {
       setDialogMessage(messages.PHONE_ISVAILD_ERROR);
+      setShowError(true);
       dialogRef.current?.openModal();
       return;
     }
 
     if (!validator.isValidPwCheck(password, pwCheck)) {
       setDialogMessage(messages.PWCHECK_ISVAILD_ERROR);
+      setShowError(true);
       dialogRef.current?.openModal();
       return;
     }
 
     if (!useTermsCheck || !privacyTermsCheck) {
       setDialogMessage(messages.TERMS_ISVAILD_ERROR);
+      setShowError(true);
       dialogRef.current?.openModal();
       return;
     }

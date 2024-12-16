@@ -5,5 +5,15 @@ import LoginFormActions from './LoginFormActions.tsx';
 import LoginNavigation from './LoginNavigation.tsx';
 import LoginNavigationLink from './LoginNavigationLink.tsx';
 import PasswordInput from './PasswordInput.tsx';
+import Slogan from './Slogan.tsx';
 
-export { EmailInput, LoginButton, LoginForm, LoginFormActions, LoginNavigation, LoginNavigationLink, PasswordInput };
+export {
+  EmailInput,
+  LoginButton,
+  LoginForm,
+  LoginFormActions,
+  LoginNavigation,
+  LoginNavigationLink,
+  PasswordInput,
+  Slogan,
+};
