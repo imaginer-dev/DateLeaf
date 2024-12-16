@@ -11,7 +11,7 @@ const TermsCheckInput = () => {
   }
 
   const [dialogMessage, setDialogMessage] = useState('');
-  const { useTermsCheck, privacyTermsCheck } = useJoinState();
+  const { useTermsCheck, privacyTermsCheck, showError } = useJoinState();
   const dialogRef = useRef<DialogElement | null>(null);
 
   const useTermsClick = () => {
@@ -47,7 +47,7 @@ const TermsCheckInput = () => {
             readOnly
           />
         </div>
-        {!useTermsCheck ? (
+        {showError && !useTermsCheck ? (
           <span className="text-red-500">이용약관에 동의해 주세요.</span>
         ) : (
           <span className="h-6"></span>
@@ -65,7 +65,7 @@ const TermsCheckInput = () => {
             readOnly
           />
         </div>
-        {!privacyTermsCheck ? (
+        {showError && !privacyTermsCheck ? (
           <span className="text-red-500">개인정보 수집, 이용에 동의해 주세요.</span>
         ) : (
           <span className="h-6"></span>

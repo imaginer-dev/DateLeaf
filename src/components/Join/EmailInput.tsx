@@ -3,7 +3,7 @@ import { useJoinState } from '../../stores/joinStore.ts';
 import { LooseValidation, ValidateProcessor } from '../../utils/authUtils.ts';
 
 const EmailInput = () => {
-  const { email, emailHandler } = useJoinState();
+  const { email, emailHandler, showError } = useJoinState();
   const validator = new ValidateProcessor(new LooseValidation());
 
   return (
@@ -17,7 +17,7 @@ const EmailInput = () => {
       name={'email'}
       id={'email-input'}
       aria-label={'join-email-input'}
-      error={!validator.isValidEmail(email)}
+      error={showError && !validator.isValidEmail(email)}
       errorText={'※ 올바른 이메일을 입력해 주세요.'}
     />
   );

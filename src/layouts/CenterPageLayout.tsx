@@ -7,7 +7,7 @@ interface Props {
 const CenterPageLayout: FC<Props> = ({ children }) => {
   return (
     <main className={'flex h-screen w-screen items-center justify-center'}>
-      <div className={'flex h-full w-full max-w-md flex-col items-center justify-around overflow-hidden px-8 py-8'}>
+      <div className={'flex h-full w-full max-w-md flex-col items-center justify-around overflow-hidden px-8 py-16'}>
         {children}
       </div>
     </main>

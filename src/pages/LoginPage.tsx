@@ -8,6 +8,7 @@ import {
   LoginNavigation,
   LoginNavigationLink,
   PasswordInput,
+  Slogan,
 } from '../components/login';
 import Footer from '@/components/common/Footer.tsx';
 
@@ -16,6 +17,7 @@ const LoginPage = () => {
     <>
       <CenterPageLayout>
         <VerticalLogo />
+        <Slogan />
         <LoginForm>
           <EmailInput />
           <PasswordInput />

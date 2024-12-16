@@ -3,7 +3,7 @@ import { useJoinState } from '../../stores/joinStore.ts';
 import { LooseValidation, ValidateProcessor } from '../../utils/authUtils.ts';
 
 const PasswordInput = () => {
-  const { password, passwordHandler } = useJoinState();
+  const { password, passwordHandler, showError } = useJoinState();
   const validator = new ValidateProcessor(new LooseValidation());
 
   return (
@@ -17,7 +17,7 @@ const PasswordInput = () => {
       type={'password'}
       id={'password-input'}
       aria-label={'join-password-input'}
-      error={!validator.isValidPassword(password)}
+      error={showError && !validator.isValidPassword(password)}
       errorText={'※ 비밀번호는 6자리 이상이어야 합니다.'}
     />
   );

@@ -6,6 +6,7 @@ interface JoinState {
   phone: string;
   email: string;
   password: string;
+  showError: boolean;
   pwCheck: string;
   useTermsCheck: boolean;
   privacyTermsCheck: boolean;
@@ -15,6 +16,7 @@ interface JoinState {
   phoneHandler: (phone: string) => void;
   emailHandler: (email: string) => void;
   passwordHandler: (password: string) => void;
+  setShowError: (showError: boolean) => void;
   pwCheckHandler: (pwCheck: string) => void;
   useTermsCheckHandler: () => void;
   privacyTermsCheckHandler: () => void;
@@ -26,6 +28,7 @@ export const useJoinState = create<JoinState>()((set) => ({
   phone: '',
   email: '',
   password: '',
+  showError: false,
   pwCheck: '',
   useTermsCheck: false,
   privacyTermsCheck: false,
@@ -38,4 +41,5 @@ export const useJoinState = create<JoinState>()((set) => ({
   pwCheckHandler: (pwCheck: string) => set((state) => ({ ...state, pwCheck })),
   useTermsCheckHandler: () => set((state) => ({ ...state, useTermsCheck: !state.useTermsCheck })),
   privacyTermsCheckHandler: () => set((state) => ({ ...state, privacyTermsCheck: !state.privacyTermsCheck })),
+  setShowError: (showError: boolean) => set((state) => ({ ...state, showError })),
 }));

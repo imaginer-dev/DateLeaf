@@ -3,7 +3,7 @@ import { useJoinState } from '../../stores/joinStore.ts';
 import { LooseValidation, ValidateProcessor } from '../../utils/authUtils.ts';
 
 const NameInput = () => {
-  const { name, nameHandler } = useJoinState();
+  const { name, nameHandler, showError } = useJoinState();
   const validator = new ValidateProcessor(new LooseValidation());
 
   return (
@@ -17,7 +17,7 @@ const NameInput = () => {
       name={'name'}
       id={'name-input'}
       aria-label={'join-name-input'}
-      error={!validator.isValidName(name)}
+      error={showError && !validator.isValidName(name)}
       errorText={'※ 이름을 입력해 주세요.'}
     />
   );
