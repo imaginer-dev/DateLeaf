@@ -15,6 +15,14 @@ button {
   cursor: pointer;
 }
 
+@layer components {
+  input {
+    &:focus {
+      background-color: #ffffff;
+    }
+  }
+}
+
 .navHeight {
   height: 64px;
 }
