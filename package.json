@@ -25,6 +25,7 @@
     "axios": "^1.6.8",
     "browser-image-compression": "^2.0.2",
     "daisyui": "^4.10.2",
+    "esbuild": "0.24.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.0",
@@ -39,7 +40,7 @@
     "@storybook/addon-links": "^8.0.6",
     "@storybook/addon-onboarding": "^8.0.6",
     "@storybook/blocks": "^8.0.6",
-    "@storybook/react": "^8.0.6",
+    "@storybook/react": "^8.4.7",
     "@storybook/react-vite": "^8.0.6",
     "@storybook/test": "^8.0.6",
     "@tanstack/eslint-plugin-query": "^5.28.11",
@@ -75,8 +76,5 @@
     "vite-plugin-pwa": "^0.19.8",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^1.4.0"
-  },
-  "overrides": {
-    "esbuild": "0.24.0"
   }
 }
