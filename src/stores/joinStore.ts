@@ -10,6 +10,7 @@ interface JoinState {
   pwCheck: string;
   useTermsCheck: boolean;
   privacyTermsCheck: boolean;
+  isSignupSuccess: boolean;
 
   nameHandler: (name: string) => void;
   nickNameHandler: (name: string) => void;
@@ -20,6 +21,7 @@ interface JoinState {
   pwCheckHandler: (pwCheck: string) => void;
   useTermsCheckHandler: () => void;
   privacyTermsCheckHandler: () => void;
+  setIsSignupSuccess: (value: boolean) => void;
 }
 
 export const useJoinState = create<JoinState>()((set) => ({
@@ -32,6 +34,7 @@ export const useJoinState = create<JoinState>()((set) => ({
   pwCheck: '',
   useTermsCheck: false,
   privacyTermsCheck: false,
+  isSignupSuccess: false,
 
   nameHandler: (name: string) => set((state) => ({ ...state, name })),
   nickNameHandler: (nickName: string) => set((state) => ({ ...state, nickName })),
@@ -42,4 +45,5 @@ export const useJoinState = create<JoinState>()((set) => ({
   useTermsCheckHandler: () => set((state) => ({ ...state, useTermsCheck: !state.useTermsCheck })),
   privacyTermsCheckHandler: () => set((state) => ({ ...state, privacyTermsCheck: !state.privacyTermsCheck })),
   setShowError: (showError: boolean) => set((state) => ({ ...state, showError })),
+  setIsSignupSuccess: (value) => set({ isSignupSuccess: value }),
 }));
